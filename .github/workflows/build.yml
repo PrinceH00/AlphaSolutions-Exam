@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v3
         with:
           ref: main
-          
+
       - name: Attempt rebase and fast-forward merge
         run: |
           # Attempt to rebase the current branch onto main
@@ -26,13 +26,13 @@ jobs:
           git checkout main
           # ${{ github.ref }} means the branch that triggered the workflow
           git merge --ff-only ${{ github.ref }}
-          
+
       - name: Build with Maven
         uses: dorny/paths-filter@v2
         with:
           filters: |
             mvn clean test
-          
+
       - name: Push changes to main
         if: success()
         run: |

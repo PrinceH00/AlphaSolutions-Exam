@@ -1,6 +1,9 @@
-DROP DATABASE IF EXISTS projectmanagerdb;
-CREATE DATABASE projectmanagerdb;
-USE projectmanagerdb;
+DROP
+DATABASE IF EXISTS projectmanagerdb;
+CREATE
+DATABASE projectmanagerdb;
+USE
+projectmanagerdb;
 
 CREATE TABLE User
 (
