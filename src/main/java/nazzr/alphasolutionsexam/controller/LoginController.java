@@ -31,7 +31,6 @@ public class LoginController {
     public String login(@RequestParam("email") String email, @RequestParam("password") String password,
                         HttpSession session, Model model)
     {
-
         User user = loginService.getUser(email, password);
         if (user != null) {
             session.setAttribute("user", user);
