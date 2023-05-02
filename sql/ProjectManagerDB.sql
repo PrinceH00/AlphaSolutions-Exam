@@ -1,9 +1,6 @@
-DROP
-DATABASE IF EXISTS projectmanagerdb;
-CREATE
-DATABASE projectmanagerdb;
-USE
-projectmanagerdb;
+DROP DATABASE IF EXISTS projectmanagerdb;
+CREATE DATABASE projectmanagerdb;
+USE projectmanagerdb;
 
 CREATE TABLE User
 (
@@ -61,16 +58,6 @@ CREATE TABLE Subtask
     isDone         BIT(1),
     task_id        INT(10) NOT NULL,
     PRIMARY KEY (subtask_id),
-    FOREIGN KEY (task_id) REFERENCES Task (task_id)
-);
-
-CREATE TABLE EmployeeTask
-(
-    employeetask_id INT(10) NOT NULL AUTO_INCREMENT,
-    employee_id     INT(10) NOT NULL,
-    task_id         INT(10) NOT NULL,
-    PRIMARY KEY (employeetask_id),
-    FOREIGN KEY (employee_id) REFERENCES Employee (employee_id),
     FOREIGN KEY (task_id) REFERENCES Task (task_id)
 );
 
