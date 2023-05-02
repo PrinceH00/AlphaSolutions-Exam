@@ -1,7 +1,7 @@
 package nazzr.alphasolutionsexam.repository;
 
 import nazzr.alphasolutionsexam.model.User;
-import org.springframework.beans.factory.annotation.Value;
+import nazzr.alphasolutionsexam.repository.utill.DB_Connector;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -11,13 +11,10 @@ import java.sql.SQLException;
 
 @Repository
 public class UserRepository_DB implements IUserRepository_DB {
-
-    @Value("${spring.datasource.url}")
-    String url;
-    @Value("${spring.datasource.username}")
-    String username;
-    @Value("${spring.datasource.password}")
-    String pwd;
+    String SQL = null;
+    Connection connection = DB_Connector.getConnection();
+    PreparedStatement preparedStatement = null;
+    ResultSet resultSet = null;
 
     @Override
     public User createUser(User user) {
@@ -34,6 +31,25 @@ public class UserRepository_DB implements IUserRepository_DB {
             throw new RuntimeException();
         }
     }
+
+    @Override
+    public User getUser(String email, String password) {
+            try {
+                SQL = "SELECT * FROM User WHERE email = ? AND password = ?";
+                PreparedStatement preparedStatementUserID = connection.prepareStatement(SQL);
+                preparedStatementUserID.setString(1, email);
+                preparedStatementUserID.setString(2, password);
+                resultSet = preparedStatementUserID.executeQuery();
+                User user = null;
+                if (resultSet.next()) {
+                    user = new User( resultSet.getInt("UserID"), resultSet.getString("firstName"), resultSet.getString("lastName"),resultSet.getString("email"), resultSet.getString("password"));
+                }
+                return user;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+    }
+}
 
 
 
