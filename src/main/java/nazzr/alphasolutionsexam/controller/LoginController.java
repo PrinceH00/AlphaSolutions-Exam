@@ -6,6 +6,7 @@ import nazzr.alphasolutionsexam.service.LoginService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -39,6 +40,17 @@ public class LoginController {
         }
         // wrong credentials
         model.addAttribute("wrongCredentials", true);
+        return "redirect:/login";
+    }
+    @GetMapping("/signup")
+    public String createUser(Model model){
+        model.addAttribute("user", new User());
+        return "signup";
+    }
+    @PostMapping("/signup")
+    public String saveUser(@ModelAttribute User user, Model model){
+        model.addAttribute("user", user);
+        loginService.createUser(user);
         return "redirect:/login";
     }
 
