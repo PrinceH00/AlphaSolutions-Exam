@@ -7,9 +7,4 @@ public class SubTask {
     private int estimated_time;
     private int final_time;
     private boolean isDone;
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> origin/main
 }

@@ -5,7 +5,7 @@ import java.util.Date;
 public class Project {
     private int projectID;
     private String title;
-    private String description;
+    private String discription;
     private Date startDate;
     private Date deadlineDate;
     private Date finalDate;
@@ -14,10 +14,10 @@ public class Project {
     public Project() {
     }
 
-    public Project(int projectID, String title, String description, Date startDate, Date deadlineDate, Date finalDate, boolean isDone) {
+    public Project(int projectID, String title, String discription, Date startDate, Date deadlineDate, Date finalDate, boolean isDone) {
         this.projectID = projectID;
         this.title = title;
-        this.description = description;
+        this.discription = discription;
         this.startDate = startDate;
         this.deadlineDate = deadlineDate;
         this.finalDate = finalDate;
@@ -32,8 +32,8 @@ public class Project {
         return title;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDiscription() {
+        return discription;
     }
 
     public Date getStartDate() {
@@ -62,8 +62,8 @@ public class Project {
         return this;
     }
 
-    public Project setDescription(String discription) {
-        this.description = discription;
+    public Project setDiscription(String discription) {
+        this.discription = discription;
         return this;
     }
 
