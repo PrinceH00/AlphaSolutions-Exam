@@ -23,6 +23,10 @@ public class LoginController {
         return session.getAttribute("user") != null;
     }
 
+    @GetMapping("/")
+    public String landingPage() {
+        return "index";
+    }
     @GetMapping("/login")
     public String showLogin() {
         return "login";
