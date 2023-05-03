@@ -1,27 +1,39 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Log in</title>
 </head>
+
 <body>
+
 <h1>Log in</h1>
+
 <form action="/login" method="post">
-    <p th:if="${wrongCredentials}" class="error">Forkert brugerid eller password</p>
+
+    <p th:if="${wrongCredentials}" class="error">Incorrect username or password</p>
+
     <p><label>Email:</label>
         <input name="email" type="text" autofocus required></p>
+
     <p><label>Password:</label>
         <input name="password" type="password" required></p>
+
     <p>
         <button type="submit">Login</button>
-        <a th:href="@{'/'}"><button type="button">Fortryd</button></a>
-    </p>
-</form>
 
-<a th:href="@{/createuser}">
-    <button class="createuser">Opret bruger</button>
-</a>
+        <a th:href="@{/signup}">
+            <button type="button"> Create Account</button>
+        </a>
+
+        <a th:href="@{'/'}">
+            <button type="button">Home Page</button>
+        </a>
+    </p>
+
+</form>
 
 </body>
 </html>
