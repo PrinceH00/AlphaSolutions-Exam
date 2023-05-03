@@ -19,14 +19,13 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    private boolean isLoggedIn(HttpSession session) {
-        return session.getAttribute("user") != null;
-    }
 
     @GetMapping("/")
     public String landingPage() {
         return "index";
     }
+
+    //----------------------------------------------------LOGIN-----------------------------------------------------\\
     @GetMapping("/login")
     public String showLogin() {
         return "login";
@@ -46,6 +45,8 @@ public class LoginController {
         model.addAttribute("wrongCredentials", true);
         return "redirect:/login";
     }
+
+    //--------------------------------------------------SIGN--UP----------------------------------------------------\\
     @GetMapping("/signup")
     public String createUser(Model model){
         model.addAttribute("user", new User());
@@ -58,4 +59,11 @@ public class LoginController {
         return "redirect:/login";
     }
 
+    //----------------------------------------------------LOGOUT----------------------------------------------------\\
+    @GetMapping("/logout")
+    public String logout(HttpSession session) {
+        // invalidate session and return landing page
+        session.invalidate();
+        return "redirect:/";
+    }
 }
