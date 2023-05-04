@@ -26,7 +26,7 @@ public class ProjectManagerController {
     @GetMapping("/project")
     public String createProject(Model model) {
         model.addAttribute("project", new Project());
-        return "project";
+        return "createProject";
     }
 
     @PostMapping("/project")
