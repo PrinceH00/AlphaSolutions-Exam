@@ -1,4 +1,4 @@
-package nazzr.alphasolutionsexam.repository.utill;
+package nazzr.alphasolutionsexam.repository.util;
 
 import java.io.FileInputStream;
 import java.io.IOException;

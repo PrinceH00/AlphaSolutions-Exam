@@ -1,7 +1,7 @@
 package nazzr.alphasolutionsexam.repository;
 
 import nazzr.alphasolutionsexam.model.User;
-import nazzr.alphasolutionsexam.repository.utill.DB_Connector;
+import nazzr.alphasolutionsexam.repository.util.DB_Connector;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
