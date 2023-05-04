@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<html lang="en" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="UTF-8">
@@ -13,8 +12,8 @@
 <form th:method="post" th:object="${project}">
 
     <div>
-        <label for="titel">Titel:</label>
-        <input type="text" id="titel" th:field="*{titel}" autofocus required>
+        <label for="title">Title:</label>
+        <input type="text" id="title" th:field="*{title}" autofocus required>
     </div>
 
     <div>
@@ -51,5 +50,7 @@
         </p>
     </div>
 
+</form>
 </body>
+
 </html>
