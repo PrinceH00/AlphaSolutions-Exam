@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" >
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Project</title>
+</head>
+
+<body>
+<h1>Create Project</h1>
+
+<form th:method="post" th:object="${project}">
+
+    <div>
+        <label for="titel">Titel:</label>
+        <input type="text" id="titel" th:field="*{titel}" autofocus required>
+    </div>
+
+    <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" th:field="*{description}" required>
+    </div>
+
+    <div>
+        <label for="startDate">Start Date:</label>
+        <input type="date" id="startDate" th:field="*{startDate}" required>
+    </div>
+
+    <div>
+        <label for="deadlineDate">Deadline:</label>
+        <input type="date" id="deadlineDate" th:field="*{deadlineDate}" required>
+    </div>
+
+    <div>
+        <label for="finalDate">Final Date:</label>
+        <input type="date" id="finalDate" th:field="*{finalDate}">
+    </div>
+
+    <div>
+        <label for="isDone">Is Done:</label>
+        <input type="checkbox" id="isDone" th:field="*{isDone}">
+    </div>
+
+
+    <div>
+        <p>
+            <button type="submit">Done</button>
+            <a th:href="@{'/dashboard'}"> <button type="button">Dashboard</button> </a>
+
+        </p>
+    </div>
+
+</body>
+</html>
