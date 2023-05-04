@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.sql.*;
 
-@Repository
+@Repository("project_db")
 public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB {
     String SQL = null;
     Connection connection = DB_Connector.getConnection();
