@@ -5,7 +5,7 @@ import java.util.Date;
 public class Project {
     private int projectID;
     private String title;
-    private String discription;
+    private String description;
     private Date startDate;
     private Date deadlineDate;
     private Date finalDate;
@@ -13,10 +13,10 @@ public class Project {
 
     public Project() {}
 
-    public Project(int projectID, String title, String discription, Date startDate, Date deadlineDate, Date finalDate, boolean isDone) {
+    public Project(int projectID, String title, String description, Date startDate, Date deadlineDate, Date finalDate, boolean isDone) {
         this.projectID = projectID;
         this.title = title;
-        this.discription = discription;
+        this.description = description;
         this.startDate = startDate;
         this.deadlineDate = deadlineDate;
         this.finalDate = finalDate;
@@ -26,7 +26,7 @@ public class Project {
     //----------------------------------------------------Getter-----------------------------------------------------\\
     public int getProjectID() { return projectID; }
     public String getTitle() { return title; }
-    public String getDiscription() { return discription; }
+    public String getDescription() { return description; }
     public Date getStartDate() { return startDate; }
     public Date getDeadlineDate() { return deadlineDate; }
     public Date getFinalDate() { return finalDate; }
@@ -35,7 +35,7 @@ public class Project {
     //----------------------------------------------------Setter-----------------------------------------------------\\
     public void setProjectID(int projectID) { this.projectID = projectID; }
     public void setTitle(String title) { this.title = title; }
-    public void setDiscription(String discription) { this.discription = discription; }
+    public void setDescription(String description) { this.description = description; }
     public void setStartDate(Date startDate) { this.startDate = startDate; }
     public void setDeadlineDate(Date deadlineDate) { this.deadlineDate = deadlineDate; }
     public void setFinalDate(Date finalDate) { this.finalDate = finalDate; }
