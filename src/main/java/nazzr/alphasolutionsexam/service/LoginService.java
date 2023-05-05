@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class LoginService {
     private final IUserRepository_DB userRepository_db ;
 
-    public LoginService(ApplicationContext context, @Value("UserRepo") String impl) {
+    public LoginService(ApplicationContext context, @Value("userRepo") String impl) {
         userRepository_db = (IUserRepository_DB) context.getBean(impl);
     }
 

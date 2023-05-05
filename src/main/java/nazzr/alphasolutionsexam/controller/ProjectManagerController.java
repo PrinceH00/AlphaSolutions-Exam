@@ -1,7 +1,9 @@
 package nazzr.alphasolutionsexam.controller;
 
 import jakarta.servlet.http.HttpSession;
+import nazzr.alphasolutionsexam.DTO.ViewProjectDTO;
 import nazzr.alphasolutionsexam.model.Project;
+import nazzr.alphasolutionsexam.model.User;
 import nazzr.alphasolutionsexam.service.ProjectManagerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +30,14 @@ public class ProjectManagerController {
 
     @GetMapping("")
     public String homePage() {
-        return "homepage";
+        return "home_page";
     }
 
     //--------------------------------------------------Project-----------------------------------------------------\\
     @GetMapping("/project")
     public String createProject(Model model) {
         model.addAttribute("project", new Project());
-        return "createProject";
+        return "create_project";
     }
 
     @PostMapping("/project")
@@ -45,8 +47,8 @@ public class ProjectManagerController {
         return "redirect:/dashboard";
     }
     @GetMapping("/project/list")
-    public String viewProject(Model model){
-        List<Project> projectList = projectManagerService.getAllProjects();
+    public String viewProject(Model model, User user){
+        List<ViewProjectDTO> projectList = projectManagerService.getAllProjects(user);
         model.addAttribute("projects", projectList);
         return "dashboard";
     }

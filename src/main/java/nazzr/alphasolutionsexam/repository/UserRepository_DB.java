@@ -9,7 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Repository("UserRepo")
+@Repository("userRepo")
 public class UserRepository_DB implements IUserRepository_DB {
 
     String SQL = null;

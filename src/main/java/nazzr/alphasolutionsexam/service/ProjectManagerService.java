@@ -1,6 +1,8 @@
 package nazzr.alphasolutionsexam.service;
 
+import nazzr.alphasolutionsexam.DTO.ViewProjectDTO;
 import nazzr.alphasolutionsexam.model.Project;
+import nazzr.alphasolutionsexam.model.User;
 import nazzr.alphasolutionsexam.repository.IProjectManagerRepository_DB;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -19,7 +21,7 @@ public class ProjectManagerService {
     public Project createProject(Project project) {
         return iProjectManagerRepositoryDb.createProject(project);
     }
-    public List<Project> getAllProjects(){
-        return iProjectManagerRepositoryDb.getAllProjects();
+    public List<ViewProjectDTO> getAllProjects(User user){
+        return iProjectManagerRepositoryDb.getAllProjects(user);
     }
 }
