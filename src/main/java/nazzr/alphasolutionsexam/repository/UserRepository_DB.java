@@ -43,7 +43,7 @@ public class UserRepository_DB implements IUserRepository_DB {
                 resultSet = preparedStatementUserID.executeQuery();
                 User user = null;
                 if (resultSet.next()) {
-                    user = new User( resultSet.getInt("user_id "), resultSet.getString("firstName"), resultSet.getString("lastName"),resultSet.getString("email"), resultSet.getString("password"));
+                    user = new User( resultSet.getInt("user_id"), resultSet.getString("firstName"), resultSet.getString("lastName"),resultSet.getString("email"), resultSet.getString("password"));
                 }
                 return user;
             } catch (SQLException e) {
