@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("")
 public class ProjectManagerController {
@@ -41,6 +43,12 @@ public class ProjectManagerController {
         model.addAttribute("project", project);
         projectManagerService.createProject(project);
         return "redirect:/dashboard";
+    }
+    @GetMapping("/project/list")
+    public String viewProject(Model model){
+        List<Project> projectList = projectManagerService.getAllProjects();
+        model.addAttribute("projects", projectList);
+        return "dashboard";
     }
 
 }

@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProjectManagerService {
     private final IProjectManagerRepository_DB iProjectManagerRepositoryDb;
@@ -16,5 +18,8 @@ public class ProjectManagerService {
 
     public Project createProject(Project project) {
         return iProjectManagerRepositoryDb.createProject(project);
+    }
+    public List<Project> getAllProjects(){
+        return iProjectManagerRepositoryDb.getAllProjects();
     }
 }
