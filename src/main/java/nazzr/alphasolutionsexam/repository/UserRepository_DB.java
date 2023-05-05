@@ -9,8 +9,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-@Repository("UserRepo_DB")
+@Repository("UserRepo")
 public class UserRepository_DB implements IUserRepository_DB {
+
     String SQL = null;
     Connection connection = DB_Connector.getConnection();
     PreparedStatement preparedStatement = null;

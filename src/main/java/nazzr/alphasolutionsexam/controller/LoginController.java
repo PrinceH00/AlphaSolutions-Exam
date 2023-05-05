@@ -20,11 +20,6 @@ public class LoginController {
     }
 
 
-    @GetMapping("/")
-    public String landingPage() {
-        return "index";
-    }
-
     //----------------------------------------------------LOGIN-----------------------------------------------------\\
     @GetMapping("/login")
     public String showLogin() {

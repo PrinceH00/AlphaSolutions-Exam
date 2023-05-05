@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class ProjectManagerService {
     private final IProjectManagerRepository_DB iProjectManagerRepositoryDb;
 
-    public ProjectManagerService(ApplicationContext context, @Value("project_db") String impl) {
+    public ProjectManagerService(ApplicationContext context, @Value("projectRepo") String impl) {
         iProjectManagerRepositoryDb = (IProjectManagerRepository_DB) context.getBean(impl);
     }
 
