@@ -1,10 +1,14 @@
 package nazzr.alphasolutionsexam.repository;
 
+import nazzr.alphasolutionsexam.DTO.ViewProjectDTO;
 import nazzr.alphasolutionsexam.model.Project;
+import nazzr.alphasolutionsexam.model.User;
 import nazzr.alphasolutionsexam.repository.util.DB_Connector;
 import org.springframework.stereotype.Repository;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Repository("projectRepo")
 public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB {
@@ -31,6 +35,24 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
 
         } catch (SQLException e) {
             throw new RuntimeException();
+        }
+    }
+
+
+    public List<ViewProjectDTO> getAllProjects(User user) {
+        try {
+            SQL = "SELECT title, project_id FROM Projectt WHERE user_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, user.getUserID());
+            resultSet = preparedStatement.executeQuery();
+            List<ViewProjectDTO> viewProject = new ArrayList<>();
+            while (resultSet.next()) {
+                viewProject.add(new ViewProjectDTO(resultSet.getString("title"), resultSet.getInt("project_id"), user.getUserID()));
+            }
+            return viewProject;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 }
