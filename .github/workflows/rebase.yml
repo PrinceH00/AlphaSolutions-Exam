@@ -1,0 +1,28 @@
+name: Automatic Rebase
+
+on:
+  push:
+    branches-ignore:
+      - main
+
+jobs:
+  rebase:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Rebase branches
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor }}@users.noreply.github.com"
+
+          branches=$(git branch --format="%(refname:short)" --no-color)
+          for branch in ${branches}; do
+            if [[ "${branch}" != "main" ]]; then
+              git checkout "${branch}"
+              git pull --rebase origin "${branch}"
+              git push --force-with-lease
+            fi
+          done
