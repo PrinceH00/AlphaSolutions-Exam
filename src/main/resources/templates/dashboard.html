@@ -15,9 +15,27 @@
 </thead>
 
     <tbody>
-    <tr th:each="project": ${projects}></tr>
-    <td th:text = "${projects}"></td>
+    <tr th:each="projectList: ${projectList}">
+
+        <td th:text="${projectList.getTitle()}"/>
+
+
+
+
+    </tr>
     </tbody>
+
+</table>
+
+<br>
+
+<a th:href="@{/project}">
+    <button>Add project</button>
+</a>
+
+<a th:href="@{/logout}">
+    <button class="logout">Logout</button>
+</a>
 
 </table>
 </body>
