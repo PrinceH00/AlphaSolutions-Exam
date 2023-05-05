@@ -40,12 +40,12 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
 
 
     public List<ViewProjectDTO> getAllProjects(User user) {
+        List<ViewProjectDTO> viewProject = new ArrayList<>();
         try {
             SQL = "SELECT title, project_id FROM Project WHERE user_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, user.getUserID());
             resultSet = preparedStatement.executeQuery();
-            List<ViewProjectDTO> viewProject = new ArrayList<>();
             while (resultSet.next()) {
                 viewProject.add(new ViewProjectDTO(resultSet.getString("title"), resultSet.getInt("project_id"), user.getUserID()));
             }
