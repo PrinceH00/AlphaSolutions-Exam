@@ -33,24 +33,35 @@ public class ProjectManagerController {
         return "home_page";
     }
 
+
     //--------------------------------------------------Project-----------------------------------------------------\\
     @GetMapping("/project")
-    public String createProject(Model model) {
-        model.addAttribute("project", new Project());
-        return "create_project";
+    public String createProject(HttpSession session, Model model) {
+        if(isLoggedIn(session)) {
+            model.addAttribute("project", new Project());
+            return "create_project";
+        }
+        return "redirect:/login";
     }
 
     @PostMapping("/project")
-    public String saveProject(@ModelAttribute Project project, Model model) {
+    public String saveProject(@ModelAttribute Project project, Model model, HttpSession session) {
+        if(isLoggedIn(session)) {
         model.addAttribute("project", project);
         projectManagerService.createProject(project);
         return "redirect:/dashboard";
-    }
-    @GetMapping("/project/list")
-    public String viewProject(Model model, User user){
-        List<ViewProjectDTO> projectList = projectManagerService.getAllProjects(user);
-        model.addAttribute("projects", projectList);
-        return "dashboard";
+
+        }
+        return "redirect:/login";
     }
 
+    @GetMapping("/dashboard")
+    public String viewProject(HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            List<ViewProjectDTO> projectList = projectManagerService.getAllProjects((User) session.getAttribute("user"));
+            model.addAttribute("projects", projectList);
+            return "dashboard";
+        }
+        return "redirect:/login";
+    }
 }
