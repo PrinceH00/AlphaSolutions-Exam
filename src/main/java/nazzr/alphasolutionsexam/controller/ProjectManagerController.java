@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-@RequestMapping("")
+@RequestMapping("/")
 public class ProjectManagerController {
 
     private final ProjectManagerService projectManagerService;
@@ -35,31 +35,33 @@ public class ProjectManagerController {
 
 
     //--------------------------------------------------Project-----------------------------------------------------\\
-    @GetMapping("/project")
+    @GetMapping("createproject")
     public String createProject(HttpSession session, Model model) {
         if(isLoggedIn(session)) {
-            model.addAttribute("project", new Project());
-            return "create_project";
+            Project project = new Project();
+            model.addAttribute("project", project);
+            return "createProject";
         }
-        return "redirect:/login";
+       return "redirect:/login";
     }
 
-    @PostMapping("/project")
-    public String saveProject(@ModelAttribute Project project, Model model, HttpSession session) {
-        if(isLoggedIn(session)) {
-        model.addAttribute("project", project);
+    @PostMapping("createproject")
+    public String saveProject(@ModelAttribute("project") Project project, HttpSession session) {
+       if(isLoggedIn(session)) {
+        User user = (User) session.getAttribute("user");
+        project.setUserID(user.getUserID());
         projectManagerService.createProject(project);
-        return "redirect:/dashboard";
+        return "redirect:dashboard";
 
         }
         return "redirect:/login";
     }
 
-    @GetMapping("/dashboard")
+    @GetMapping("dashboard")
     public String viewProject(HttpSession session, Model model) {
         if (isLoggedIn(session)) {
             List<ViewProjectDTO> projectList = projectManagerService.getAllProjects((User) session.getAttribute("user"));
-            model.addAttribute("projects", projectList);
+            model.addAttribute("projectList", projectList);
             return "dashboard";
         }
         return "redirect:/login";
