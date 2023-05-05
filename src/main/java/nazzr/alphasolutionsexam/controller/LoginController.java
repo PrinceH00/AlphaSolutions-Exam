@@ -38,7 +38,7 @@ public class LoginController {
         }
         // wrong credentials
         model.addAttribute("wrongCredentials", true);
-        return "redirect:/login";
+        return "redirect:/error";
     }
 
     //--------------------------------------------------SIGN--UP----------------------------------------------------\\
