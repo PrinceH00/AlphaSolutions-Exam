@@ -3,7 +3,6 @@ package nazzr.alphasolutionsexam.service;
 import nazzr.alphasolutionsexam.model.Project;
 import nazzr.alphasolutionsexam.model.User;
 import nazzr.alphasolutionsexam.repository.IProjectManagerRepository_DB;
-import nazzr.alphasolutionsexam.repository.ProjectManagerRepository_DB;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.stereotype.Service;

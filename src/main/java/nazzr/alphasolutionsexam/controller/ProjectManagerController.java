@@ -34,17 +34,17 @@
 
 
         //--------------------------------------------------Project-----------------------------------------------------\\
-        @GetMapping("createproject")
+        @GetMapping("create_project")
         public String createProject(HttpSession session, Model model) {
             if(isLoggedIn(session)) {
                 Project project = new Project();
                 model.addAttribute("project", project);
-                return "createproject";
+                return "create_project";
             }
            return "redirect:/login";
         }
 
-        @PostMapping("createproject")
+        @PostMapping("create_project")
         public String saveProject(@ModelAttribute("project") Project project, HttpSession session) {
            if(isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");

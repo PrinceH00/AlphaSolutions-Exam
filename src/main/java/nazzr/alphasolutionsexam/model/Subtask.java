@@ -1,16 +1,16 @@
 package nazzr.alphasolutionsexam.model;
 
-public class SubTask {
+public class Subtask {
     private int subTaskID;
     private String title;
     private String description;
     private int estimated_time;
     private int final_time;
 
-    public SubTask() {
+    public Subtask() {
     }
 
-    public SubTask(int subTaskID, String title, String description, int estimated_time, int final_time) {
+    public Subtask(int subTaskID, String title, String description, int estimated_time, int final_time) {
         this.subTaskID = subTaskID;
         this.title = title;
         this.description = description;
