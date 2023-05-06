@@ -6,22 +6,19 @@
 </head>
 <body>
 <table>
-<thead>
-<th>Project Title</th>
-<th>Start date</th>
-<th>Deadline date</th>
-<th>Final Date</th>
-<th>IsDone</th>
-</thead>
+    <thead>
+    <th>Project Title</th>
+    <th>Start date</th>
+    <th>Deadline date</th>
+    <th>Final Date</th>
+    </thead>
 
     <tbody>
-    <tr th:each="projectList: ${projectList}">
-
-        <td th:text="${projectList.getTitle()}"/>
-
-
-
-
+    <tr th:each="project: ${projectList}">
+        <td th:text="${project.getTitle()}"/>
+        <td th:text="${project.getStartDate()}"/>
+        <td th:text="${project.getDeadlineDate()}"/>
+        <td th:text="${project.getFinalDate()}"/>
     </tr>
     </tbody>
 
@@ -29,7 +26,7 @@
 
 <br>
 
-<a th:href="@{/project}">
+<a th:href="@{/createproject}">
     <button>Add project</button>
 </a>
 
@@ -37,6 +34,5 @@
     <button class="logout">Logout</button>
 </a>
 
-</table>
 </body>
 </html>

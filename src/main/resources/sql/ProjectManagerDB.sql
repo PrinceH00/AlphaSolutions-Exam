@@ -32,7 +32,6 @@ CREATE TABLE Project
     startDate    DATE        NOT NULL,
     deadlineDate DATE        NOT NULL,
     finalDate    DATE,
-    isDone       BIT(1),
     user_id      INT(10) NOT NULL,
     PRIMARY KEY (project_id),
     FOREIGN KEY (user_id) REFERENCES User (user_id)
@@ -43,7 +42,6 @@ CREATE TABLE Task
     task_id     INT(10) NOT NULL AUTO_INCREMENT,
     title       VARCHAR(30) NOT NULL,
     description VARCHAR(255),
-    isDone      BIT(1),
     project_id  INT(10) NOT NULL,
     PRIMARY KEY (task_id),
     FOREIGN KEY (project_id) REFERENCES Project (project_id)
@@ -55,7 +53,6 @@ CREATE TABLE Subtask
     description    VARCHAR(255),
     estimated_time INT(10),
     final_time     INT(10),
-    isDone         BIT(1),
     task_id        INT(10) NOT NULL,
     PRIMARY KEY (subtask_id),
     FOREIGN KEY (task_id) REFERENCES Task (task_id)
