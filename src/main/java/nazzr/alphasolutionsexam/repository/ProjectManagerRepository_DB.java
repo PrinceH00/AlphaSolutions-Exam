@@ -1,6 +1,7 @@
 package nazzr.alphasolutionsexam.repository;
 
 import nazzr.alphasolutionsexam.model.Project;
+import nazzr.alphasolutionsexam.model.Task;
 import nazzr.alphasolutionsexam.model.User;
 import nazzr.alphasolutionsexam.repository.util.DB_Connector;
 import org.springframework.stereotype.Repository;
@@ -70,6 +71,19 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+    public Task createTask(Task task){
+        try {
+            SQL = "INSERT INTO Task (title, description, project_id) VALUES (?,?,?)";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, task.getTitle());
+            preparedStatement.setString(1, task.getDescription());
+            preparedStatement.setInt(3, task.getProjectID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e){
+            throw new RuntimeException();
+        }
+        return task;
     }
 
 

@@ -4,13 +4,16 @@ public class Task {
     private int TaskID;
     private String title;
     private String description;
+    private int projectID;
 
-    public Task() {}
-
-    public Task(int taskID, String title, String description) {
+    public Task(int taskID, String title, String description, int projectID) {
         TaskID = taskID;
         this.title = title;
         this.description = description;
+        this.projectID = projectID;
+    }
+    public Task(){
+
     }
 
     public int getTaskID() {
@@ -35,5 +38,13 @@ public class Task {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public int getProjectID() {
+        return projectID;
+    }
+
+    public void setProjectID(int projectID) {
+        this.projectID = projectID;
     }
 }
