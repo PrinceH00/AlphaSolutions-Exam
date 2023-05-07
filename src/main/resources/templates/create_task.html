@@ -1,10 +1,35 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Create Task</title>
 </head>
-<body>
 
+<body>
+<h1>Create Task</h1>
+
+<form method="post" th:object="${task}">
+
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" th:field="*{title}" autofocus required>
+    </div>
+
+    <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" th:field="*{description}" required>
+    </div>
+
+    <div>
+        <p>
+            <button type="submit">Done</button>
+            <a th:href="@{'/dashboard'}"> <button type="button">Back</button> </a>
+
+        </p>
+    </div>
+
+</form>
 </body>
+
 </html>
