@@ -1,6 +1,7 @@
 package nazzr.alphasolutionsexam.repository;
 
 import nazzr.alphasolutionsexam.model.Project;
+import nazzr.alphasolutionsexam.model.Task;
 import nazzr.alphasolutionsexam.model.User;
 import nazzr.alphasolutionsexam.repository.util.DB_Connector;
 import org.springframework.stereotype.Repository;
@@ -72,5 +73,39 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
     }
 
+    public Task createTask(Task task) {
+        try {
+            SQL = "INSERT INTO Task (title, description, project_id) VALUES (?,?,?)";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, task.getTitle());
+            preparedStatement.setString(1, task.getDescription());
+            preparedStatement.setInt(3, task.getProjectID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        return task;
+    }
+
+    public List<Task> getAllTask(Project project) {
+        List<Task> taskList = new ArrayList<>();
+        try {
+            SQL = "SELECT ALL FROM Task WHERE project_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, project.getProjectID());
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int taskID = resultSet.getInt(1);
+                String title = resultSet.getString(2);
+                String description = resultSet.getString(3);
+                int projectID = resultSet.getInt(4);
+                taskList.add(new Task(taskID, title, description, projectID));
+
+            }
+        } catch (SQLException e) {
+
+        }
+        return taskList;
+    }
 
 }

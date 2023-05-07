@@ -1,6 +1,7 @@
 package nazzr.alphasolutionsexam.service;
 
 import nazzr.alphasolutionsexam.model.Project;
+import nazzr.alphasolutionsexam.model.Task;
 import nazzr.alphasolutionsexam.model.User;
 import nazzr.alphasolutionsexam.repository.IProjectManagerRepository_DB;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,5 +23,8 @@ public class ProjectManagerService {
     }
     public List<Project> getAllProjects(User user){
         return iProjectManagerRepositoryDb.getAllProjects(user);
+    }
+    public Task createTask(Task task){
+        return iProjectManagerRepositoryDb.createTask(task);
     }
 }
