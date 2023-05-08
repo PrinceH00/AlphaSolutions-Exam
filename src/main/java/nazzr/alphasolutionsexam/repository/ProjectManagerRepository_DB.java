@@ -1,6 +1,7 @@
 package nazzr.alphasolutionsexam.repository;
 
 import nazzr.alphasolutionsexam.model.Project;
+import nazzr.alphasolutionsexam.model.Subtask;
 import nazzr.alphasolutionsexam.model.Task;
 import nazzr.alphasolutionsexam.model.User;
 import nazzr.alphasolutionsexam.repository.util.DB_Connector;
@@ -107,5 +108,42 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
         return taskList;
     }
+    public Subtask createTask(Subtask subtask) {
+        try {
+            SQL = "INSERT INTO Subtask (title, description, estimated_time, final_time, task_id) VALUES (?,?,?,?,?)";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, subtask.getTitle());
+            preparedStatement.setString(1, subtask.getDescription());
+            preparedStatement.setInt(3, subtask.getEstimated_time());
+            preparedStatement.setInt(3, subtask.getFinal_time());
+            preparedStatement.setInt(3, subtask.getTaskID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        return subtask;
+    }
 
+    public List<Subtask> getAllTask(Task task) {
+        List<Subtask> subtasks = new ArrayList<>();
+        try {
+            SQL = "SELECT * FROM Subtask WHERE task_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, task.getTaskID());
+            resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                int subtaskID = resultSet.getInt(1);
+                String title = resultSet.getString(2);
+                String description = resultSet.getString(3);
+                int estimated_time = resultSet.getInt(4);
+                int final_time = resultSet.getInt(5);
+                int taskID = resultSet.getInt(6);
+                subtasks.add(new Subtask(subtaskID, title, description,estimated_time,final_time,taskID));
+
+            }
+        } catch (SQLException e) {
+
+        }
+        return subtasks;
+    }
 }
