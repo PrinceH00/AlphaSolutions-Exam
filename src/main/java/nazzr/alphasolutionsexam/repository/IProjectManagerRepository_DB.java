@@ -10,5 +10,6 @@ public interface IProjectManagerRepository_DB {
 
     Project createProject(Project project);
     List<Project> getAllProjects(User user);
-    Task createTask(Task task);
+    Task createTask (Task task);
+    List <Task> getAllTask (Project project);
 }
