@@ -118,12 +118,10 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             preparedStatement.setInt(1, project_id);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int taskID = resultSet.getInt(2);
-                String title = resultSet.getString(3);
-                String description = resultSet.getString(4);
-                int projectID = resultSet.getInt(5);
-                taskList.add(new Task(taskID, title, description, projectID));
-
+                String title = resultSet.getString(2);
+                String description = resultSet.getString(3);
+                int projectID = resultSet.getInt(4);
+                taskList.add(new Task(projectID, title, description, projectID));
             }
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -135,10 +133,10 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             SQL = "INSERT INTO Subtask (title, description, estimated_time, final_time, task_id) VALUES (?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, subtask.getTitle());
-            preparedStatement.setString(1, subtask.getDescription());
+            preparedStatement.setString(2, subtask.getDescription());
             preparedStatement.setInt(3, subtask.getEstimated_time());
-            preparedStatement.setInt(3, subtask.getFinal_time());
-            preparedStatement.setInt(3, subtask.getTaskID());
+            preparedStatement.setInt(4, subtask.getFinal_time());
+            preparedStatement.setInt(5, subtask.getTaskID());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -164,7 +162,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
 
             }
         } catch (SQLException e) {
-
+            throw new RuntimeException();
         }
         return subtasks;
     }

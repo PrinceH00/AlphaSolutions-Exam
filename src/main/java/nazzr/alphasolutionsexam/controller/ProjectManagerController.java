@@ -80,8 +80,7 @@
        @PostMapping("create_task/{project_id}")
         public String saveTask(@ModelAttribute Task task, HttpSession session, @PathVariable int project_id) {
            if (isLoggedIn(session)) {
-               Project project = (Project) session.getAttribute("project");
-               task.setProjectID(project.getProjectID());
+               task.setProjectID(project_id);
                projectManagerService.createTask(task,project_id);
                return "redirect:/dashboard";
            }
