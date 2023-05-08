@@ -118,10 +118,10 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             preparedStatement.setInt(1, project_id);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                int taskID = resultSet.getInt(1);
-                String title = resultSet.getString(2);
-                String description = resultSet.getString(3);
-                int projectID = resultSet.getInt(4);
+                int taskID = resultSet.getInt(2);
+                String title = resultSet.getString(3);
+                String description = resultSet.getString(4);
+                int projectID = resultSet.getInt(5);
                 taskList.add(new Task(taskID, title, description, projectID));
 
             }

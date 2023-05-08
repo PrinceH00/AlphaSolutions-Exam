@@ -66,7 +66,7 @@
             return "redirect:/login";
         }
 
-        @GetMapping("create_task")
+        @GetMapping("create_task/{project_id}")
         public String createTask(HttpSession session, Model model, @PathVariable int project_id) {
             if (isLoggedIn(session)) {
                 Task task = new Task();
@@ -83,7 +83,7 @@
                Project project = (Project) session.getAttribute("project");
                task.setProjectID(project.getProjectID());
                projectManagerService.createTask(task,project_id);
-               return "redirect:/task";
+               return "redirect:/dashboard";
            }
            return "redirect:/login";
        }
