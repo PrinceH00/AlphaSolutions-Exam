@@ -100,7 +100,17 @@
             if (isLoggedIn(session)) {
                 Subtask subtask = new Subtask();
                 subtask.setTaskID(taskID);
-                return "create_create_subtask";
+                return "create_subtask";
+            }
+            return "redirect:/login";
+        }
+
+        @PostMapping("create_subtask/{taskID}")
+        public String saveSubtask(@PathVariable int taskID, @ModelAttribute Subtask subtask, HttpSession session) {
+            if (isLoggedIn(session)) {
+                subtask.setTaskID(taskID);
+                projectManagerService.createSuptask(subtask,taskID);
+                return "redirect:/dashboard";
             }
             return "redirect:/login";
         }
