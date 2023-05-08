@@ -74,13 +74,35 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
     }
 
-    public Task createTask(Task task) {
+    public Project getProjectByID(int project_id) {
+        try {
+              SQL = "SELECT * FROM project WHERE project_id = ?";
+              preparedStatement = connection.prepareStatement(SQL);
+              preparedStatement.setInt(1, project_id);
+              resultSet = preparedStatement.executeQuery(SQL);
+              Project project = null;
+              while (resultSet.next()) {
+                  String title = resultSet.getString(2);
+                  String description = resultSet.getString(3);
+                  LocalDate startDate= resultSet.getDate(4).toLocalDate();
+                  LocalDate deadlineDate = resultSet.getDate(5).toLocalDate();
+                  LocalDate finalDate = resultSet.getDate(6).toLocalDate();
+                  int userID = resultSet.getInt(7);
+                  project = new Project(project_id,title,description,startDate,deadlineDate,finalDate,userID);
+              }
+              return project;
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public Task createTask(Task task, int project_id) {
         try {
             SQL = "INSERT INTO Task (title, description, project_id) VALUES (?,?,?)";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, task.getTitle());
-            preparedStatement.setString(1, task.getDescription());
-            preparedStatement.setInt(3, task.getProjectID());
+            preparedStatement.setString(2, task.getDescription());
+            preparedStatement.setInt(3, project_id);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();

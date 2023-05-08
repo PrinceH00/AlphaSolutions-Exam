@@ -67,22 +67,23 @@
         }
 
         @GetMapping("create_task")
-        public String createTask(HttpSession session, Model model) {
+        public String createTask(HttpSession session, Model model, @PathVariable int project_id) {
             if (isLoggedIn(session)) {
                 Task task = new Task();
+                task.setProjectID(project_id);
                 model.addAttribute("task", task);
                 return "create_task";
             }
             return "redirect:/login";
         }
 
-       @PostMapping("create_task")
-        public String createTask(@ModelAttribute Task task, HttpSession session) {
+       @PostMapping("create_task/{project_id}")
+        public String saveTask(@ModelAttribute Task task, HttpSession session, @PathVariable int project_id) {
            if (isLoggedIn(session)) {
                Project project = (Project) session.getAttribute("project");
                task.setProjectID(project.getProjectID());
-               projectManagerService.createTask(task);
-               return "redirect:/project";
+               projectManagerService.createTask(task,project_id);
+               return "redirect:/task";
            }
            return "redirect:/login";
        }

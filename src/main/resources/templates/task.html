@@ -16,6 +16,11 @@
   <tr th:each="task: ${task}">
     <td th:text="${task.getTitle()}"/>
     <td th:text="${task.getDescription()}"/>
+    <td>
+    <button type="submit">
+      <a th:href="@{create_task/{project_id} (project_id=${task.get(project_id)}) }">Add task</a>
+    </button>
+    </td>
   </tr>
   </tbody>
 
@@ -23,9 +28,11 @@
 
 <br>
 
-<a th:href="@{/add_task}">
-  <button>Add task</button>
+<a th:href="@{/create_task}">
+  <button class="add task">add task</button>
 </a>
+
+
 
 <a th:href="@{/logout}">
   <button class="logout">Logout</button>

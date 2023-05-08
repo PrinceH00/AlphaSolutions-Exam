@@ -10,9 +10,11 @@ import java.util.List;
 public interface IProjectManagerRepository_DB {
 
     Project createProject(Project project);
+    public Project getProjectByID(int project_id);
     List<Project> getAllProjects(User user);
-    Task createTask (Task task);
+    Task createTask (Task task, int project_id);
     List <Task> getTasksByProjectID(int project_id);
     Subtask createSubtask(Subtask subtask);
     List<Subtask> getAllSubtask(Task task);
+
 }
