@@ -32,13 +32,14 @@ public class LoginController {
     {
         User user = loginService.getUser(email, password);
         if (user != null) {
+            if (user.getPassword().equals(password))
             session.setAttribute("user", user);
             session.setMaxInactiveInterval(900);
             return "redirect:/dashboard";
         }
         // wrong credentials
         model.addAttribute("wrongCredentials", true);
-        return "redirect:/error";
+        return "login";
     }
 
     //--------------------------------------------------SIGN--UP----------------------------------------------------\\
