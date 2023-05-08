@@ -2,6 +2,7 @@
 
     import jakarta.servlet.http.HttpSession;
     import nazzr.alphasolutionsexam.model.Project;
+    import nazzr.alphasolutionsexam.model.Subtask;
     import nazzr.alphasolutionsexam.model.Task;
     import nazzr.alphasolutionsexam.model.User;
     import nazzr.alphasolutionsexam.service.ProjectManagerService;
@@ -94,4 +95,13 @@
             return "redirect:/login";
        }
        //------------------------------------------------SUBTASKS-----------------------------------------------------\\
+        @GetMapping("create_subtask/{taskID}")
+        public String createSubtask(@PathVariable int taskID, @ModelAttribute("subtask") Model model, HttpSession session) {
+            if (isLoggedIn(session)) {
+                Subtask subtask = new Subtask();
+                subtask.setTaskID(taskID);
+                return "create_create_subtask";
+            }
+            return "redirect:/login";
+        }
     }
