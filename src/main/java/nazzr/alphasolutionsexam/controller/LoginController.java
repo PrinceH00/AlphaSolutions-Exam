@@ -28,7 +28,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@RequestParam("email") String email, @RequestParam("password") String password,
-                        HttpSession session, Model model)
+                        HttpSession session, Model model).
     {
         User user = loginService.getUser(email, password);
         if (user != null) {
