@@ -108,7 +108,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
         return taskList;
     }
-    public Subtask createTask(Subtask subtask) {
+    public Subtask createSubtask(Subtask subtask) {
         try {
             SQL = "INSERT INTO Subtask (title, description, estimated_time, final_time, task_id) VALUES (?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(SQL);
@@ -124,7 +124,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         return subtask;
     }
 
-    public List<Subtask> getAllTask(Task task) {
+    public List<Subtask> getAllSubtask(Task task) {
         List<Subtask> subtasks = new ArrayList<>();
         try {
             SQL = "SELECT * FROM Subtask WHERE task_id = ?";
