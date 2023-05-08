@@ -27,7 +27,7 @@ public class ProjectManagerService {
     public Task createTask(Task task){
         return iProjectManagerRepositoryDb.createTask(task);
     }
-    public List<Task> getAllTask(Project project){
-        return iProjectManagerRepositoryDb.getAllTask(project);
+    public List<Task> getAllTask(int project_id){
+        return iProjectManagerRepositoryDb.getTasksByProjectID(project_id);
     }
 }

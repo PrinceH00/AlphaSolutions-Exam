@@ -87,12 +87,12 @@
            return "redirect:/login";
        }
 
-       @GetMapping
-        public String getAllTask(HttpSession session, Model model){
+           @GetMapping("task/{project_id}")
+        public String getAllTask(HttpSession session, Model model, @PathVariable int project_id){
             if (isLoggedIn(session)){
-                List<Task> taskList = projectManagerService.getAllTask((Project) session.getAttribute("project"));
-                model.addAttribute("taskList", taskList);
-                return "project";
+                List<Task> taskList = projectManagerService.getAllTask(project_id);
+                model.addAttribute("task", taskList);
+                return "task";
             }
             return "redirect:/login";
        }

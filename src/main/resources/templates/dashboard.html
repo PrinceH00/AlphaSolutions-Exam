@@ -19,6 +19,7 @@
         <td th:text="${project.getStartDate()}"/>
         <td th:text="${project.getDeadlineDate()}"/>
         <td th:text="${project.getFinalDate()}"/>
+        <td><a th:href="@{/task/{project_id} (project_id=${project.getProjectID()})}">Tasks</a></td>
     </tr>
     </tbody>
 

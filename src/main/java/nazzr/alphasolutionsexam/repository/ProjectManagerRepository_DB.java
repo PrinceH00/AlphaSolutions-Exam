@@ -88,12 +88,12 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         return task;
     }
 
-    public List<Task> getAllTask(Project project) {
+    public List<Task> getTasksByProjectID(int project_id) {
         List<Task> taskList = new ArrayList<>();
         try {
-            SQL = "SELECT ALL FROM Task WHERE project_id = ?";
+            SQL = "SELECT * FROM Task WHERE project_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, project.getProjectID());
+            preparedStatement.setInt(1, project_id);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 int taskID = resultSet.getInt(1);
@@ -104,7 +104,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
 
             }
         } catch (SQLException e) {
-
+            throw new RuntimeException();
         }
         return taskList;
     }
