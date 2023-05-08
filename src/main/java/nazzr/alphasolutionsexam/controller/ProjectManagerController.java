@@ -7,11 +7,10 @@
     import nazzr.alphasolutionsexam.service.ProjectManagerService;
     import org.springframework.stereotype.Controller;
     import org.springframework.ui.Model;
-    import org.springframework.web.bind.annotation.GetMapping;
-    import org.springframework.web.bind.annotation.ModelAttribute;
-    import org.springframework.web.bind.annotation.PostMapping;
-    import org.springframework.web.bind.annotation.RequestMapping;
+    import org.springframework.web.bind.annotation.*;
 
+    import java.time.LocalDate;
+    import java.util.ArrayList;
     import java.util.List;
 
     @Controller
@@ -76,14 +75,26 @@
             }
             return "redirect:/login";
         }
-        @PostMapping("create_task")
-        public String createTask(@ModelAttribute Task task, HttpSession session){
+
+       @PostMapping("create_task")
+        public String createTask(@ModelAttribute Task task, HttpSession session) {
+           if (isLoggedIn(session)) {
+               Project project = (Project) session.getAttribute("project");
+               task.setProjectID(project.getProjectID());
+               projectManagerService.createTask(task);
+               return "redirect:/project";
+           }
+           return "redirect:/login";
+       }
+
+       @GetMapping
+        public String getAllTask(HttpSession session, Model model){
             if (isLoggedIn(session)){
-                Project project = (Project) session.getAttribute("project");
-                task.setProjectID(project.getProjectID());
-                projectManagerService.createTask(task);
-                return "redirect:/project";
+                List<Task> taskList = projectManagerService.getAllTask((Project) session.getAttribute("project"));
+                model.addAttribute("taskList", taskList);
+                return "project";
             }
             return "redirect:/login";
-        }
+       }
+
     }
