@@ -30,7 +30,7 @@
         }
 
 
-        //--------------------------------------------------Project-----------------------------------------------------\\
+        //------------------------------------------------PROJECT-----------------------------------------------------\\
         @GetMapping("create_project")
         public String createProject(HttpSession session, Model model) {
             if(isLoggedIn(session)) {
@@ -62,7 +62,7 @@
             }
             return "redirect:/login";
         }
-
+        //-------------------------------------------------TASK-------------------------------------------------------\\
         @GetMapping("create_task/{project_id}")
         public String createTask(HttpSession session, Model model, @PathVariable int project_id) {
             if (isLoggedIn(session)) {
@@ -93,5 +93,5 @@
             }
             return "redirect:/login";
        }
-
+       //------------------------------------------------SUBTASKS-----------------------------------------------------\\
     }
