@@ -1,42 +1,39 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
   <meta charset="UTF-8">
   <title>Subtasks</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
-
 <body>
-<table>
-
-  <thead>
-  <th>Title</th>
-  <th>Description</th>
-  <th>Estimate Time</th>
-  <th>Final Time</th>
-  </thead>
-
-  <tbody>
-  <tr th:each="subtask: ${subtasks}">
-
-    <td th:text="${subtask.getTitle}"/>
-    <td th:text="${subtask.getDescription()}"/>
-    <td th:text="${subtask.getEstimated_time()}"/>
-    <td th:text="${subtask.getFinal_time()}"/>
-  </tr>
-  </tbody>
-</table>
-
-<br>
-
-<a th:href="@{/create_subtask/{taskID} (taskID=${taskID})}">
-  <button> Add SubtaskTask</button>
-</a>
-
-<a th:href="@{/logout}">
-  <button class="logout">Logout</button>
-</a>
-
+<div class="container" style="padding-top: 20px;">
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">Subtasks</h3>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Estimate Time</th>
+          <th>Final Time</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="subtask: ${subtasks}">
+          <td th:text="${subtask.getTitle()}"></td>
+          <td th:text="${subtask.getDescription()}"></td>
+          <td th:text="${subtask.getEstimated_time()}"></td>
+          <td th:text="${subtask.getFinal_time()}"></td>
+        </tr>
+        </tbody>
+      </table>
+      <br>
+      <a th:href="@{/create_subtask/{taskID} (taskID=${taskID})}" class="btn btn-primary">Add Subtask</a>
+      <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+    </div>
+  </div>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
-

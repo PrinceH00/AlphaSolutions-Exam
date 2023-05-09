@@ -3,37 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
-<table>
-    <thead>
-    <th>Project Title</th>
-    <th>Start date</th>
-    <th>Deadline date</th>
-    <th>Final Date</th>
-    </thead>
-
-    <tbody>
-    <tr th:each="project: ${projectList}">
-        <td th:text="${project.getTitle()}"/>
-        <td th:text="${project.getStartDate()}"/>
-        <td th:text="${project.getDeadlineDate()}"/>
-        <td th:text="${project.getFinalDate()}"/>
-        <td><a th:href="@{/task/{project_id} (project_id=${project.getProjectID()})}">Tasks</a></td>
-    </tr>
-    </tbody>
-
-</table>
-
-<br>
-
-<a th:href="@{/create_project}">
-    <button>Add project</button>
-</a>
-
-<a th:href="@{/logout}">
-    <button class="logout">Logout</button>
-</a>
-
+<div class="container" style="padding-top: 20px;">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Dashboard</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Project Title</th>
+                    <th>Start date</th>
+                    <th>Deadline date</th>
+                    <th>Final Date</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="project : ${projectList}">
+                    <td th:text="${project.getTitle()}"></td>
+                    <td th:text="${project.getStartDate()}"></td>
+                    <td th:text="${project.getDeadlineDate()}"></td>
+                    <td th:text="${project.getFinalDate()}"></td>
+                    <td><a th:href="@{/task/{project_id} (project_id=${project.getProjectID()})}" class="btn btn-primary">Tasks</a></td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
+            <a th:href="@{/create_project}" class="btn btn-primary">Add project</a>
+            <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+        </div>
+    </div>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>

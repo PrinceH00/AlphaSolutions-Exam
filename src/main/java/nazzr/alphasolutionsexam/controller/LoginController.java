@@ -21,7 +21,7 @@ public class LoginController {
 
 
     //----------------------------------------------------LOGIN-----------------------------------------------------\\
-    @GetMapping("/login")
+    @GetMapping("/")
     public String showLogin() {
         return "login";
     }

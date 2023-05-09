@@ -1,35 +1,34 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
     <meta charset="UTF-8">
     <title>Create Task</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
-
 <body>
-<h1>Create Task</h1>
-
-<form method="post" th:object="${task}">
-
-    <div>
-        <label for="title">Title:</label>
-        <input type="text" id="title" th:field="*{title}" autofocus required>
+<div class="container" style="max-width: 400px; margin: 20px auto;">
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Create Task</h3>
+            <form method="post" th:object="${task}">
+                <div class="form-group">
+                    <label for="title">Title:</label>
+                    <input type="text" id="title" th:field="*{title}" class="form-control" autofocus required>
+                </div>
+                <div class="form-group">
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" th:field="*{description}" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <p>
+                        <button type="submit" class="btn btn-primary">Done</button>
+                        <a th:href="@{'/dashboard'}" class="btn btn-secondary">Back</a>
+                    </p>
+                </div>
+            </form>
+        </div>
     </div>
-
-    <div>
-        <label for="description">Description:</label>
-        <input type="text" id="description" th:field="*{description}" required>
-    </div>
-
-    <div>
-        <p>
-            <button type="submit">Done</button>
-            <a th:href="@{'/dashboard'}"> <button type="button">Back</button> </a>
-
-        </p>
-    </div>
-
-</form>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
-
 </html>

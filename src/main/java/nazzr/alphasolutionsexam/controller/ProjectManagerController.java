@@ -25,12 +25,6 @@
             return session.getAttribute("user") != null;
         }
 
-        @GetMapping("")
-        public String homePage() {
-            return "home_page";
-        }
-
-
         //------------------------------------------------PROJECT-----------------------------------------------------\\
         @GetMapping("create_project")
         public String createProject(HttpSession session, Model model) {

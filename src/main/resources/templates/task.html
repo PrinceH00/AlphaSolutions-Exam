@@ -3,34 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <title>Task</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
-<table>
-  <thead>
-  <th>Title</th>
-  <th>Description</th>
-  <th>Project ID</th>
-  </thead>
-
-  <tbody>
-  <tr th:each="task: ${task}">
-    <td th:text="${task.getTitle()}"/>
-    <td th:text="${task.getDescription()}"/>
-    <td><a th:href="@{/subtasks/{taskID} (taskID=${task.getTaskID()})}">Subtasks</a></td>
-  </tr>
-  </tbody>
-
-</table>
-
-<br>
-
-<a th:href="@{/create_task/{project_id} (project_id=${project_id})}">
-  <button> Add Task</button>
-</a>
-
-<a th:href="@{/logout}">
-  <button class="logout">Logout</button>
-</a>
-
+<div class="container" style="padding-top: 20px;">
+  <div class="card">
+    <div class="card-body">
+      <h3 class="card-title">Tasks</h3>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Project ID</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="task: ${task}">
+          <td th:text="${task.getTitle()}"></td>
+          <td th:text="${task.getDescription()}"></td>
+          <td><a th:href="@{/subtasks/{taskID} (taskID=${task.getTaskID()})}" class="btn btn-primary">Subtasks</a></td>
+        </tr>
+        </tbody>
+      </table>
+      <br>
+      <a th:href="@{/create_task/{project_id} (project_id=${project_id})}" class="btn btn-primary">Add Task</a>
+      <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+    </div>
+  </div>
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
