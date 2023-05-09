@@ -14,7 +14,7 @@ public interface IProjectManagerRepository_DB {
     List<Project> getAllProjects(User user);
     Task createTask (Task task, int project_id);
     List <Task> getTasksByProjectID(int project_id);
-    Subtask createSubtask(Subtask subtask);
-    List<Subtask> getAllSubtask(Task task);
+    Subtask createSubtask(Subtask subtask, int taskID);
+    List<Subtask> getSubtasks(int taskID);
 
 }
