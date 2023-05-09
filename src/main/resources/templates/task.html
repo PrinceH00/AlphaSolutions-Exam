@@ -16,6 +16,7 @@
   <tr th:each="task: ${task}">
     <td th:text="${task.getTitle()}"/>
     <td th:text="${task.getDescription()}"/>
+    <td><a th:href="@{/subtasks/{taskID} (taskID=${task.getTaskID()})}">Subtasks</a></td>
   </tr>
   </tbody>
 
