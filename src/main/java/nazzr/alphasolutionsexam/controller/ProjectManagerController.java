@@ -114,7 +114,7 @@
             if (isLoggedIn(session)) {
                 subtask.setTaskID(taskID);
                 projectManagerService.createSuptask(subtask,taskID);
-                return "redirect:/task";
+                return "redirect:/subtasks/" + taskID;
             }
             return "redirect:/login";
         }
