@@ -118,10 +118,11 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             preparedStatement.setInt(1, project_id);
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                int taskID = resultSet.getInt(1);
                 String title = resultSet.getString(2);
                 String description = resultSet.getString(3);
                 int projectID = resultSet.getInt(4);
-                taskList.add(new Task(projectID, title, description, projectID));
+                taskList.add(new Task(taskID, title, description, projectID));
             }
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -155,12 +156,13 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
+                int subtaskID = resultSet.getInt(1);
                 String title = resultSet.getString(2);
                 String description = resultSet.getString(3);
                 int estimated_time = resultSet.getInt(4);
                 int final_time = resultSet.getInt(5);
                 int task_ID = resultSet.getInt(6);
-                subtasks.add(new Subtask(taskID, title, description, estimated_time, final_time, task_ID ));
+                subtasks.add(new Subtask(subtaskID, title, description, estimated_time, final_time, task_ID ));
             }
         } catch (SQLException e) {
             throw new RuntimeException();
