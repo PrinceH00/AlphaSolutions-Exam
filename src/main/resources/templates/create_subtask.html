@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Create Subtask</title>
+</head>
+
+<body>
+<h1>Create Subtask</h1>
+
+<form method="post" th:object="${subtask}">
+
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" th:field="*{title}" autofocus required>
+    </div>
+
+    <div>
+        <label for="description">Description:</label>
+        <input type="text" id="description" th:field="*{description}" required>
+    </div>
+
+    <div>
+        <label for="estimated_time">Estimated time:</label>
+        <input type="time" id="estimated_time" th:field="*{estimated_time}" required>
+    </div>
+
+    <div>
+        <label for="final_time">Final time:</label>
+        <input type="time" id="final_time" th:field="*{final_time}" required>
+    </div>
+
+    <div>
+        <p>
+            <button type="submit">Done</button>
+            <a th:href="@{'/task'}"> <button type="button">Back</button> </a>
+
+        </p>
+    </div>
+
+</form>
+</body>
+
+</html>
