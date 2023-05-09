@@ -95,6 +95,9 @@
             return "redirect:/login";
        }
        //------------------------------------------------SUBTASKS-----------------------------------------------------\\
+       // TODO: 09/05/2023 Man skal kunne gemme tiden når man laver et project!!
+       // TODO: 09/05/2023 Html filen skal rette så der er de rigtige knapper!
+       // TODO: 09/05/2023 ret fejlen med at man kan se subtask som ikke er dine!!!
         @GetMapping("create_subtask/{taskID}")
         public String createSubtask(@PathVariable int taskID, Model model, HttpSession session) {
             if (isLoggedIn(session)) {
