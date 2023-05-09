@@ -128,7 +128,8 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
         return taskList;
     }
-    public Subtask createSubtask(Subtask subtask) {
+
+    public Subtask createSubtask(Subtask subtask, int taskID ) {
         try {
             SQL = "INSERT INTO Subtask (title, description, estimated_time, final_time, task_id) VALUES (?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(SQL);
@@ -136,7 +137,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             preparedStatement.setString(2, subtask.getDescription());
             preparedStatement.setInt(3, subtask.getEstimated_time());
             preparedStatement.setInt(4, subtask.getFinal_time());
-            preparedStatement.setInt(5, subtask.getTaskID());
+            preparedStatement.setInt(5, taskID);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -144,22 +145,22 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         return subtask;
     }
 
-    public List<Subtask> getAllSubtask(Task task) {
+
+    public List<Subtask> getSubtasks(int taskID) {
         List<Subtask> subtasks = new ArrayList<>();
         try {
             SQL = "SELECT * FROM Subtask WHERE task_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, task.getTaskID());
+            preparedStatement.setInt(1, taskID);
             resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
-                int subtaskID = resultSet.getInt(1);
                 String title = resultSet.getString(2);
                 String description = resultSet.getString(3);
                 int estimated_time = resultSet.getInt(4);
                 int final_time = resultSet.getInt(5);
-                int taskID = resultSet.getInt(6);
-                subtasks.add(new Subtask(subtaskID, title, description,estimated_time,final_time,taskID));
-
+                int task_ID = resultSet.getInt(6);
+                subtasks.add(new Subtask(taskID, title, description, estimated_time, final_time, task_ID ));
             }
         } catch (SQLException e) {
             throw new RuntimeException();
