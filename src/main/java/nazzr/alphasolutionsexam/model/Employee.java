@@ -5,18 +5,18 @@ public class Employee {
     private String firstName;
     private String lastName;
     private String email;
-    private String role;
+    private String job;
     private int userID;
 
     public Employee() {
     }
 
-    public Employee(int employeeID, String firstName, String lastName, String email, String role, int userID) {
+    public Employee(int employeeID, String firstName, String lastName, String email, String job, int userID) {
         this.employeeID = employeeID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.role = role;
+        this.job = job;
         this.userID = userID;
     }
 
@@ -36,8 +36,8 @@ public class Employee {
         return email;
     }
 
-    public String getRole() {
-        return role;
+    public String getJob() {
+        return job;
     }
 
     public int getUserID() {
@@ -64,8 +64,8 @@ public class Employee {
         return this;
     }
 
-    public Employee setRole(String role) {
-        this.role = role;
+    public Employee setJob(String job) {
+        this.job = job;
         return this;
     }
 
