@@ -22,16 +22,20 @@ public class ProjectManagerService {
     public Project createProject(Project project) {
         return iProjectManagerRepositoryDb.createProject(project);
     }
-    public List<Project> getAllProjects(User user){
+
+    public List<Project> getAllProjects(User user) {
         return iProjectManagerRepositoryDb.getAllProjects(user);
     }
-    public Task createTask(Task task, int project_id){
-        return iProjectManagerRepositoryDb.createTask(task,project_id);
+
+    public Task createTask(Task task, int project_id) {
+        return iProjectManagerRepositoryDb.createTask(task, project_id);
     }
-    public List<Task> getAllTasks(int project_id){
+
+    public List<Task> getAllTask(int project_id) {
         return iProjectManagerRepositoryDb.getTasksByProjectID(project_id);
     }
-    public Project getProjectByID(int project_id){
+
+    public Project getProjectByID(int project_id) {
         return iProjectManagerRepositoryDb.getProjectByID(project_id);
     }
 
@@ -39,7 +43,7 @@ public class ProjectManagerService {
         return iProjectManagerRepositoryDb.createSubtask(subtask, taskID);
     }
 
-    public List<Subtask> getSubtasks(int taskID){
+    public List<Subtask> getSubtasks(int taskID) {
         return iProjectManagerRepositoryDb.getSubtasks(taskID);
     }
 }

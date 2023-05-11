@@ -18,7 +18,6 @@ public class Employee {
         this.role = role;
     }
 
-    //----------------------------------------------------Getter-----------------------------------------------------\\
     public int getEmployeeID() {
         return employeeID;
     }
@@ -39,7 +38,6 @@ public class Employee {
         return role;
     }
 
-    //----------------------------------------------------Setter-----------------------------------------------------\\
     public void setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
     }

@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+//
 @Repository("projectRepo")
 public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB {
 
@@ -30,6 +31,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             preparedStatement.setDate(3, Date.valueOf(project.getStartDate()));
             preparedStatement.setDate(4, Date.valueOf(project.getDeadlineDate()));
 
+            // Check if finalDate is null and set the value accordingly
             if (project.getFinalDate() != null) {
                 preparedStatement.setDate(5, Date.valueOf(project.getFinalDate()));
             } else {

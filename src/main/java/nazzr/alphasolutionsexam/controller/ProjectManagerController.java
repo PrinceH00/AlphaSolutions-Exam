@@ -84,7 +84,7 @@ public class ProjectManagerController {
     @GetMapping("task/{project_id}")
     public String getAllTask(HttpSession session, Model model, @PathVariable int project_id) {
         if (isLoggedIn(session)) {
-            List<Task> taskList = projectManagerService.getAllTasks(project_id);
+            List<Task> taskList = projectManagerService.getAllTask(project_id);
             model.addAttribute("task", taskList);
             return "task";
         }
@@ -108,17 +108,17 @@ public class ProjectManagerController {
         if (isLoggedIn(session)) {
             subtask.setTaskID(taskID);
             projectManagerService.createSubtask(subtask, taskID);
-            return "redirect:/subtask/" + taskID;
+            return "redirect:/subtasks/" + taskID;
         }
         return "redirect:/login";
     }
 
-    @GetMapping("subtask/{taskID}")
-    public String getSubtask(@PathVariable int taskID, Model model, HttpSession session) {
+    @GetMapping("subtasks/{taskID}")
+    public String getSubtasks(@PathVariable int taskID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
-            List<Subtask> subtaskList = projectManagerService.getSubtasks(taskID);
-            model.addAttribute("subtask", subtaskList);
-            return "subtask";
+            List<Subtask> subtasks = projectManagerService.getSubtasks(taskID);
+            model.addAttribute("subtasks", subtasks);
+            return "subtasks";
         }
         return "redirect:/login";
     }
