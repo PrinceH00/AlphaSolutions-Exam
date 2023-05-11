@@ -1,9 +1,6 @@
 package nazzr.alphasolutionsexam.repository;
 
-import nazzr.alphasolutionsexam.model.Project;
-import nazzr.alphasolutionsexam.model.Subtask;
-import nazzr.alphasolutionsexam.model.Task;
-import nazzr.alphasolutionsexam.model.User;
+import nazzr.alphasolutionsexam.model.*;
 import nazzr.alphasolutionsexam.repository.util.DB_Connector;
 import org.springframework.stereotype.Repository;
 
@@ -95,6 +92,34 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         } catch (SQLException e) {
             throw new RuntimeException();
         }
+    }
+
+    public  Employee createEmployee(Employee employee){
+
+    }
+
+    public List<Employee> getEmployees(User user){
+        List<Employee> employees = new ArrayList<>();
+        try {
+            SQL = "SELECT * FROM Employee WHERE user_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, user.getUserID());
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int employeeID = resultSet.getInt(1);
+                String firstName = resultSet.getString(2);
+                String lastName = resultSet.getString(3);
+                LocalDate email = resultSet.getDate(4).toLocalDate();
+                LocalDate  role = resultSet.getDate(5).toLocalDate();
+                int userID = resultSet.getInt(6);
+                employees.add(new Employee(employeeID,firstName,lastName,email,role userID));
+            }
+            return employees;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     public Task createTask(Task task, int project_id) {
