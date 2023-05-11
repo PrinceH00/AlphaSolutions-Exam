@@ -124,7 +124,7 @@ public class ProjectManagerController {
         if (isLoggedIn(session)) {
             List<Task> taskList = projectManagerService.getAllTask(project_id);
             model.addAttribute("task", taskList);
-            return "task";
+            return "tasks";
         }
         return "redirect:/login";
     }
