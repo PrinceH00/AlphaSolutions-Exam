@@ -95,6 +95,7 @@ public class ProjectManagerController {
             return "dashboard";
         }
         return "redirect:/login";
+    }
 
     //-------------------------------------------------TASK-------------------------------------------------------\\
     @GetMapping("create_task/{project_id}")
