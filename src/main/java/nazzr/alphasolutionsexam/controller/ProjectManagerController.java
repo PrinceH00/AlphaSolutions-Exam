@@ -92,7 +92,7 @@ public class ProjectManagerController {
         if (isLoggedIn(session)) {
             List<Employee> employees = projectManagerService.getEmployees((User) session.getAttribute("user"));
             model.addAttribute("employees", employees);
-            return "dashboard";
+            return "employees";
         }
         return "redirect:/login";
     }
