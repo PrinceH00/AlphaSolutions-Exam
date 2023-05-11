@@ -1,9 +1,6 @@
 package nazzr.alphasolutionsexam.service;
 
-import nazzr.alphasolutionsexam.model.Project;
-import nazzr.alphasolutionsexam.model.Subtask;
-import nazzr.alphasolutionsexam.model.Task;
-import nazzr.alphasolutionsexam.model.User;
+import nazzr.alphasolutionsexam.model.*;
 import nazzr.alphasolutionsexam.repository.IProjectManagerRepository_DB;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
@@ -50,4 +47,13 @@ public class ProjectManagerService {
     public List<Subtask> getSubtasks(int taskID) {
         return iProjectManagerRepositoryDb.getSubtasks(taskID);
     }
+
+    public Employee createEmployee(Employee employee) {
+        return iProjectManagerRepositoryDb.createEmployee(employee);
+    }
+
+    public List<Employee> getEmployees(User user) {
+            return iProjectManagerRepositoryDb.getEmployees(user);
+    }
+
 }
