@@ -95,7 +95,21 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     }
 
     public  Employee createEmployee(Employee employee){
+        try {
+            String SQL = "INSERT INTO Employee (fristname, lastname, email, role, user_id) VALUES(?,?,?,?,?)";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, employee.getFirstName());
+            preparedStatement.setString(2, employee.getLastName());
+            preparedStatement.setString(3, employee.getEmail());
+            preparedStatement.setString(4, employee.getRole());
+            preparedStatement.setInt(5, employee.getUserID());
+            preparedStatement.executeUpdate();
 
+            return employee;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public List<Employee> getEmployees(User user){
@@ -110,11 +124,12 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
                 int employeeID = resultSet.getInt(1);
                 String firstName = resultSet.getString(2);
                 String lastName = resultSet.getString(3);
-                LocalDate email = resultSet.getDate(4).toLocalDate();
-                LocalDate  role = resultSet.getDate(5).toLocalDate();
+                String email = resultSet.getString(4);
+                String  role = resultSet.getString(5);
                 int userID = resultSet.getInt(6);
-                employees.add(new Employee(employeeID,firstName,lastName,email,role userID));
+                employees.add(new Employee(employeeID,firstName,lastName,email,role, userID));
             }
+
             return employees;
         } catch (SQLException e) {
             throw new RuntimeException(e);
