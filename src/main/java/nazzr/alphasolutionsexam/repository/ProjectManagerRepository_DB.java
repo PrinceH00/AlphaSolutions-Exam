@@ -96,7 +96,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
 
     public  Employee createEmployee(Employee employee){
         try {
-            String SQL = "INSERT INTO Employee (fristname, lastname, email, job, user_id) VALUES(?,?,?,?,?)";
+            String SQL = "INSERT INTO Employee (firstname, lastname, email, job, user_id) VALUES(?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setString(2, employee.getLastName());
