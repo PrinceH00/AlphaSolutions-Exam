@@ -1,10 +1,7 @@
 package nazzr.alphasolutionsexam.controller;
 
 import jakarta.servlet.http.HttpSession;
-import nazzr.alphasolutionsexam.model.Project;
-import nazzr.alphasolutionsexam.model.Subtask;
-import nazzr.alphasolutionsexam.model.Task;
-import nazzr.alphasolutionsexam.model.User;
+import nazzr.alphasolutionsexam.model.*;
 import nazzr.alphasolutionsexam.service.ProjectManagerService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -67,6 +64,37 @@ public class ProjectManagerController {
         }
         return "redirect:/login";
     }
+    //------------------------------------------------EMPLOYEES-----------------------------------------------------\\
+    @GetMapping("create_employee")
+    public String createEmployee(HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            Employee employee = new Employee();
+            model.addAttribute("employee", employee);
+            return "create_employee";
+        }
+        return "redirect:/login";
+    }
+
+    @PostMapping("create_employee")
+    public String saveEmployee(@ModelAttribute("employee") Employee employee, HttpSession session) {
+        if (isLoggedIn(session)) {
+            User user = (User) session.getAttribute("user");
+            employee.setUserID(user.getUserID());
+            projectManagerService.createEmployee(employee);
+            return "redirect:dashboard";
+
+        }
+        return "redirect:/login";
+    }
+
+    @GetMapping("employees")
+    public String viewEmployee(HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            List<Employee> employees = projectManagerService.getEmployees((User) session.getAttribute("user"));
+            model.addAttribute("employees", employees);
+            return "dashboard";
+        }
+        return "redirect:/login";
 
     //-------------------------------------------------TASK-------------------------------------------------------\\
     @GetMapping("create_task/{project_id}")
