@@ -22,10 +22,10 @@
         <tr th:each="task: ${task}">
           <td th:text="${task.getTitle()}"></td>
           <td th:text="${task.getDescription()}"></td>
-          <td><a th:href="@{/subtasks/{taskID} (taskID=${task.getTaskID()})}" class="btn btn-primary">Subtasks</a>
-            <form method="POST" th:action="@{/delete_task/{task_id} (task_id=${task.getTaskID()})}" style="display: inline-block;">
+          <td><a th:href="@{/subtasks/{task_id} (task_id=${task.getTaskID()})}" class="btn btn-primary">Subtasks</a>
+            <form method="post" th:action="@{/delete_task/{task_id} (task_id=${task.getTaskID()})}" style="display: inline-block;">
               <button type="submit" class="btn btn-danger">Delete</button>
-            </form></td>
+            </form>
         </tr>
         </tbody>
       </table>

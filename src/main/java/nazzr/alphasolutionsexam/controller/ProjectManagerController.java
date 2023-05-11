@@ -114,7 +114,7 @@ public class ProjectManagerController {
         if (isLoggedIn(session)) {
             task.setProjectID(project_id);
             projectManagerService.createTask(task, project_id);
-            return "redirect:/dashboard";
+            return "redirect:/task/" + project_id;
         }
         return "redirect:/login";
     }
@@ -131,8 +131,10 @@ public class ProjectManagerController {
     @PostMapping("delete_task/{task_id}")
     public String deleteTask(@PathVariable int task_id, HttpSession session) {
         if (isLoggedIn(session)) {
+            Task task = projectManagerService.getTaskByID(task_id);
+            int project_id = task.getProjectID();
             projectManagerService.deleteTask(task_id);
-            return "redirect:/task";
+            return "redirect:/task/" + project_id;
         }
         return "redirect:/login";
     }

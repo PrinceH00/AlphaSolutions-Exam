@@ -162,7 +162,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
     }
 
-    public List<Task> getTasksByProjectID(int project_id) {
+    public List<Task> getAllTasks(int project_id) {
         List<Task> taskList = new ArrayList<>();
         try {
             SQL = "SELECT * FROM Task WHERE project_id = ?";
@@ -180,6 +180,25 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             throw new RuntimeException();
         }
         return taskList;
+    }
+
+    public Task getTaskByID(int task_id) {
+        try {
+            SQL = "SELECT * FROM Task WHERE task_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, task_id);
+            resultSet = preparedStatement.executeQuery();
+            Task task = null;
+            if (resultSet.next()) {
+                String title = resultSet.getString(2);
+                String description = resultSet.getString(3);
+                int projectID = resultSet.getInt(4);
+                task = new Task(task_id, title, description, projectID);
+            }
+            return task;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     public void deleteTask(int taskID) {
         try {

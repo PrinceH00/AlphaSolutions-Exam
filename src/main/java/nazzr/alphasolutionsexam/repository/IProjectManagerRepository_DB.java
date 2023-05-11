@@ -8,15 +8,12 @@ public interface IProjectManagerRepository_DB {
 
     Project createProject(Project project);
     void deleteProject(int projectID);
-    public Project getProjectByID(int project_id);
-
+    Project getProjectByID(int project_id);
     List<Project> getAllProjects(User user);
-
     Task createTask(Task task, int project_id);
-
-    List<Task> getTasksByProjectID(int project_id);
+    Task getTaskByID(int task_id);
+    List<Task> getAllTasks(int project_id);
     void deleteTask(int taskID);
-
     Subtask createSubtask(Subtask subtask, int taskID);
 
     List<Subtask> getSubtasks(int taskID);

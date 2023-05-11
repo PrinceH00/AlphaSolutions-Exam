@@ -28,16 +28,20 @@ public class ProjectManagerService {
         return iProjectManagerRepositoryDb.getAllProjects(user);
     }
 
+    public Project getProjectByID(int project_id) {
+        return iProjectManagerRepositoryDb.getProjectByID(project_id);
+    }
+
     public Task createTask(Task task, int project_id) {
         return iProjectManagerRepositoryDb.createTask(task, project_id);
     }
 
     public List<Task> getAllTask(int project_id) {
-        return iProjectManagerRepositoryDb.getTasksByProjectID(project_id);
+        return iProjectManagerRepositoryDb.getAllTasks(project_id);
     }
 
-    public Project getProjectByID(int project_id) {
-        return iProjectManagerRepositoryDb.getProjectByID(project_id);
+    public Task getTaskByID (int task_id) {
+        return iProjectManagerRepositoryDb.getTaskByID(task_id);
     }
     public void deleteTask(int taskID){
         iProjectManagerRepositoryDb.deleteTask(taskID);
