@@ -6,16 +6,18 @@ public class Employee {
     private String lastName;
     private String email;
     private String role;
+    private int userID;
 
     public Employee() {
     }
 
-    public Employee(int employeeID, String firstName, String lastName, String email, String role) {
+    public Employee(int employeeID, String firstName, String lastName, String email, String role, int userID) {
         this.employeeID = employeeID;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.role = role;
+        this.userID = userID;
     }
 
     public int getEmployeeID() {
@@ -38,23 +40,37 @@ public class Employee {
         return role;
     }
 
-    public void setEmployeeID(int employeeID) {
+    public int getUserID() {
+        return userID;
+    }
+
+    public Employee setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
+        return this;
     }
 
-    public void setFirstName(String firstName) {
+    public Employee setFirstName(String firstName) {
         this.firstName = firstName;
+        return this;
     }
 
-    public void setLastName(String lastName) {
+    public Employee setLastName(String lastName) {
         this.lastName = lastName;
+        return this;
     }
 
-    public void setEmail(String email) {
+    public Employee setEmail(String email) {
         this.email = email;
+        return this;
     }
 
-    public void setRole(String role) {
+    public Employee setRole(String role) {
         this.role = role;
+        return this;
+    }
+
+    public Employee setUserID(int userID) {
+        this.userID = userID;
+        return this;
     }
 }
