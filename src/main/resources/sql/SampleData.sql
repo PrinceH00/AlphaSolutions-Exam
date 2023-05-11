@@ -5,7 +5,7 @@ VALUES
     ('Jane', 'Smith', 'janesmith@example.com', 'pass123word'),
     ('Michael', 'Johnson', 'michaeljohnson@example.com', 'securepassword');
 
-INSERT INTO Employee (firstname, lastname, email, role, user_id)
+INSERT INTO Employee (firstname, lastname, email, job, user_id)
 VALUES
     ('John', 'Doe', 'johndoe@example.com', 'Project Manager', 1),
     ('Jane', 'Smith', 'janesmith@example.com', 'Developer', 2),

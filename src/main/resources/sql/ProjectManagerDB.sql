@@ -18,7 +18,7 @@ CREATE TABLE Employee
     firstname   VARCHAR(30)  NOT NULL,
     lastname    VARCHAR(30)  NOT NULL,
     email       VARCHAR(100) NOT NULL UNIQUE,
-    role        VARCHAR(30)  NOT NULL,
+    job        VARCHAR(30)  NOT NULL,
     user_id     INT(10) NOT NULL,
     PRIMARY KEY (employee_id),
     FOREIGN KEY (user_id) REFERENCES User (user_id) ON DELETE CASCADE
