@@ -250,4 +250,16 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
         return subtasks;
     }
+
+    @Override
+    public void deleteSubtask(int taskID) {
+        try {
+            String SQL = "DELETE FROM Subtask WHERE subtask_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, taskID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

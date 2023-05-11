@@ -170,4 +170,12 @@ public class ProjectManagerController {
         }
         return "redirect:/login";
     }
+    @PostMapping("delete_subtask/{taskID}")
+    public String deleteSubtask(@PathVariable int taskID, HttpSession session){
+        if (isLoggedIn(session)){
+            projectManagerService.deleteSubtask(taskID);
+            return "redirect:/subtasks/" + taskID;
+        }
+        return "redirect:/login";
+    }
 }

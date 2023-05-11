@@ -15,10 +15,10 @@ public interface IProjectManagerRepository_DB {
     List<Task> getAllTasks(int project_id);
     void deleteTask(int taskID);
     Subtask createSubtask(Subtask subtask, int taskID);
-
     List<Subtask> getSubtasks(int taskID);
-
+    void deleteSubtask(int taskID);
     Employee createEmployee(Employee employee);
 
     List<Employee> getEmployees(User user);
+
 }

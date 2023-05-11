@@ -55,6 +55,9 @@ public class ProjectManagerService {
         return iProjectManagerRepositoryDb.getSubtasks(taskID);
     }
 
+    public void deleteSubtask(int taskID){
+        iProjectManagerRepositoryDb.deleteSubtask(taskID);
+    }
     public Employee createEmployee(Employee employee) {
         return iProjectManagerRepositoryDb.createEmployee(employee);
     }

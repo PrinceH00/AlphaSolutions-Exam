@@ -3,12 +3,11 @@ package nazzr.alphasolutionsexam.controller;
 import jakarta.servlet.http.HttpSession;
 import nazzr.alphasolutionsexam.model.User;
 import nazzr.alphasolutionsexam.service.LoginService;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 public class LoginController {
@@ -60,4 +59,16 @@ public class LoginController {
         session.invalidate();
         return "redirect:/";
     }
+    @ExceptionHandler(Exception.class)
+    public String handleException(Exception ex, Model model) {
+        model.addAttribute("errorMessage", "An error occurred: " + ex.getMessage());
+        return "error";
+    }
+    @ExceptionHandler(ResponseStatusException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public String handle404Error(ResponseStatusException ex, Model model) {
+        model.addAttribute("errorMessage", "The page you requested could not be found." + ex.getMessage());
+        return "error404";
+    }
+
 }
