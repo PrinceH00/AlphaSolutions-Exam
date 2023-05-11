@@ -28,28 +28,27 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@RequestParam("email") String email, @RequestParam("password") String password,
-                        HttpSession session, Model model)
-    {
+                        HttpSession session, Model model) {
         User user = loginService.getUser(email, password);
         if (user != null) {
             if (user.getPassword().equals(password))
-            session.setAttribute("user", user);
+                session.setAttribute("user", user);
             session.setMaxInactiveInterval(900);
             return "redirect:/dashboard";
         }
-        // wrong credentials
         model.addAttribute("wrongCredentials", true);
         return "login";
     }
 
     //--------------------------------------------------SIGN--UP----------------------------------------------------\\
     @GetMapping("/signup")
-    public String createUser(Model model){
+    public String createUser(Model model) {
         model.addAttribute("user", new User());
         return "signup";
     }
+
     @PostMapping("/signup")
-    public String saveUser(@ModelAttribute User user, Model model){
+    public String saveUser(@ModelAttribute User user, Model model) {
         model.addAttribute("user", user);
         loginService.createUser(user);
         return "redirect:/login";
@@ -58,7 +57,6 @@ public class LoginController {
     //----------------------------------------------------LOGOUT----------------------------------------------------\\
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        // invalidate session and return landing page
         session.invalidate();
         return "redirect:/";
     }

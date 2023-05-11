@@ -35,20 +35,20 @@ public class UserRepository_DB implements IUserRepository_DB {
 
     @Override
     public User getUser(String email, String password) {
-            try {
-                SQL = "SELECT * FROM User WHERE email = ? AND password = ?";
-                PreparedStatement preparedStatementUserID = connection.prepareStatement(SQL);
-                preparedStatementUserID.setString(1, email);
-                preparedStatementUserID.setString(2, password);
-                resultSet = preparedStatementUserID.executeQuery();
-                User user = null;
-                if (resultSet.next()) {
-                    user = new User( resultSet.getInt("user_id"), resultSet.getString("firstName"), resultSet.getString("lastName"),resultSet.getString("email"), resultSet.getString("password"));
-                }
-                return user;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+        try {
+            SQL = "SELECT * FROM User WHERE email = ? AND password = ?";
+            PreparedStatement preparedStatementUserID = connection.prepareStatement(SQL);
+            preparedStatementUserID.setString(1, email);
+            preparedStatementUserID.setString(2, password);
+            resultSet = preparedStatementUserID.executeQuery();
+            User user = null;
+            if (resultSet.next()) {
+                user = new User(resultSet.getInt("user_id"), resultSet.getString("firstName"), resultSet.getString("lastName"), resultSet.getString("email"), resultSet.getString("password"));
             }
+            return user;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
 

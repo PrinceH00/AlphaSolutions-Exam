@@ -1,7 +1,7 @@
 package nazzr.alphasolutionsexam.model;
 
 public class Subtask {
-    private int subTaskID;
+    private int subtaskID;
     private String title;
     private String description;
     private int estimated_time;
@@ -11,8 +11,8 @@ public class Subtask {
     public Subtask() {
     }
 
-    public Subtask(int subTaskID, String title, String description, int estimated_time, int final_time, int taskID) {
-        this.subTaskID = subTaskID;
+    public Subtask(int subtaskID, String title, String description, int estimated_time, int final_time, int taskID) {
+        this.subtaskID = subtaskID;
         this.title = title;
         this.description = description;
         this.estimated_time = estimated_time;
@@ -20,8 +20,8 @@ public class Subtask {
         this.taskID = taskID;
     }
 
-    public int getSubTaskID() {
-        return subTaskID;
+    public int getSubtaskID() {
+        return subtaskID;
     }
 
     public String getTitle() {
@@ -44,8 +44,8 @@ public class Subtask {
         return taskID;
     }
 
-    public Subtask setSubTaskID(int subTaskID) {
-        this.subTaskID = subTaskID;
+    public Subtask setSubtaskID(int subtaskID) {
+        this.subtaskID = subtaskID;
         return this;
     }
 

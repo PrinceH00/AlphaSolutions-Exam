@@ -28,14 +28,14 @@ public class ProjectManagerService {
     public Task createTask(Task task, int project_id){
         return iProjectManagerRepositoryDb.createTask(task,project_id);
     }
-    public List<Task> getAllTask(int project_id){
+    public List<Task> getAllTasks(int project_id){
         return iProjectManagerRepositoryDb.getTasksByProjectID(project_id);
     }
     public Project getProjectByID(int project_id){
         return iProjectManagerRepositoryDb.getProjectByID(project_id);
     }
 
-    public Subtask createSuptask(Subtask subtask, int taskID) {
+    public Subtask createSubtask(Subtask subtask, int taskID) {
         return iProjectManagerRepositoryDb.createSubtask(subtask, taskID);
     }
 

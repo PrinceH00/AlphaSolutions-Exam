@@ -1,27 +1,28 @@
 package nazzr.alphasolutionsexam.model;
 
 public class Task {
-    private int TaskID;
+    private int taskID;
     private String title;
     private String description;
     private int projectID;
 
     public Task(int taskID, String title, String description, int projectID) {
-        TaskID = taskID;
+        this.taskID = taskID;
         this.title = title;
         this.description = description;
         this.projectID = projectID;
     }
-    public Task(){
+
+    public Task() {
 
     }
 
     public int getTaskID() {
-        return TaskID;
+        return taskID;
     }
 
     public void setTaskID(int taskID) {
-        TaskID = taskID;
+        this.taskID = taskID;
     }
 
     public String getTitle() {

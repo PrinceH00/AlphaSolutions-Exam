@@ -1,125 +1,125 @@
-    package nazzr.alphasolutionsexam.controller;
+package nazzr.alphasolutionsexam.controller;
 
-    import jakarta.servlet.http.HttpSession;
-    import nazzr.alphasolutionsexam.model.Project;
-    import nazzr.alphasolutionsexam.model.Subtask;
-    import nazzr.alphasolutionsexam.model.Task;
-    import nazzr.alphasolutionsexam.model.User;
-    import nazzr.alphasolutionsexam.service.ProjectManagerService;
-    import org.springframework.stereotype.Controller;
-    import org.springframework.ui.Model;
-    import org.springframework.web.bind.annotation.*;
-    import java.util.List;
+import jakarta.servlet.http.HttpSession;
+import nazzr.alphasolutionsexam.model.Project;
+import nazzr.alphasolutionsexam.model.Subtask;
+import nazzr.alphasolutionsexam.model.Task;
+import nazzr.alphasolutionsexam.model.User;
+import nazzr.alphasolutionsexam.service.ProjectManagerService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-    @Controller
-    @RequestMapping("/")
-    public class ProjectManagerController {
+import java.util.List;
 
-        private final ProjectManagerService projectManagerService;
+@Controller
+@RequestMapping("/")
+public class ProjectManagerController {
 
-        public ProjectManagerController(ProjectManagerService projectManagerService) {
-            this.projectManagerService = projectManagerService;
+    private final ProjectManagerService projectManagerService;
+
+    public ProjectManagerController(ProjectManagerService projectManagerService) {
+        this.projectManagerService = projectManagerService;
+    }
+
+    private boolean isLoggedIn(HttpSession session) {
+        return session.getAttribute("user") != null;
+    }
+
+    //------------------------------------------------PROJECT-----------------------------------------------------\\
+    @GetMapping("create_project")
+    public String createProject(HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            Project project = new Project();
+            model.addAttribute("project", project);
+            return "create_project";
         }
+        return "redirect:/login";
+    }
 
-        private boolean isLoggedIn(HttpSession session) {
-            return session.getAttribute("user") != null;
-        }
-
-        //------------------------------------------------PROJECT-----------------------------------------------------\\
-        @GetMapping("create_project")
-        public String createProject(HttpSession session, Model model) {
-            if(isLoggedIn(session)) {
-                Project project = new Project();
-                model.addAttribute("project", project);
-                return "create_project";
-            }
-           return "redirect:/login";
-        }
-
-        @PostMapping("create_project")
-        public String saveProject(@ModelAttribute("project") Project project, HttpSession session) {
-           if(isLoggedIn(session)) {
+    @PostMapping("create_project")
+    public String saveProject(@ModelAttribute("project") Project project, HttpSession session) {
+        if (isLoggedIn(session)) {
             User user = (User) session.getAttribute("user");
             project.setUserID(user.getUserID());
             projectManagerService.createProject(project);
             return "redirect:dashboard";
 
-            }
-            return "redirect:/login";
         }
-
-        @GetMapping("dashboard")
-        public String viewProject(HttpSession session, Model model) {
-            if (isLoggedIn(session)) {
-                List<Project> projectList = projectManagerService.getAllProjects((User) session.getAttribute("user"));
-                model.addAttribute("projectList", projectList);
-                return "dashboard";
-            }
-            return "redirect:/login";
-        }
-        //-------------------------------------------------TASK-------------------------------------------------------\\
-        @GetMapping("create_task/{project_id}")
-        public String createTask(HttpSession session, Model model, @PathVariable int project_id) {
-            if (isLoggedIn(session)) {
-                Task task = new Task();
-                task.setProjectID(project_id);
-                model.addAttribute("task", task);
-                return "create_task";
-            }
-            return "redirect:/login";
-        }
-
-       @PostMapping("create_task/{project_id}")
-        public String saveTask(@ModelAttribute Task task, HttpSession session, @PathVariable int project_id) {
-           if (isLoggedIn(session)) {
-               task.setProjectID(project_id);
-               projectManagerService.createTask(task,project_id);
-               return "redirect:/dashboard";
-           }
-           return "redirect:/login";
-       }
-
-           @GetMapping("task/{project_id}")
-        public String getAllTask(HttpSession session, Model model, @PathVariable int project_id){
-            if (isLoggedIn(session)){
-                List<Task> taskList = projectManagerService.getAllTask(project_id);
-                model.addAttribute("task", taskList);
-                return "task";
-            }
-            return "redirect:/login";
-       }
-       //------------------------------------------------SUBTASKS-----------------------------------------------------\\
-       // TODO: 09/05/2023 Man skal kunne gemme tiden når man laver et project!!
-       // TODO: 09/05/2023 Html filen skal rette så der er de rigtige knapper!
-       // TODO: 09/05/2023 ret fejlen med at man kan se subtask som ikke er dine!!!
-        @GetMapping("create_subtask/{taskID}")
-        public String createSubtask(@PathVariable int taskID, Model model, HttpSession session) {
-            if (isLoggedIn(session)) {
-                Subtask subtask = new Subtask();
-                subtask.setTaskID(taskID);
-                model.addAttribute("subtask",subtask);
-                return "create_subtask";
-            }
-            return "redirect:/login";
-        }
-
-        @PostMapping("create_subtask/{taskID}")
-        public String saveSubtask(@PathVariable int taskID, @ModelAttribute Subtask subtask, HttpSession session) {
-            if (isLoggedIn(session)) {
-                subtask.setTaskID(taskID);
-                projectManagerService.createSuptask(subtask,taskID);
-                return "redirect:/subtasks/" + taskID;
-            }
-            return "redirect:/login";
-        }
-
-        @GetMapping("subtasks/{taskID}")
-        public String getSubtasks(@PathVariable int taskID, Model model, HttpSession session){
-            if (isLoggedIn(session)){
-                List<Subtask> subtasks = projectManagerService.getSubtasks(taskID);
-                model.addAttribute("subtasks", subtasks);
-                return "subtasks";
-            }
-            return "redirect:/login";
+        return "redirect:/login";
     }
+
+    @GetMapping("dashboard")
+    public String viewProject(HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            List<Project> projectList = projectManagerService.getAllProjects((User) session.getAttribute("user"));
+            model.addAttribute("projectList", projectList);
+            return "dashboard";
+        }
+        return "redirect:/login";
     }
+
+    //-------------------------------------------------TASK-------------------------------------------------------\\
+    @GetMapping("create_task/{project_id}")
+    public String createTask(HttpSession session, Model model, @PathVariable int project_id) {
+        if (isLoggedIn(session)) {
+            Task task = new Task();
+            task.setProjectID(project_id);
+            model.addAttribute("task", task);
+            return "create_task";
+        }
+        return "redirect:/login";
+    }
+
+    @PostMapping("create_task/{project_id}")
+    public String saveTask(@ModelAttribute Task task, HttpSession session, @PathVariable int project_id) {
+        if (isLoggedIn(session)) {
+            task.setProjectID(project_id);
+            projectManagerService.createTask(task, project_id);
+            return "redirect:/dashboard";
+        }
+        return "redirect:/login";
+    }
+
+    @GetMapping("task/{project_id}")
+    public String getAllTask(HttpSession session, Model model, @PathVariable int project_id) {
+        if (isLoggedIn(session)) {
+            List<Task> taskList = projectManagerService.getAllTasks(project_id);
+            model.addAttribute("task", taskList);
+            return "task";
+        }
+        return "redirect:/login";
+    }
+
+    //------------------------------------------------SUBTASKS-----------------------------------------------------\\
+    @GetMapping("create_subtask/{taskID}")
+    public String createSubtask(@PathVariable int taskID, Model model, HttpSession session) {
+        if (isLoggedIn(session)) {
+            Subtask subtask = new Subtask();
+            subtask.setTaskID(taskID);
+            model.addAttribute("subtask", subtask);
+            return "create_subtask";
+        }
+        return "redirect:/login";
+    }
+
+    @PostMapping("create_subtask/{taskID}")
+    public String saveSubtask(@PathVariable int taskID, @ModelAttribute Subtask subtask, HttpSession session) {
+        if (isLoggedIn(session)) {
+            subtask.setTaskID(taskID);
+            projectManagerService.createSubtask(subtask, taskID);
+            return "redirect:/subtask/" + taskID;
+        }
+        return "redirect:/login";
+    }
+
+    @GetMapping("subtask/{taskID}")
+    public String getSubtask(@PathVariable int taskID, Model model, HttpSession session) {
+        if (isLoggedIn(session)) {
+            List<Subtask> subtaskList = projectManagerService.getSubtasks(taskID);
+            model.addAttribute("subtask", subtaskList);
+            return "subtask";
+        }
+        return "redirect:/login";
+    }
+}

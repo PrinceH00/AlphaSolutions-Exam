@@ -8,17 +8,18 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class LoginService {
-    private final IUserRepository_DB userRepository_db ;
+    private final IUserRepository_DB userRepository_db;
 
     public LoginService(ApplicationContext context, @Value("userRepo") String impl) {
         userRepository_db = (IUserRepository_DB) context.getBean(impl);
     }
 
     public User createUser(User user) {
-        return userRepository_db.createUser(user); }
+        return userRepository_db.createUser(user);
+    }
 
-    public User getUser(String email, String password){
-        return userRepository_db.getUser(email,password);
+    public User getUser(String email, String password) {
+        return userRepository_db.getUser(email, password);
     }
 }
 
