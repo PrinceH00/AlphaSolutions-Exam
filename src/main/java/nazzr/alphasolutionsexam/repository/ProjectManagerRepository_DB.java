@@ -96,12 +96,12 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
 
     public  Employee createEmployee(Employee employee){
         try {
-            String SQL = "INSERT INTO Employee (fristname, lastname, email, role, user_id) VALUES(?,?,?,?,?)";
+            String SQL = "INSERT INTO Employee (fristname, lastname, email, job, user_id) VALUES(?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, employee.getFirstName());
             preparedStatement.setString(2, employee.getLastName());
             preparedStatement.setString(3, employee.getEmail());
-            preparedStatement.setString(4, employee.getRole());
+            preparedStatement.setString(4, employee.getJob());
             preparedStatement.setInt(5, employee.getUserID());
             preparedStatement.executeUpdate();
 
@@ -125,9 +125,9 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
                 String firstName = resultSet.getString(2);
                 String lastName = resultSet.getString(3);
                 String email = resultSet.getString(4);
-                String  role = resultSet.getString(5);
+                String  job = resultSet.getString(5);
                 int userID = resultSet.getInt(6);
-                employees.add(new Employee(employeeID,firstName,lastName,email,role, userID));
+                employees.add(new Employee(employeeID,firstName,lastName,email, job, userID));
             }
 
             return employees;
