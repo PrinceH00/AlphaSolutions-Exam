@@ -81,7 +81,7 @@ public class ProjectManagerController {
             User user = (User) session.getAttribute("user");
             employee.setUserID(user.getUserID());
             projectManagerService.createEmployee(employee);
-            return "redirect:dashboard";
+            return "redirect:employees";
 
         }
         return "redirect:/login";
