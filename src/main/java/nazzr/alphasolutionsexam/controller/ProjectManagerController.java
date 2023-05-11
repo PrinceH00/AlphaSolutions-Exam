@@ -128,6 +128,14 @@ public class ProjectManagerController {
         }
         return "redirect:/login";
     }
+    @PostMapping("delete_task/{task_id}")
+    public String deleteTask(@PathVariable int task_id, HttpSession session) {
+        if (isLoggedIn(session)) {
+            projectManagerService.deleteTask(task_id);
+            return "redirect:/task";
+        }
+        return "redirect:/login";
+    }
 
     //------------------------------------------------SUBTASKS-----------------------------------------------------\\
     @GetMapping("create_subtask/{taskID}")

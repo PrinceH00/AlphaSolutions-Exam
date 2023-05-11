@@ -39,6 +39,9 @@ public class ProjectManagerService {
     public Project getProjectByID(int project_id) {
         return iProjectManagerRepositoryDb.getProjectByID(project_id);
     }
+    public void deleteTask(int taskID){
+        iProjectManagerRepositoryDb.deleteTask(taskID);
+    }
 
     public Subtask createSubtask(Subtask subtask, int taskID) {
         return iProjectManagerRepositoryDb.createSubtask(subtask, taskID);
