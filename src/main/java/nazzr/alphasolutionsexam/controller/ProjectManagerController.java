@@ -49,6 +49,15 @@ public class ProjectManagerController {
         return "redirect:/login";
     }
 
+    @PostMapping("delete_project/{project_id}")
+    public String deleteProject(@PathVariable int project_id, HttpSession session) {
+        if (isLoggedIn(session)) {
+            projectManagerService.deleteProject(project_id);
+            return "redirect:/dashboard";
+        }
+        return "redirect:/login";
+    }
+
     @GetMapping("dashboard")
     public String viewProject(HttpSession session, Model model) {
         if (isLoggedIn(session)) {

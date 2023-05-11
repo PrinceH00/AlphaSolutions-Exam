@@ -111,6 +111,17 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         return task;
     }
 
+    public void deleteProject(int projectID) {
+        try {
+            String SQL = "DELETE FROM Project WHERE project_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, projectID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public List<Task> getTasksByProjectID(int project_id) {
         List<Task> taskList = new ArrayList<>();
         try {

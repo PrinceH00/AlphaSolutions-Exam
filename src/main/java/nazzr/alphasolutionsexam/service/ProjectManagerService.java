@@ -23,6 +23,10 @@ public class ProjectManagerService {
         return iProjectManagerRepositoryDb.createProject(project);
     }
 
+    public void deleteProject(int projectID) {
+        iProjectManagerRepositoryDb.deleteProject(projectID);
+    }
+
     public List<Project> getAllProjects(User user) {
         return iProjectManagerRepositoryDb.getAllProjects(user);
     }

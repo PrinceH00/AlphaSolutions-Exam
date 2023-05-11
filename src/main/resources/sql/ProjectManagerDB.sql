@@ -21,7 +21,7 @@ CREATE TABLE Employee
     role        VARCHAR(30)  NOT NULL,
     user_id     INT(10) NOT NULL,
     PRIMARY KEY (employee_id),
-    FOREIGN KEY (user_id) REFERENCES User (user_id)
+    FOREIGN KEY (user_id) REFERENCES User (user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Project
@@ -34,7 +34,7 @@ CREATE TABLE Project
     finalDate    DATE,
     user_id      INT(10) NOT NULL,
     PRIMARY KEY (project_id),
-    FOREIGN KEY (user_id) REFERENCES User (user_id)
+    FOREIGN KEY (user_id) REFERENCES User (user_id) ON DELETE CASCADE
 );
 
 CREATE TABLE Task
@@ -44,8 +44,9 @@ CREATE TABLE Task
     description VARCHAR(255),
     project_id  INT(10) NOT NULL,
     PRIMARY KEY (task_id),
-    FOREIGN KEY (project_id) REFERENCES Project (project_id)
+    FOREIGN KEY (project_id) REFERENCES Project (project_id) ON DELETE CASCADE
 );
+
 CREATE TABLE Subtask
 (
     subtask_id     INT(10) NOT NULL AUTO_INCREMENT,
@@ -55,7 +56,7 @@ CREATE TABLE Subtask
     final_time     INT(10),
     task_id        INT(10) NOT NULL,
     PRIMARY KEY (subtask_id),
-    FOREIGN KEY (task_id) REFERENCES Task (task_id)
+    FOREIGN KEY (task_id) REFERENCES Task (task_id) ON DELETE CASCADE
 );
 
 CREATE TABLE EmployeeSubtask
@@ -64,6 +65,6 @@ CREATE TABLE EmployeeSubtask
     employee_id        INT(10) NOT NULL,
     subtask_id         INT(10) NOT NULL,
     PRIMARY KEY (employeesubtask_id),
-    FOREIGN KEY (employee_id) REFERENCES Employee (employee_id),
-    FOREIGN KEY (subtask_id) REFERENCES Subtask (subtask_id)
+    FOREIGN KEY (employee_id) REFERENCES Employee (employee_id) ON DELETE CASCADE,
+    FOREIGN KEY (subtask_id) REFERENCES Subtask (subtask_id) ON DELETE CASCADE
 );

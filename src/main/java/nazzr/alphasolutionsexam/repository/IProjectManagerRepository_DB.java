@@ -10,7 +10,7 @@ import java.util.List;
 public interface IProjectManagerRepository_DB {
 
     Project createProject(Project project);
-
+    void deleteProject(int projectID);
     public Project getProjectByID(int project_id);
 
     List<Project> getAllProjects(User user);

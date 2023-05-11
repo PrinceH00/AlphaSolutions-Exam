@@ -26,7 +26,12 @@
                     <td th:text="${project.getStartDate()}"></td>
                     <td th:text="${project.getDeadlineDate()}"></td>
                     <td th:text="${project.getFinalDate()}"></td>
-                    <td><a th:href="@{/task/{project_id} (project_id=${project.getProjectID()})}" class="btn btn-primary">Tasks</a></td>
+                    <td>
+                        <a th:href="@{/task/{project_id} (project_id=${project.getProjectID()})}" class="btn btn-primary">Tasks</a>
+                        <form method="POST" th:action="@{/delete_project/{project_id} (project_id=${project.getProjectID()})}" style="display: inline-block;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -36,6 +41,5 @@
         </div>
     </div>
 </div>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>
