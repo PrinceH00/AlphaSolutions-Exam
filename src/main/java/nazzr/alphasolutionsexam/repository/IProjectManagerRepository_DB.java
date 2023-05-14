@@ -21,4 +21,5 @@ public interface IProjectManagerRepository_DB {
 
     List<Employee> getEmployees(User user);
 
+    void deleteEmployee(int employeeID);
 }

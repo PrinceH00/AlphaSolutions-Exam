@@ -137,6 +137,17 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
 
     }
 
+    public void deleteEmployee(int employeeID) {
+        try {
+            String SQL = "DELETE FROM Employee WHERE employee_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, employeeID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public Task createTask(Task task, int project_id) {
         try {
             SQL = "INSERT INTO Task (title, description, project_id) VALUES (?,?,?)";
