@@ -18,6 +18,7 @@ public class User {
         this.password = password;
     }
 
+    //---------------------------------------------------Getter-------------------------------------------------------\\
     public int getUserID() {
         return userID;
     }
@@ -38,6 +39,7 @@ public class User {
         return password;
     }
 
+    //---------------------------------------------------Setter-------------------------------------------------------\\
     public void setUserID(int userID) {
         this.userID = userID;
     }
