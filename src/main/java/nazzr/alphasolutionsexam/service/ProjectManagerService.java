@@ -66,4 +66,7 @@ public class ProjectManagerService {
             return iProjectManagerRepositoryDb.getEmployees(user);
     }
 
+    public void deleteEmployee(int employeeID) {
+        iProjectManagerRepositoryDb.deleteEmployee(employeeID);
+    }
 }

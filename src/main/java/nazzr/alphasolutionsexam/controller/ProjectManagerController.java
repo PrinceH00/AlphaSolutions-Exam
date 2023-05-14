@@ -97,6 +97,15 @@ public class ProjectManagerController {
         return "redirect:/login";
     }
 
+    @PostMapping("delete_employee/{employeeID}")
+    public String deleteEmployee(@PathVariable int employeeID, HttpSession session) {
+        if (isLoggedIn(session)) {
+            projectManagerService.deleteEmployee(employeeID);
+            return "redirect:/dashboard";
+        }
+        return "redirect:/login";
+    }
+
     //-------------------------------------------------TASK-------------------------------------------------------\\
     @GetMapping("create_task/{project_id}")
     public String createTask(HttpSession session, Model model, @PathVariable int project_id) {
