@@ -68,7 +68,7 @@ public class LoginController {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public String handle404Error(ResponseStatusException ex, Model model) {
         model.addAttribute("errorMessage", "The page you requested could not be found." + ex.getMessage());
-        return "error404";
+        return "404";
     }
 
 }
