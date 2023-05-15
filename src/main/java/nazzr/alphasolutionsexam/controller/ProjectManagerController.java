@@ -56,6 +56,29 @@ public class ProjectManagerController {
         return "redirect:/login";
     }
 
+    @GetMapping("edit_project/{projectID}")
+    public String editProject(@PathVariable int projectID, HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            Project project = projectManagerService.getProjectByID(projectID);
+            model.addAttribute("project", project);
+
+            return "edit_project";
+        }
+        return "redirect:/login";
+    }
+
+    @PostMapping("edit_project/{projectID}")
+    public String updateProject(@PathVariable int projectID, @ModelAttribute("project") Project project, HttpSession session) {
+        if (isLoggedIn(session)) {
+            project.setProjectID(projectID);
+            projectManagerService.updateProject(project);
+
+            return "redirect:/dashboard";
+        }
+        return "redirect:/login";
+    }
+
+
     @GetMapping("dashboard")
     public String viewProjects(HttpSession session, Model model) {
         if (isLoggedIn(session)) {

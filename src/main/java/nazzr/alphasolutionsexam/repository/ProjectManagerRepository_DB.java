@@ -24,18 +24,17 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         try {
             String SQL = "INSERT INTO Project (title, description, startDate, deadlineDate, finalDate, user_id) VALUES(?,?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(SQL);
-
             preparedStatement.setString(1, project.getTitle());
             preparedStatement.setString(2, project.getDescription());
             preparedStatement.setDate(3, Date.valueOf(project.getStartDate()));
             preparedStatement.setDate(4, Date.valueOf(project.getDeadlineDate()));
 
-            // Check if finalDate is null and set the value accordingly
             if (project.getFinalDate() != null) {
                 preparedStatement.setDate(5, Date.valueOf(project.getFinalDate()));
             } else {
                 preparedStatement.setObject(5, null);
             }
+
             preparedStatement.setInt(6, project.getUserID());
             preparedStatement.executeUpdate();
 
@@ -52,20 +51,23 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             SQL = "SELECT * FROM project WHERE project_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, projectID);
-            resultSet = preparedStatement.executeQuery(SQL);
+            resultSet = preparedStatement.executeQuery();
 
             Project project = null;
+
             while (resultSet.next()) {
                 String title = resultSet.getString(2);
                 String description = resultSet.getString(3);
                 LocalDate startDate = resultSet.getDate(4).toLocalDate();
                 LocalDate deadlineDate = resultSet.getDate(5).toLocalDate();
-                LocalDate finalDate = resultSet.getDate(6).toLocalDate();
+                LocalDate finalDate = null;
+                if (resultSet.getDate(6) != null) {
+                    finalDate = resultSet.getDate(6).toLocalDate();
+                }
                 int userID = resultSet.getInt(7);
 
                 project = new Project(projectID, title, description, startDate, deadlineDate, finalDate, userID);
             }
-
             return project;
 
         } catch (SQLException e) {
@@ -106,13 +108,35 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
     }
 
-    @Override
     public void deleteProject(int projectID) {
         try {
             String SQL = "DELETE FROM Project WHERE project_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, projectID);
             preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void updateProject(Project project) {
+        try {
+            String SQL = "UPDATE Project SET title = ?, description = ?, startDate = ?, deadlineDate = ?, finalDate = ? WHERE project_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, project.getTitle());
+            preparedStatement.setString(2, project.getDescription());
+            preparedStatement.setDate(3, Date.valueOf(project.getStartDate()));
+            preparedStatement.setDate(4, Date.valueOf(project.getDeadlineDate()));
+
+            if (project.getFinalDate() != null) {
+                preparedStatement.setDate(5, Date.valueOf(project.getFinalDate()));
+            } else {
+                preparedStatement.setObject(5, null);
+            }
+            preparedStatement.setInt(6, project.getProjectID());
+            preparedStatement.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

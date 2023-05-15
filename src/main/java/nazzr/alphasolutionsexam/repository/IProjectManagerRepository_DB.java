@@ -15,6 +15,8 @@ public interface IProjectManagerRepository_DB {
 
     List<Project> getProjects(User user);
 
+    void updateProject(Project project);
+
     //--------------------------------------------------EMPLOYEE------------------------------------------------------\\
     Employee createEmployee(Employee employee);
 

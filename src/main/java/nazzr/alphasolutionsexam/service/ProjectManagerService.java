@@ -34,6 +34,10 @@ public class ProjectManagerService {
         iProjectManagerRepositoryDb.deleteProject(projectID);
     }
 
+    public void updateProject(Project project) {
+        iProjectManagerRepositoryDb.updateProject(project);
+    }
+
     //--------------------------------------------------EMPLOYEE------------------------------------------------------\\
 
     public Employee createEmployee(Employee employee) {
