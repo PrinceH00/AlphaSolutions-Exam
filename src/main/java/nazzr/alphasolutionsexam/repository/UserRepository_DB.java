@@ -22,12 +22,15 @@ public class UserRepository_DB implements IUserRepository_DB {
         try {
             SQL = "INSERT INTO User(firstname, lastname, email, password) VALUES (?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(SQL);
+
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
             preparedStatement.setString(4, user.getPassword());
             preparedStatement.executeUpdate();
+
             return user;
+
         } catch (SQLException e) {
             throw new RuntimeException();
         }
@@ -38,14 +41,24 @@ public class UserRepository_DB implements IUserRepository_DB {
         try {
             SQL = "SELECT * FROM User WHERE email = ? AND password = ?";
             PreparedStatement preparedStatementUserID = connection.prepareStatement(SQL);
+
             preparedStatementUserID.setString(1, email);
             preparedStatementUserID.setString(2, password);
             resultSet = preparedStatementUserID.executeQuery();
+
             User user = null;
             if (resultSet.next()) {
-                user = new User(resultSet.getInt("user_id"), resultSet.getString("firstName"), resultSet.getString("lastName"), resultSet.getString("email"), resultSet.getString("password"));
+                int UserID = resultSet.getInt("user_id");
+                String FirstName = resultSet.getString("firstName");
+                String LastName = resultSet.getString("lastName");
+                String Email = resultSet.getString("email");
+                String Password = resultSet.getString("password");
+
+                user = new User(UserID, FirstName, LastName, Email, Password);
             }
+
             return user;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
