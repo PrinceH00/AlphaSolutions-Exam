@@ -27,7 +27,7 @@ public class ProjectManagerService {
     }
 
     public List<Project> getProjects(User user) {
-        return iProjectManagerRepositoryDb.getAllProjects(user);
+        return iProjectManagerRepositoryDb.getProjects(user);
     }
 
     public void deleteProject(int projectID) {
@@ -59,7 +59,7 @@ public class ProjectManagerService {
     }
 
     public List<Task> getTasks(int projectID) {
-        return iProjectManagerRepositoryDb.getAllTasks(projectID);
+        return iProjectManagerRepositoryDb.getTasks(projectID);
     }
 
     public void deleteTask(int taskID) {
@@ -71,11 +71,16 @@ public class ProjectManagerService {
         return iProjectManagerRepositoryDb.createSubtask(subtask, taskID);
     }
 
+    public Subtask getSubTaskByID(int subTaskID) {
+        return iProjectManagerRepositoryDb.getSubTaskByID(subTaskID);
+    }
+
     public List<Subtask> getSubtasks(int taskID) {
         return iProjectManagerRepositoryDb.getSubtasks(taskID);
     }
 
-    public void deleteSubtask(int taskID) {
-        iProjectManagerRepositoryDb.deleteSubtask(taskID);
+    public void deleteSubtask(int subTaskID) {
+        iProjectManagerRepositoryDb.deleteSubtask(subTaskID);
     }
+
 }

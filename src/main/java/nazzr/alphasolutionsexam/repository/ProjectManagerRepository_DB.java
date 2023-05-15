@@ -74,7 +74,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     }
 
     @Override
-    public List<Project> getAllProjects(User user) {
+    public List<Project> getProjects(User user) {
         List<Project> projectList = new ArrayList<>();
         try {
             SQL = "SELECT * FROM Project WHERE user_id = ?";
@@ -221,7 +221,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     }
 
     @Override
-    public List<Task> getAllTasks(int projectID) {
+    public List<Task> getTasks(int projectID) {
         List<Task> taskList = new ArrayList<>();
         try {
             SQL = "SELECT * FROM Task WHERE project_id = ?";
@@ -277,6 +277,31 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
     }
 
+    public Subtask getSubTaskByID(int subTaskID) {
+        try {
+            SQL = "SELECT * FROM SubTask WHERE subtask_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, subTaskID);
+            resultSet = preparedStatement.executeQuery();
+
+            Subtask subtask = null;
+            if (resultSet.next()) {
+                String title = resultSet.getString(2);
+                String description = resultSet.getString(3);
+                int estimated_time = resultSet.getInt(4);
+                int final_time = resultSet.getInt(5);
+                int taskID = resultSet.getInt(6);
+
+                subtask = new Subtask(subTaskID, title, description, estimated_time, final_time, taskID);
+            }
+
+            return subtask;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @Override
     public List<Subtask> getSubtasks(int taskID) {
         List<Subtask> subtasks = new ArrayList<>();
@@ -304,11 +329,11 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     }
 
     @Override
-    public void deleteSubtask(int taskID) {
+    public void deleteSubtask(int subtaskID) {
         try {
             String SQL = "DELETE FROM Subtask WHERE subtask_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, taskID);
+            preparedStatement.setInt(1, subtaskID);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
