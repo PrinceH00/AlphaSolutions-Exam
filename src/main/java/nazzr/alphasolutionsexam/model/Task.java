@@ -6,6 +6,9 @@ public class Task {
     private String description;
     private int projectID;
 
+    public Task() {
+    }
+
     public Task(int taskID, String title, String description, int projectID) {
         this.taskID = taskID;
         this.title = title;
@@ -13,39 +16,43 @@ public class Task {
         this.projectID = projectID;
     }
 
-    public Task() {
-
-    }
+    //---------------------------------------------------Getter-------------------------------------------------------\\
 
     public int getTaskID() {
         return taskID;
-    }
-
-    public void setTaskID(int taskID) {
-        this.taskID = taskID;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public int getProjectID() {
         return projectID;
     }
 
-    public void setProjectID(int projectID) {
+    //---------------------------------------------------Setter-------------------------------------------------------\\
+
+    public Task setTaskID(int taskID) {
+        this.taskID = taskID;
+        return this;
+    }
+
+    public Task setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public Task setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public Task setProjectID(int projectID) {
         this.projectID = projectID;
+        return this;
     }
 }
