@@ -367,6 +367,24 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     }
 
     @Override
+    public void updateSubtask(Subtask subtask) {
+        try {
+            String SQL = "UPDATE Subtask SET title = ?, description = ?, estimated_time = ?, final_time = ? WHERE subtask_id  = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, subtask.getTitle());
+            preparedStatement.setString(2, subtask.getDescription());
+            preparedStatement.setInt(3, subtask.getEstimated_time());
+            preparedStatement.setInt(4, subtask.getFinal_time());
+            preparedStatement.setInt(5, subtask.getSubtaskID());
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void deleteSubtask(int subtaskID) {
         try {
             String SQL = "DELETE FROM Subtask WHERE subtask_id = ?";

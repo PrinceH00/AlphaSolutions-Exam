@@ -85,6 +85,9 @@ public class ProjectManagerService {
     public List<Subtask> getSubtasks(int taskID) {
         return iProjectManagerRepositoryDb.getSubtasks(taskID);
     }
+    public void updateSubtask(Subtask subtask){
+        iProjectManagerRepositoryDb.updateSubtask(subtask);
+    }
 
     public void deleteSubtask(int subTaskID) {
         iProjectManagerRepositoryDb.deleteSubtask(subTaskID);

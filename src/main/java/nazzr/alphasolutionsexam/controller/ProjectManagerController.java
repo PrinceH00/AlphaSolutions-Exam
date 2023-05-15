@@ -235,6 +235,24 @@ public class ProjectManagerController {
         }
         return "redirect:/login";
     }
+    @GetMapping("edit_subtask/{subtaskID}")
+    public String editSubtask(@PathVariable int subtaskID, HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            Subtask subtask = projectManagerService.getSubTaskByID(subtaskID);
+            model.addAttribute("subtask", subtask);
+            return "edit_subtask";
+        }
+        return "redirect:/login";
+    }
+    @PostMapping("edit_subtask/{subtaskID}")
+    public String updateSubtask(@PathVariable int subtaskID, @ModelAttribute("subtask") Subtask subtask, HttpSession session) {
+        if (isLoggedIn(session)) {
+            subtask.setSubtaskID(subtaskID);
+            projectManagerService.updateSubtask(subtask);
+            return "redirect:/dashboard";
+        }
+        return "redirect:/login";
+    }
 
     @PostMapping("delete_subtask/{subTaskID}")
     public String deleteSubtask(@PathVariable int subTaskID, HttpSession session) {

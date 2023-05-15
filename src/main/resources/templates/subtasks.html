@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
   <meta charset="UTF-8">
   <title>Subtasks</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
+
 <body>
 <div class="container" style="padding-top: 20px;">
   <div class="card">
@@ -27,6 +29,7 @@
           <td th:text="${subtask.getEstimated_time()}"></td>
           <td th:text="${subtask.getFinal_time()}"></td>
           <td>
+            <a th:href="@{/edit_subtask/{subtaskID} (subtaskID=${subtask.getSubtaskID()})}" class="btn btn-warning">Edit</a>
             <form method="post" th:action="@{/delete_subtask/{subtaskID} (subtaskID=${subtask.getSubtaskID()})}"
                   style="display: inline-block;">
               <button type="submit" class="btn btn-danger">Delete</button>
