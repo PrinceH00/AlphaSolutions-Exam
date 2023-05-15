@@ -30,6 +30,7 @@ public interface IProjectManagerRepository_DB {
     Task getTaskByID(int task_id);
 
     List<Task> getTasks(int project_id);
+    void updateTask(Task task);
 
     void deleteTask(int subTaskID);
 

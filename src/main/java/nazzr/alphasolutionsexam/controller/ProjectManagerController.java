@@ -170,6 +170,24 @@ public class ProjectManagerController {
         }
         return "redirect:/login";
     }
+    @GetMapping("edit_task/{taskID}")
+    public String editTask(@PathVariable int taskID, HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            Task task = projectManagerService.getTaskByID(taskID);
+            model.addAttribute("task", task);
+            return "edit_task";
+        }
+        return "redirect:/login";
+    }
+    @PostMapping("edit_task/{taskID}")
+    public String updateTask(@PathVariable int taskID, @ModelAttribute("task") Task task, HttpSession session) {
+        if (isLoggedIn(session)) {
+            task.setTaskID(taskID);
+            projectManagerService.updateTask(task);
+            return "redirect:/dashboard";
+        }
+        return "redirect:/login";
+    }
 
     @PostMapping("delete_task/{taskID}")
     public String deleteTask(@PathVariable int taskID, HttpSession session) {

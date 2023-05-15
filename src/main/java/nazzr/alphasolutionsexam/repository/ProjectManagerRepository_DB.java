@@ -270,6 +270,20 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     }
 
     @Override
+    public void updateTask(Task task) {
+        try {
+            String SQL = "UPDATE Task SET title = ?, description = ? WHERE task_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setString(1, task.getTitle());
+            preparedStatement.setString(2, task.getDescription());
+            preparedStatement.setInt(3, task.getTaskID());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void deleteTask(int taskID) {
         try {
             String SQL = "DELETE FROM Task WHERE task_id = ?";

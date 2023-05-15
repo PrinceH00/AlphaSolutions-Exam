@@ -1,19 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
+
 <head>
     <meta charset="UTF-8">
     <title>Task</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 
+
 <body>
 <div class="container" style="padding-top: 20px;">
     <div class="card">
         <div class="card-body">
 
+
             <h3 class="card-title">Tasks</h3>
             <table class="table">
+
 
                 <thead>
                 <tr>
@@ -23,12 +27,14 @@
                 </tr>
                 </thead>
 
+
                 <tbody>
                 <tr th:each="task: ${tasks}">
                     <td th:text="${task.getTitle()}"></td>
                     <td th:text="${task.getDescription()}"></td>
                     <td><a th:href="@{/subtasks/{taskID} (taskID=${task.getTaskID()})}"
                            class="btn btn-primary">Subtasks</a>
+                        <a th:href="@{/edit_task/{taskID} (taskID=${task.getTaskID()})}" class="btn btn-warning">Edit</a>
                         <form method="post" th:action="@{/delete_task/{taskID} (taskID=${task.getTaskID()})}"
                               style="display: inline-block;">
                             <button type="submit" class="btn btn-danger">Delete</button>
@@ -37,11 +43,14 @@
                 </tbody>
             </table>
 
+
             <br>
+
 
             <a th:href="@{/create_task/{projectID} (projectID=${projectID})}" class="btn btn-primary">Add Task</a>
             <a th:href="@{/dashboard}" class="btn btn-primary">Back</a>
             <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
+
 
         </div>
     </div>
