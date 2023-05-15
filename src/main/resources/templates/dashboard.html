@@ -27,8 +27,8 @@
                     <td th:text="${project.getDeadlineDate()}"></td>
                     <td th:text="${project.getFinalDate()}"></td>
                     <td>
-                        <a th:href="@{/task/{project_id} (project_id=${project.getProjectID()})}" class="btn btn-primary">Tasks</a>
-                        <form method="POST" th:action="@{/delete_project/{project_id} (project_id=${project.getProjectID()})}" style="display: inline-block;">
+                        <a th:href="@{/tasks/{projectID} (projectID=${project.getProjectID()})}" class="btn btn-primary">Tasks</a>
+                        <form method="POST" th:action="@{/delete_project/{projectID} (projectID=${project.getProjectID()})}" style="display: inline-block;">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </td>
