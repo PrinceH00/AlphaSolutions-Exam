@@ -197,6 +197,30 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     }
 
     @Override
+    public Task getTaskByID(int taskID) {
+        try {
+            SQL = "SELECT * FROM Task WHERE task_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, taskID);
+            resultSet = preparedStatement.executeQuery();
+
+            Task task = null;
+            if (resultSet.next()) {
+                String title = resultSet.getString(2);
+                String description = resultSet.getString(3);
+                int projectID = resultSet.getInt(4);
+
+                task = new Task(taskID, title, description, projectID);
+            }
+
+            return task;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public List<Task> getAllTasks(int projectID) {
         List<Task> taskList = new ArrayList<>();
         try {
@@ -218,30 +242,6 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
 
         } catch (SQLException e) {
             throw new RuntimeException();
-        }
-    }
-
-    @Override
-    public Task getTaskByID(int taskID) {
-        try {
-            SQL = "SELECT * FROM Task WHERE task_id = ?";
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, taskID);
-            resultSet = preparedStatement.executeQuery();
-
-            Task task = null;
-            if (resultSet.next()) {
-                String title = resultSet.getString(2);
-                String description = resultSet.getString(3);
-                int projectID = resultSet.getInt(4);
-
-                task = new Task(taskID, title, description, projectID);
-            }
-
-            return task;
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 

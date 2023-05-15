@@ -12,41 +12,61 @@ import java.util.List;
 public class ProjectManagerService {
     private final IProjectManagerRepository_DB iProjectManagerRepositoryDb;
 
-    public ProjectManagerService(ApplicationContext context, @Value("projectRepo") String impl) {
+    public ProjectManagerService(ApplicationContext context, @Value("projectManagerRepo") String impl) {
         iProjectManagerRepositoryDb = (IProjectManagerRepository_DB) context.getBean(impl);
     }
+
+    //--------------------------------------------------PROJECT-------------------------------------------------------\\
 
     public Project createProject(Project project) {
         return iProjectManagerRepositoryDb.createProject(project);
     }
 
-    public void deleteProject(int projectID) {
-        iProjectManagerRepositoryDb.deleteProject(projectID);
+    public Project getProjectByID(int projectID) {
+        return iProjectManagerRepositoryDb.getProjectByID(projectID);
     }
 
     public List<Project> getAllProjects(User user) {
         return iProjectManagerRepositoryDb.getAllProjects(user);
     }
 
-    public Project getProjectByID(int project_id) {
-        return iProjectManagerRepositoryDb.getProjectByID(project_id);
+    public void deleteProject(int projectID) {
+        iProjectManagerRepositoryDb.deleteProject(projectID);
     }
 
-    public Task createTask(Task task, int project_id) {
-        return iProjectManagerRepositoryDb.createTask(task, project_id);
+    //--------------------------------------------------EMPLOYEE------------------------------------------------------\\
+
+    public Employee createEmployee(Employee employee) {
+        return iProjectManagerRepositoryDb.createEmployee(employee);
     }
 
-    public List<Task> getAllTask(int project_id) {
-        return iProjectManagerRepositoryDb.getAllTasks(project_id);
+    public List<Employee> getEmployees(User user) {
+        return iProjectManagerRepositoryDb.getEmployees(user);
     }
 
-    public Task getTaskByID (int task_id) {
-        return iProjectManagerRepositoryDb.getTaskByID(task_id);
+    public void deleteEmployee(int employeeID) {
+        iProjectManagerRepositoryDb.deleteEmployee(employeeID);
     }
-    public void deleteTask(int taskID){
+
+    //---------------------------------------------------TASK---------------------------------------------------------\\
+
+    public Task createTask(Task task, int projectID) {
+        return iProjectManagerRepositoryDb.createTask(task, projectID);
+    }
+
+    public Task getTaskByID(int taskID) {
+        return iProjectManagerRepositoryDb.getTaskByID(taskID);
+    }
+
+    public List<Task> getAllTasks(int projectID) {
+        return iProjectManagerRepositoryDb.getAllTasks(projectID);
+    }
+
+    public void deleteTask(int taskID) {
         iProjectManagerRepositoryDb.deleteTask(taskID);
     }
 
+    //--------------------------------------------------SUBTASK-------------------------------------------------------\\
     public Subtask createSubtask(Subtask subtask, int taskID) {
         return iProjectManagerRepositoryDb.createSubtask(subtask, taskID);
     }
@@ -55,18 +75,7 @@ public class ProjectManagerService {
         return iProjectManagerRepositoryDb.getSubtasks(taskID);
     }
 
-    public void deleteSubtask(int taskID){
+    public void deleteSubtask(int taskID) {
         iProjectManagerRepositoryDb.deleteSubtask(taskID);
-    }
-    public Employee createEmployee(Employee employee) {
-        return iProjectManagerRepositoryDb.createEmployee(employee);
-    }
-
-    public List<Employee> getEmployees(User user) {
-            return iProjectManagerRepositoryDb.getEmployees(user);
-    }
-
-    public void deleteEmployee(int employeeID) {
-        iProjectManagerRepositoryDb.deleteEmployee(employeeID);
     }
 }
