@@ -22,7 +22,6 @@ public class UserRepository_DB implements IUserRepository_DB {
         try {
             SQL = "INSERT INTO User(firstname, lastname, email, password) VALUES (?, ?, ?, ?)";
             preparedStatement = connection.prepareStatement(SQL);
-
             preparedStatement.setString(1, user.getFirstName());
             preparedStatement.setString(2, user.getLastName());
             preparedStatement.setString(3, user.getEmail());
@@ -41,7 +40,6 @@ public class UserRepository_DB implements IUserRepository_DB {
         try {
             SQL = "SELECT * FROM User WHERE email = ? AND password = ?";
             PreparedStatement preparedStatementUserID = connection.prepareStatement(SQL);
-
             preparedStatementUserID.setString(1, email);
             preparedStatementUserID.setString(2, password);
             resultSet = preparedStatementUserID.executeQuery();

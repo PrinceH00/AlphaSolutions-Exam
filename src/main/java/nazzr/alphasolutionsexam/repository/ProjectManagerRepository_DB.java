@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //
-@Repository("projectRepo")
+@Repository("projectManagerRepo")
 public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB {
 
     String SQL = null;
@@ -18,6 +18,8 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     PreparedStatement preparedStatement = null;
     ResultSet resultSet = null;
 
+    //--------------------------------------------------PROJECT-------------------------------------------------------\\
+    @Override
     public Project createProject(Project project) {
         try {
             String SQL = "INSERT INTO Project (title, description, startDate, deadlineDate, finalDate, user_id) VALUES(?,?,?,?,?,?)";
@@ -34,7 +36,6 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             } else {
                 preparedStatement.setObject(5, null);
             }
-
             preparedStatement.setInt(6, project.getUserID());
             preparedStatement.executeUpdate();
 
@@ -45,39 +46,14 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
     }
 
-
-    public List<Project> getAllProjects(User user) {
-        List<Project> projectList = new ArrayList<>();
-        try {
-            SQL = "SELECT * FROM Project WHERE user_id = ?";
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, user.getUserID());
-            resultSet = preparedStatement.executeQuery();
-            while (resultSet.next()) {
-                int projectID = resultSet.getInt(1);
-                String title = resultSet.getString(2);
-                String description = resultSet.getString(3);
-                LocalDate startDate = resultSet.getDate(4).toLocalDate();
-                LocalDate deadlineDate = resultSet.getDate(5).toLocalDate();
-                LocalDate finalDate = null;
-                if (resultSet.getDate(6) != null) {
-                    finalDate = resultSet.getDate(6).toLocalDate();
-                }
-                int userID = resultSet.getInt(7);
-                projectList.add(new Project(projectID, title, description, startDate, deadlineDate, finalDate, userID));
-            }
-            return projectList;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public Project getProjectByID(int project_id) {
+    @Override
+    public Project getProjectByID(int projectID) {
         try {
             SQL = "SELECT * FROM project WHERE project_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, project_id);
+            preparedStatement.setInt(1, projectID);
             resultSet = preparedStatement.executeQuery(SQL);
+
             Project project = null;
             while (resultSet.next()) {
                 String title = resultSet.getString(2);
@@ -86,15 +62,65 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
                 LocalDate deadlineDate = resultSet.getDate(5).toLocalDate();
                 LocalDate finalDate = resultSet.getDate(6).toLocalDate();
                 int userID = resultSet.getInt(7);
-                project = new Project(project_id, title, description, startDate, deadlineDate, finalDate, userID);
+
+                project = new Project(projectID, title, description, startDate, deadlineDate, finalDate, userID);
             }
+
             return project;
+
         } catch (SQLException e) {
             throw new RuntimeException();
         }
     }
 
-    public  Employee createEmployee(Employee employee){
+    @Override
+    public List<Project> getAllProjects(User user) {
+        List<Project> projectList = new ArrayList<>();
+        try {
+            SQL = "SELECT * FROM Project WHERE user_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, user.getUserID());
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int projectID = resultSet.getInt(1);
+                String title = resultSet.getString(2);
+                String description = resultSet.getString(3);
+                LocalDate startDate = resultSet.getDate(4).toLocalDate();
+                LocalDate deadlineDate = resultSet.getDate(5).toLocalDate();
+
+                LocalDate finalDate = null;
+                if (resultSet.getDate(6) != null) {
+                    finalDate = resultSet.getDate(6).toLocalDate();
+                }
+
+                int userID = resultSet.getInt(7);
+
+                projectList.add(new Project(projectID, title, description, startDate, deadlineDate, finalDate, userID));
+            }
+
+            return projectList;
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void deleteProject(int projectID) {
+        try {
+            String SQL = "DELETE FROM Project WHERE project_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, projectID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //--------------------------------------------------EMPLOYEE------------------------------------------------------\\
+    @Override
+    public Employee createEmployee(Employee employee) {
         try {
             String SQL = "INSERT INTO Employee (firstname, lastname, email, job, user_id) VALUES(?,?,?,?,?)";
             preparedStatement = connection.prepareStatement(SQL);
@@ -112,7 +138,8 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
     }
 
-    public List<Employee> getEmployees(User user){
+    @Override
+    public List<Employee> getEmployees(User user) {
         List<Employee> employees = new ArrayList<>();
         try {
             SQL = "SELECT * FROM Employee WHERE user_id = ?";
@@ -125,18 +152,21 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
                 String firstName = resultSet.getString(2);
                 String lastName = resultSet.getString(3);
                 String email = resultSet.getString(4);
-                String  job = resultSet.getString(5);
+                String job = resultSet.getString(5);
                 int userID = resultSet.getInt(6);
-                employees.add(new Employee(employeeID,firstName,lastName,email, job, userID));
+
+                employees.add(new Employee(employeeID, firstName, lastName, email, job, userID));
             }
 
             return employees;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
     }
 
+    @Override
     public void deleteEmployee(int employeeID) {
         try {
             String SQL = "DELETE FROM Employee WHERE employee_id = ?";
@@ -148,69 +178,74 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
     }
 
-    public Task createTask(Task task, int project_id) {
+    //---------------------------------------------------TASK---------------------------------------------------------\\
+    @Override
+    public Task createTask(Task task, int projectID) {
         try {
             SQL = "INSERT INTO Task (title, description, project_id) VALUES (?,?,?)";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setString(1, task.getTitle());
             preparedStatement.setString(2, task.getDescription());
-            preparedStatement.setInt(3, project_id);
+            preparedStatement.setInt(3, projectID);
             preparedStatement.executeUpdate();
+
+            return task;
+
         } catch (SQLException e) {
             throw new RuntimeException();
         }
-        return task;
     }
 
-    public void deleteProject(int projectID) {
-        try {
-            String SQL = "DELETE FROM Project WHERE project_id = ?";
-            preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, projectID);
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public List<Task> getAllTasks(int project_id) {
+    @Override
+    public List<Task> getAllTasks(int projectID) {
         List<Task> taskList = new ArrayList<>();
         try {
             SQL = "SELECT * FROM Task WHERE project_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, project_id);
+            preparedStatement.setInt(1, projectID);
             resultSet = preparedStatement.executeQuery();
+
             while (resultSet.next()) {
                 int taskID = resultSet.getInt(1);
                 String title = resultSet.getString(2);
                 String description = resultSet.getString(3);
-                int projectID = resultSet.getInt(4);
-                taskList.add(new Task(taskID, title, description, projectID));
+                int project_id = resultSet.getInt(4);
+
+                taskList.add(new Task(taskID, title, description, project_id));
             }
+
+            return taskList;
+
         } catch (SQLException e) {
             throw new RuntimeException();
         }
-        return taskList;
     }
 
-    public Task getTaskByID(int task_id) {
+    @Override
+    public Task getTaskByID(int taskID) {
         try {
             SQL = "SELECT * FROM Task WHERE task_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
-            preparedStatement.setInt(1, task_id);
+            preparedStatement.setInt(1, taskID);
             resultSet = preparedStatement.executeQuery();
+
             Task task = null;
             if (resultSet.next()) {
                 String title = resultSet.getString(2);
                 String description = resultSet.getString(3);
                 int projectID = resultSet.getInt(4);
-                task = new Task(task_id, title, description, projectID);
+
+                task = new Task(taskID, title, description, projectID);
             }
+
             return task;
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
     public void deleteTask(int taskID) {
         try {
             String SQL = "DELETE FROM Task WHERE task_id = ?";
@@ -222,6 +257,8 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
     }
 
+    //--------------------------------------------------SUBTASK-------------------------------------------------------\\
+    @Override
     public Subtask createSubtask(Subtask subtask, int taskID) {
         try {
             SQL = "INSERT INTO Subtask (title, description, estimated_time, final_time, task_id) VALUES (?,?,?,?,?)";
@@ -232,13 +269,15 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             preparedStatement.setInt(4, subtask.getFinal_time());
             preparedStatement.setInt(5, taskID);
             preparedStatement.executeUpdate();
+
+            return subtask;
+
         } catch (SQLException e) {
             throw new RuntimeException();
         }
-        return subtask;
     }
 
-
+    @Override
     public List<Subtask> getSubtasks(int taskID) {
         List<Subtask> subtasks = new ArrayList<>();
         try {
@@ -256,10 +295,12 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
                 int task_ID = resultSet.getInt(6);
                 subtasks.add(new Subtask(subtaskID, title, description, estimated_time, final_time, task_ID));
             }
+
+            return subtasks;
+
         } catch (SQLException e) {
             throw new RuntimeException();
         }
-        return subtasks;
     }
 
     @Override
