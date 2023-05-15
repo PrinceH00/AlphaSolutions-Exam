@@ -54,10 +54,16 @@ public class LoginController {
 
     @PostMapping("signup")
     public String saveUser(@ModelAttribute User user, Model model) {
-        model.addAttribute("user", user);
-        loginService.createUser(user);
-        return "redirect:/login";
+        User existingUser = loginService.getUserByEmail(user.getEmail());
+        if (existingUser != null) {
+            model.addAttribute("userExists", true);
+            return "signup";
+        } else {
+            loginService.createUser(user);
+            return "redirect:/login";
+        }
     }
+
 
     //----------------------------------------------------LOGOUT------------------------------------------------------\\
     @GetMapping("logout")
