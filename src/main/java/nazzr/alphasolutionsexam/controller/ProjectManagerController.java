@@ -108,7 +108,7 @@ public class ProjectManagerController {
         if (isLoggedIn(session)) {
             projectManagerService.deleteEmployee(employeeID);
 
-            return "redirect:/dashboard";
+            return "redirect:/employees";
         }
         return "redirect:/login";
     }
@@ -132,18 +132,18 @@ public class ProjectManagerController {
             task.setProjectID(projectID);
             projectManagerService.createTask(task, projectID);
 
-            return "redirect:/task/" + projectID;
+            return "redirect:/tasks/" + projectID;
         }
         return "redirect:/login";
     }
 
-    @GetMapping("task/{projectID}")
+    @GetMapping("tasks/{projectID}")
     public String viewTasks( @PathVariable int projectID, HttpSession session, Model model) {
         if (isLoggedIn(session)) {
             List<Task> taskList = projectManagerService.getTasks(projectID);
-            model.addAttribute("task", taskList);
+            model.addAttribute("tasks", taskList);
 
-            return "task";
+            return "tasks";
         }
         return "redirect:/login";
     }
@@ -155,7 +155,7 @@ public class ProjectManagerController {
             int projectID = task.getProjectID();
             projectManagerService.deleteTask(taskID);
 
-            return "redirect:/task/" + projectID;
+            return "redirect:/tasks/" + projectID;
         }
         return "redirect:/login";
     }
@@ -195,10 +195,12 @@ public class ProjectManagerController {
         return "redirect:/login";
     }
 
-    @PostMapping("delete_subtask/{taskID}")
-    public String deleteSubtask(@PathVariable int taskID, HttpSession session) {
+    @PostMapping("delete_subtask/{subTaskID}")
+    public String deleteSubtask(@PathVariable int subTaskID, HttpSession session) {
         if (isLoggedIn(session)) {
-            projectManagerService.deleteSubtask(taskID);
+            Subtask subtask = projectManagerService.getSubTaskByID(subTaskID);
+            int taskID = subtask.getTaskID();
+            projectManagerService.deleteSubtask(subTaskID);
 
             return "redirect:/subtasks/" + taskID;
         }
