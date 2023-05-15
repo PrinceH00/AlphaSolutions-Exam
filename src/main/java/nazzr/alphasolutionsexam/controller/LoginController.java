@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 @Controller
+@RequestMapping("/")
 public class LoginController {
 
     private LoginService loginService;
@@ -18,17 +19,21 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-
-    //----------------------------------------------------LOGIN-----------------------------------------------------\\
+    //-----------------------------------------------------LOGIN------------------------------------------------------\\
     @GetMapping("/")
-    public String showLogin() {
+    public String homePage() {
         return "login";
     }
 
-    @PostMapping("/login")
-    public String login(@RequestParam("email") String email, @RequestParam("password") String password,
-                        HttpSession session, Model model) {
+    @GetMapping("login")
+    public String loginPage() {
+        return "login";
+    }
+
+    @PostMapping("login")
+    public String login(@RequestParam("email") String email, @RequestParam("password") String password, HttpSession session, Model model) {
         User user = loginService.getUser(email, password);
+
         if (user != null) {
             if (user.getPassword().equals(password))
                 session.setAttribute("user", user);
@@ -39,35 +44,38 @@ public class LoginController {
         return "login";
     }
 
-    //--------------------------------------------------SIGN--UP----------------------------------------------------\\
-    @GetMapping("/signup")
+    //----------------------------------------------------SIGN--UP----------------------------------------------------\\
+    @GetMapping("signup")
     public String createUser(Model model) {
         model.addAttribute("user", new User());
         return "signup";
     }
 
-    @PostMapping("/signup")
+    @PostMapping("signup")
     public String saveUser(@ModelAttribute User user, Model model) {
         model.addAttribute("user", user);
         loginService.createUser(user);
         return "redirect:/login";
     }
 
-    //----------------------------------------------------LOGOUT----------------------------------------------------\\
-    @GetMapping("/logout")
+    //----------------------------------------------------LOGOUT------------------------------------------------------\\
+    @GetMapping("logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/";
+        return "redirect:/login";
     }
+
+    //-----------------------------------------------------ERROR------------------------------------------------------\\
     @ExceptionHandler(Exception.class)
-    public String handleException(Exception ex, Model model) {
-        model.addAttribute("errorMessage", "An error occurred: " + ex.getMessage());
+    public String handleException(Exception exception, Model model) {
+        model.addAttribute("errorMessage", "An error occurred: " + exception.getMessage());
         return "error";
     }
+
     @ExceptionHandler(ResponseStatusException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public String handle404Error(ResponseStatusException ex, Model model) {
-        model.addAttribute("errorMessage", "The page you requested could not be found." + ex.getMessage());
+    public String handle404Error(ResponseStatusException exception, Model model) {
+        model.addAttribute("errorMessage", "The page you requested could not be found." + exception.getMessage());
         return "404";
     }
 
