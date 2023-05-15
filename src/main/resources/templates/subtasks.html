@@ -15,8 +15,8 @@
         <tr>
           <th>Title</th>
           <th>Description</th>
-          <th>Estimate Time</th>
-          <th>Final Time</th>
+          <th>Estimate Time (In Minutes)</th>
+          <th>Final Time (In Minutes)</th>
           <th>Action</th>
         </tr>
         </thead>
@@ -27,7 +27,8 @@
           <td th:text="${subtask.getEstimated_time()}"></td>
           <td th:text="${subtask.getFinal_time()}"></td>
           <td>
-            <form th:action="@{/delete_subtask/{subtaskId}(subtaskId=${subtask.getSubtaskID()})}" method="post">
+            <form method="post" th:action="@{/delete_subtask/{subtaskID} (subtaskID=${subtask.getSubtaskID()})}"
+                  style="display: inline-block;">
               <button type="submit" class="btn btn-danger">Delete</button>
             </form>
           </td>
