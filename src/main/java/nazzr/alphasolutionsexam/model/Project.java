@@ -1,7 +1,6 @@
 package nazzr.alphasolutionsexam.model;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Project {
     private int projectID;
@@ -25,59 +24,70 @@ public class Project {
         this.userID = userID;
     }
 
+    //---------------------------------------------------Getter-------------------------------------------------------\\
+
     public int getProjectID() {
         return projectID;
-    }
-
-    public void setProjectID(int projectID) {
-        this.projectID = projectID;
     }
 
     public String getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
     public LocalDate getDeadlineDate() {
         return deadlineDate;
-    }
-
-    public void setDeadlineDate(LocalDate deadlineDate) {
-        this.deadlineDate = deadlineDate;
     }
 
     public LocalDate getFinalDate() {
         return finalDate;
     }
 
-    public void setFinalDate(LocalDate finalDate) {
-        this.finalDate = finalDate;
-    }
-
     public int getUserID() {
         return userID;
     }
 
-    public void setUserID(int userID) {
+    //---------------------------------------------------Setter-------------------------------------------------------\\
+
+    public Project setProjectID(int projectID) {
+        this.projectID = projectID;
+        return this;
+    }
+
+    public Project setTitle(String title) {
+        this.title = title;
+        return this;
+    }
+
+    public Project setDescription(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public Project setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+        return this;
+    }
+
+    public Project setDeadlineDate(LocalDate deadlineDate) {
+        this.deadlineDate = deadlineDate;
+        return this;
+    }
+
+    public Project setFinalDate(LocalDate finalDate) {
+        this.finalDate = finalDate;
+        return this;
+    }
+
+    public Project setUserID(int userID) {
         this.userID = userID;
+        return this;
     }
 }
