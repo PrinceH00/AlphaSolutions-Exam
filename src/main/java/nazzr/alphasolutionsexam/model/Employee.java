@@ -20,6 +20,8 @@ public class Employee {
         this.userID = userID;
     }
 
+    //---------------------------------------------------Getter-------------------------------------------------------\\
+
     public int getEmployeeID() {
         return employeeID;
     }
@@ -43,6 +45,8 @@ public class Employee {
     public int getUserID() {
         return userID;
     }
+
+    //---------------------------------------------------Setter-------------------------------------------------------\\
 
     public Employee setEmployeeID(int employeeID) {
         this.employeeID = employeeID;
