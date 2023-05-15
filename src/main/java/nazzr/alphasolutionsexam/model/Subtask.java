@@ -20,6 +20,8 @@ public class Subtask {
         this.taskID = taskID;
     }
 
+    //---------------------------------------------------Getter-------------------------------------------------------\\
+
     public int getSubtaskID() {
         return subtaskID;
     }
@@ -43,6 +45,8 @@ public class Subtask {
     public int getTaskID() {
         return taskID;
     }
+
+    //---------------------------------------------------Setter-------------------------------------------------------\\
 
     public Subtask setSubtaskID(int subtaskID) {
         this.subtaskID = subtaskID;
