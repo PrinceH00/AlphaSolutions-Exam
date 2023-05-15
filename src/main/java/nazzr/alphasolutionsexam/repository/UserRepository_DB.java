@@ -42,26 +42,45 @@ public class UserRepository_DB implements IUserRepository_DB {
             PreparedStatement preparedStatementUserID = connection.prepareStatement(SQL);
             preparedStatementUserID.setString(1, email);
             preparedStatementUserID.setString(2, password);
-            resultSet = preparedStatementUserID.executeQuery();
 
-            User user = null;
-            if (resultSet.next()) {
-                int UserID = resultSet.getInt("user_id");
-                String FirstName = resultSet.getString("firstName");
-                String LastName = resultSet.getString("lastName");
-                String Email = resultSet.getString("email");
-                String Password = resultSet.getString("password");
+            return getUser(preparedStatementUserID);
 
-                user = new User(UserID, FirstName, LastName, Email, Password);
-            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
-            return user;
+    private User getUser(PreparedStatement preparedStatementUserEmail) throws SQLException {
+        resultSet = preparedStatementUserEmail.executeQuery();
+
+        User user = null;
+        if (resultSet.next()) {
+            int UserID = resultSet.getInt("user_id");
+            String FirstName = resultSet.getString("firstName");
+            String LastName = resultSet.getString("lastName");
+            String Email = resultSet.getString("email");
+            String Password = resultSet.getString("password");
+
+            user = new User(UserID, FirstName, LastName, Email, Password);
+        }
+
+        return user;
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        try {
+            SQL = "SELECT * FROM User WHERE email = ?";
+            PreparedStatement preparedStatementUserEmail = connection.prepareStatement(SQL);
+            preparedStatementUserEmail.setString(1, email);
+            return getUser(preparedStatementUserEmail);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 }
+
 
 
 

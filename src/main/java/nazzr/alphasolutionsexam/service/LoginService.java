@@ -22,5 +22,9 @@ public class LoginService {
     public User getUser(String email, String password) {
         return userRepository_db.getUser(email, password);
     }
+
+    public User getUserByEmail(String email) {
+        return userRepository_db.getUserByEmail(email);
+    }
 }
 
