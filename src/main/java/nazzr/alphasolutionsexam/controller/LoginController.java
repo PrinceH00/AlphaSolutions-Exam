@@ -47,7 +47,8 @@ public class LoginController {
     //----------------------------------------------------SIGN--UP----------------------------------------------------\\
     @GetMapping("signup")
     public String createUser(Model model) {
-        model.addAttribute("user", new User());
+        User user = new User();
+        model.addAttribute("user", user);
         return "signup";
     }
 

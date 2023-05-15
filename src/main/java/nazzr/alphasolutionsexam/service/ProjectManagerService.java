@@ -26,7 +26,7 @@ public class ProjectManagerService {
         return iProjectManagerRepositoryDb.getProjectByID(projectID);
     }
 
-    public List<Project> getAllProjects(User user) {
+    public List<Project> getProjects(User user) {
         return iProjectManagerRepositoryDb.getAllProjects(user);
     }
 
@@ -58,7 +58,7 @@ public class ProjectManagerService {
         return iProjectManagerRepositoryDb.getTaskByID(taskID);
     }
 
-    public List<Task> getAllTasks(int projectID) {
+    public List<Task> getTasks(int projectID) {
         return iProjectManagerRepositoryDb.getAllTasks(projectID);
     }
 

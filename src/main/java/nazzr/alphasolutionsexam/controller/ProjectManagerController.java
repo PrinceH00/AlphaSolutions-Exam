@@ -29,6 +29,7 @@ public class ProjectManagerController {
         if (isLoggedIn(session)) {
             Project project = new Project();
             model.addAttribute("project", project);
+
             return "create_project";
         }
         return "redirect:/login";
@@ -40,36 +41,39 @@ public class ProjectManagerController {
             User user = (User) session.getAttribute("user");
             project.setUserID(user.getUserID());
             projectManagerService.createProject(project);
-            return "redirect:dashboard";
 
+            return "redirect:dashboard";
         }
         return "redirect:/login";
     }
 
-    @PostMapping("delete_project/{project_id}")
-    public String deleteProject(@PathVariable int project_id, HttpSession session) {
+    @PostMapping("delete_project/{projectID}")
+    public String deleteProject(@PathVariable int projectID, HttpSession session) {
         if (isLoggedIn(session)) {
-            projectManagerService.deleteProject(project_id);
+            projectManagerService.deleteProject(projectID);
             return "redirect:/dashboard";
         }
         return "redirect:/login";
     }
 
     @GetMapping("dashboard")
-    public String viewProject(HttpSession session, Model model) {
+    public String viewProjects(HttpSession session, Model model) {
         if (isLoggedIn(session)) {
-            List<Project> projectList = projectManagerService.getAllProjects((User) session.getAttribute("user"));
+            List<Project> projectList = projectManagerService.getProjects((User) session.getAttribute("user"));
             model.addAttribute("projectList", projectList);
+
             return "dashboard";
         }
         return "redirect:/login";
     }
+
     //------------------------------------------------EMPLOYEES-----------------------------------------------------\\
     @GetMapping("create_employee")
     public String createEmployee(HttpSession session, Model model) {
         if (isLoggedIn(session)) {
             Employee employee = new Employee();
             model.addAttribute("employee", employee);
+
             return "create_employee";
         }
         return "redirect:/login";
@@ -81,6 +85,7 @@ public class ProjectManagerController {
             User user = (User) session.getAttribute("user");
             employee.setUserID(user.getUserID());
             projectManagerService.createEmployee(employee);
+
             return "redirect:employees";
 
         }
@@ -88,10 +93,11 @@ public class ProjectManagerController {
     }
 
     @GetMapping("employees")
-    public String viewEmployee(HttpSession session, Model model) {
+    public String viewEmployees(HttpSession session, Model model) {
         if (isLoggedIn(session)) {
             List<Employee> employees = projectManagerService.getEmployees((User) session.getAttribute("user"));
             model.addAttribute("employees", employees);
+
             return "employees";
         }
         return "redirect:/login";
@@ -101,49 +107,55 @@ public class ProjectManagerController {
     public String deleteEmployee(@PathVariable int employeeID, HttpSession session) {
         if (isLoggedIn(session)) {
             projectManagerService.deleteEmployee(employeeID);
+
             return "redirect:/dashboard";
         }
         return "redirect:/login";
     }
 
     //-------------------------------------------------TASK-------------------------------------------------------\\
-    @GetMapping("create_task/{project_id}")
-    public String createTask(HttpSession session, Model model, @PathVariable int project_id) {
+    @GetMapping("create_task/{projectID}")
+    public String createTask(@PathVariable int projectID, HttpSession session, Model model) {
         if (isLoggedIn(session)) {
             Task task = new Task();
-            task.setProjectID(project_id);
+            task.setProjectID(projectID);
             model.addAttribute("task", task);
+
             return "create_task";
         }
         return "redirect:/login";
     }
 
-    @PostMapping("create_task/{project_id}")
-    public String saveTask(@ModelAttribute Task task, HttpSession session, @PathVariable int project_id) {
+    @PostMapping("create_task/{projectID}")
+    public String saveTask( @PathVariable int projectID, @ModelAttribute Task task, HttpSession session) {
         if (isLoggedIn(session)) {
-            task.setProjectID(project_id);
-            projectManagerService.createTask(task, project_id);
-            return "redirect:/task/" + project_id;
+            task.setProjectID(projectID);
+            projectManagerService.createTask(task, projectID);
+
+            return "redirect:/task/" + projectID;
         }
         return "redirect:/login";
     }
 
-    @GetMapping("task/{project_id}")
-    public String getAllTask(HttpSession session, Model model, @PathVariable int project_id) {
+    @GetMapping("task/{projectID}")
+    public String viewTasks( @PathVariable int projectID, HttpSession session, Model model) {
         if (isLoggedIn(session)) {
-            List<Task> taskList = projectManagerService.getAllTask(project_id);
+            List<Task> taskList = projectManagerService.getTasks(projectID);
             model.addAttribute("task", taskList);
+
             return "task";
         }
         return "redirect:/login";
     }
-    @PostMapping("delete_task/{task_id}")
-    public String deleteTask(@PathVariable int task_id, HttpSession session) {
+
+    @PostMapping("delete_task/{taskID}")
+    public String deleteTask(@PathVariable int taskID, HttpSession session) {
         if (isLoggedIn(session)) {
-            Task task = projectManagerService.getTaskByID(task_id);
-            int project_id = task.getProjectID();
-            projectManagerService.deleteTask(task_id);
-            return "redirect:/task/" + project_id;
+            Task task = projectManagerService.getTaskByID(taskID);
+            int projectID = task.getProjectID();
+            projectManagerService.deleteTask(taskID);
+
+            return "redirect:/task/" + projectID;
         }
         return "redirect:/login";
     }
@@ -155,6 +167,7 @@ public class ProjectManagerController {
             Subtask subtask = new Subtask();
             subtask.setTaskID(taskID);
             model.addAttribute("subtask", subtask);
+
             return "create_subtask";
         }
         return "redirect:/login";
@@ -165,24 +178,28 @@ public class ProjectManagerController {
         if (isLoggedIn(session)) {
             subtask.setTaskID(taskID);
             projectManagerService.createSubtask(subtask, taskID);
+
             return "redirect:/subtasks/" + taskID;
         }
         return "redirect:/login";
     }
 
     @GetMapping("subtasks/{taskID}")
-    public String getSubtasks(@PathVariable int taskID, Model model, HttpSession session) {
+    public String viewSubtasks(@PathVariable int taskID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
             List<Subtask> subtasks = projectManagerService.getSubtasks(taskID);
             model.addAttribute("subtasks", subtasks);
+
             return "subtasks";
         }
         return "redirect:/login";
     }
+
     @PostMapping("delete_subtask/{taskID}")
-    public String deleteSubtask(@PathVariable int taskID, HttpSession session){
-        if (isLoggedIn(session)){
+    public String deleteSubtask(@PathVariable int taskID, HttpSession session) {
+        if (isLoggedIn(session)) {
             projectManagerService.deleteSubtask(taskID);
+
             return "redirect:/subtasks/" + taskID;
         }
         return "redirect:/login";
