@@ -32,7 +32,7 @@
                 <div class="form-group">
                     <p>
                         <button type="submit" class="btn btn-primary">Done</button>
-                        <a th:href="@{'/subtask'}" class="btn btn-secondary">Back</a>
+                        <a th:href="@{/subtasks/{taskID} (taskID=${subtask.getTaskID()})}" class="btn btn-secondary">Back</a>
                     </p>
                 </div>
             </form>
