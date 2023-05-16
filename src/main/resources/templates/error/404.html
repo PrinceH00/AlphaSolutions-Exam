@@ -1,10 +1,23 @@
 <!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Error 404</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
+
 <body>
-<h3>This webpage does not exist</h3>
+<div class="container" style="max-width: 600px; margin: 100px auto 0;">
+    <h3 class="text-center">ERROR 404</h3>
+
+    <form action="/login" method="post" style="background-color: #ffffff; padding: 20px;"class="text-center">
+        <button href="/" target="_self">
+            <a href="/" target="_self">Back to the homepage</a>
+        </button>
+    </form>
+
+</div>
 </body>
 </html>
