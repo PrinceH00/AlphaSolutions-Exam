@@ -163,6 +163,32 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     }
 
     @Override
+    public Employee getEmployeeByID(int employeeID) {
+        try {
+            SQL = "SELECT * FROM Employee WHERE employee_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, employeeID);
+            resultSet = preparedStatement.executeQuery();
+
+            Employee employee = null;
+
+            while (resultSet.next()) {
+                String firstName = resultSet.getString(2);
+                String lastName = resultSet.getString(3);
+                String email = resultSet.getString(4);
+                String job = resultSet.getString(5);
+                int userID = resultSet.getInt(6);
+
+                employee = new Employee(employeeID, firstName, lastName, email, job, userID);
+            }
+            return employee;
+
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    @Override
     public List<Employee> getEmployees(User user) {
         List<Employee> employees = new ArrayList<>();
         try {
@@ -199,6 +225,24 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void updateEmployee(Employee employee) {
+        try {
+            String SQL = "UPDATE Employee SET firstname = ?, lastname = ?, email = ?, job = ? WHERE employee_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setString(1, employee.getFirstName());
+            preparedStatement.setString(2, employee.getLastName());
+            preparedStatement.setString(3, employee.getEmail());
+            preparedStatement.setString(4, employee.getJob());
+            preparedStatement.setInt(5, employee.getEmployeeID());
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException exception) {
+            throw new RuntimeException(exception);
         }
     }
 
