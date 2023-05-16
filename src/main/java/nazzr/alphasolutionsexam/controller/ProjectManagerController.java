@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -60,6 +61,18 @@ public class ProjectManagerController {
     public String editProject(@PathVariable int projectID, HttpSession session, Model model) {
         if (isLoggedIn(session)) {
             Project project = projectManagerService.getProjectByID(projectID);
+
+            DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            String startDateString = project.getStartDate().format(dateFormatter);
+            String deadlineDateString = project.getDeadlineDate().format(dateFormatter);
+            String finalDateString = "";
+            if (project.getFinalDate() != null) {
+                finalDateString = project.getFinalDate().format(dateFormatter);
+            }
+
+            model.addAttribute("startDateString", startDateString);
+            model.addAttribute("deadlineDateString", deadlineDateString);
+            model.addAttribute("finalDateString", finalDateString);
             model.addAttribute("project", project);
 
             return "edit_project";
