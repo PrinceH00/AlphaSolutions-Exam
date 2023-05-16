@@ -20,9 +20,13 @@ public interface IProjectManagerRepository_DB {
     //--------------------------------------------------EMPLOYEE------------------------------------------------------\\
     Employee createEmployee(Employee employee);
 
+    Employee getEmployeeByID(int employeeID);
+
     List<Employee> getEmployees(User user);
 
     void deleteEmployee(int employeeID);
+
+    void updateEmployee(Employee employee);
 
     //---------------------------------------------------TASK---------------------------------------------------------\\
     Task createTask(Task task, int project_id);
@@ -43,6 +47,4 @@ public interface IProjectManagerRepository_DB {
     void updateSubtask(Subtask subtask);
 
     void deleteSubtask(int taskID);
-
-
 }

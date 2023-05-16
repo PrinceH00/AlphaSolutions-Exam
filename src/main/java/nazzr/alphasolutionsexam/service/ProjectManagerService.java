@@ -44,12 +44,20 @@ public class ProjectManagerService {
         return iProjectManagerRepositoryDb.createEmployee(employee);
     }
 
+    public Employee getEmployeeByID(int employeeID) {
+        return iProjectManagerRepositoryDb.getEmployeeByID(employeeID);
+    }
+
     public List<Employee> getEmployees(User user) {
         return iProjectManagerRepositoryDb.getEmployees(user);
     }
 
     public void deleteEmployee(int employeeID) {
         iProjectManagerRepositoryDb.deleteEmployee(employeeID);
+    }
+
+    public void updateEmployee(Employee employee) {
+        iProjectManagerRepositoryDb.updateEmployee(employee);
     }
 
     //---------------------------------------------------TASK---------------------------------------------------------\\
@@ -65,7 +73,8 @@ public class ProjectManagerService {
     public List<Task> getTasks(int projectID) {
         return iProjectManagerRepositoryDb.getTasks(projectID);
     }
-    public void updateTask(Task task){
+
+    public void updateTask(Task task) {
         iProjectManagerRepositoryDb.updateTask(task);
     }
 
