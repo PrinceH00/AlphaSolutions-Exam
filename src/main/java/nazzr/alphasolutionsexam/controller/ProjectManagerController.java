@@ -183,11 +183,14 @@ public class ProjectManagerController {
     public String updateTask(@PathVariable int taskID, @ModelAttribute("task") Task task, HttpSession session) {
         if (isLoggedIn(session)) {
             task.setTaskID(taskID);
+            int projectID = projectManagerService.getTaskByID(taskID).getProjectID();
             projectManagerService.updateTask(task);
-            return "redirect:/dashboard";
+
+            return "redirect:/tasks/" + projectID;
         }
         return "redirect:/login";
     }
+
 
     @PostMapping("delete_task/{taskID}")
     public String deleteTask(@PathVariable int taskID, HttpSession session) {
@@ -248,8 +251,9 @@ public class ProjectManagerController {
     public String updateSubtask(@PathVariable int subtaskID, @ModelAttribute("subtask") Subtask subtask, HttpSession session) {
         if (isLoggedIn(session)) {
             subtask.setSubtaskID(subtaskID);
+            int taskID = projectManagerService.getSubTaskByID(subtaskID).getTaskID();
             projectManagerService.updateSubtask(subtask);
-            return "redirect:/dashboard";
+            return "redirect:/subtasks/" + taskID;
         }
         return "redirect:/login";
     }
