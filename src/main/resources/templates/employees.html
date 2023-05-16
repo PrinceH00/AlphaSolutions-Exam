@@ -27,6 +27,7 @@
                     <td th:text="${employee.getJob()}"></td>
 
                     <td>
+                        <a th:href="@{/edit_employee/{employeeID} (employeeID=${employee.getEmployeeID()})}" class="btn btn-warning">Edit</a>
                         <form method="POST"
                               th:action="@{/delete_employee/{employeeID} (employeeID=${employee.getEmployeeID()})}"
                               style="display: inline-block;">
