@@ -136,6 +136,28 @@ public class ProjectManagerController {
         return "redirect:/login";
     }
 
+    @GetMapping("edit_employee/{employeeID}")
+    public String editEmployee(@PathVariable int employeeID, HttpSession session, Model model) {
+        if (isLoggedIn(session)) {
+            Employee employee = projectManagerService.getEmployeeByID(employeeID);
+            model.addAttribute("employee", employee);
+
+            return "edit_employee";
+        }
+        return "redirect:/login";
+    }
+
+    @PostMapping("edit_employee/{employeeID}")
+    public String updateEmployee(@PathVariable int employeeID, @ModelAttribute("employee") Employee employee, HttpSession session) {
+        if (isLoggedIn(session)) {
+            employee.setEmployeeID(employeeID);
+            projectManagerService.updateEmployee(employee);
+
+            return "redirect:/employees";
+        }
+        return "redirect:/login";
+    }
+
     //-------------------------------------------------TASK-------------------------------------------------------\\
     @GetMapping("create_task/{projectID}")
     public String createTask(@PathVariable int projectID, HttpSession session, Model model) {
