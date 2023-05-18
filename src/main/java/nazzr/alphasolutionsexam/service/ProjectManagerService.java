@@ -84,8 +84,8 @@ public class ProjectManagerService {
     }
 
     //--------------------------------------------------SUBTASK-------------------------------------------------------\\
-    public Subtask createSubtask(Subtask subtask, int taskID) {
-        return iProjectManagerRepositoryDb.createSubtask(subtask, taskID);
+    public void createSubtask(Subtask subtask, int taskID, List<Integer> employeeIDs) {
+        iProjectManagerRepositoryDb.createSubtask(subtask, taskID, employeeIDs);
     }
     public Subtask getSubTaskByID(int subTaskID) {
         return iProjectManagerRepositoryDb.getSubTaskByID(subTaskID);

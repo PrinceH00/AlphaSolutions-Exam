@@ -248,16 +248,19 @@ public class ProjectManagerController {
             subtask.setTaskID(taskID);
             model.addAttribute("subtask", subtask);
 
+            List<Employee> employees = projectManagerService.getEmployees((User) session.getAttribute("user"));
+            model.addAttribute("employees", employees);
+
             return "create_subtask";
         }
         return "redirect:/login";
     }
 
     @PostMapping("create_subtask/{taskID}")
-    public String saveSubtask(@PathVariable int taskID, @ModelAttribute Subtask subtask, HttpSession session) {
+    public String saveSubtask(@PathVariable int taskID, @ModelAttribute Subtask subtask, @RequestParam(value = "employeeIDs", required = false) List<Integer> employeeIDs, HttpSession session) {
         if (isLoggedIn(session)) {
             subtask.setTaskID(taskID);
-            projectManagerService.createSubtask(subtask, taskID);
+            projectManagerService.createSubtask(subtask, taskID, employeeIDs);
 
             return "redirect:/subtasks/" + taskID;
         }

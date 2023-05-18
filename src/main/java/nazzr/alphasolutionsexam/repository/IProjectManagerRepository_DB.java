@@ -40,7 +40,7 @@ public interface IProjectManagerRepository_DB {
     void deleteTask(int subTaskID);
 
     //--------------------------------------------------SUBTASK-------------------------------------------------------\\
-    Subtask createSubtask(Subtask subtask, int taskID);
+    void createSubtask(Subtask subtask, int taskID, List<Integer> employeeIDs);
 
     Subtask getSubTaskByID(int subTaskID);
 

@@ -342,10 +342,10 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
 
     //--------------------------------------------------SUBTASK-------------------------------------------------------\\
     @Override
-    public Subtask createSubtask(Subtask subtask, int taskID) {
+    public void createSubtask(Subtask subtask, int taskID, List<Integer> employeeIDs) {
         try {
-            SQL = "INSERT INTO Subtask (title, description, estimated_time, final_time, task_id) VALUES (?,?,?,?,?)";
-            preparedStatement = connection.prepareStatement(SQL);
+            String SQL = "INSERT INTO Subtask (title, description, estimated_time, final_time, task_id) VALUES (?,?,?,?,?)";
+            preparedStatement = connection.prepareStatement(SQL, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, subtask.getTitle());
             preparedStatement.setString(2, subtask.getDescription());
             preparedStatement.setInt(3, subtask.getEstimated_time());
@@ -353,12 +353,33 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             preparedStatement.setInt(5, taskID);
             preparedStatement.executeUpdate();
 
-            return subtask;
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+            int subtaskID;
+            if (generatedKeys.next()) {
+                subtaskID = generatedKeys.getInt(1);
+            } else {
+                throw new SQLException("Creating subtask failed, no ID found");
+            }
+
+            if (employeeIDs != null && !employeeIDs.isEmpty()) {
+                SQL = "INSERT INTO EmployeeSubtask (employee_id, subtask_id) VALUES (?, ?)";
+                preparedStatement = connection.prepareStatement(SQL);
+                for (int employeeID : employeeIDs) {
+                    preparedStatement.setInt(1, employeeID);
+                    preparedStatement.setInt(2, subtaskID);
+                    preparedStatement.addBatch();
+                }
+                preparedStatement.executeBatch();
+            }
+
+            subtask.setSubtaskID(subtaskID);
 
         } catch (SQLException e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
     }
+
+
 
     public Subtask getSubTaskByID(int subTaskID) {
         try {
