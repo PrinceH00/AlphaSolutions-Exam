@@ -23,16 +23,19 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="subtask: ${subtasks}">
+        <tr th:each="subtask : ${subtasks}" th:style="${subtask.isDone() ? 'background-color: #c9f6c9;' : 'background-color: #ffffff;'}">
           <td th:text="${subtask.getTitle()}"></td>
           <td th:text="${subtask.getDescription()}"></td>
           <td th:text="${subtask.getEstimated_time()}"></td>
           <td th:text="${subtask.getFinal_time()}"></td>
           <td>
             <a th:href="@{/edit_subtask/{subtaskID} (subtaskID=${subtask.getSubtaskID()})}" class="btn btn-warning">Edit</a>
-            <form method="post" th:action="@{/delete_subtask/{subtaskID} (subtaskID=${subtask.getSubtaskID()})}"
-                  style="display: inline-block;">
+            <form method="post" th:action="@{/delete_subtask/{subtaskID} (subtaskID=${subtask.getSubtaskID()})}" style="display: inline-block;">
               <button type="submit" class="btn btn-danger">Delete</button>
+            </form>
+            <form method="POST" th:action="@{/mark_done/{subtaskID}(subtaskID=${subtask.getSubtaskID()})}" style="display: inline-block;">
+              <input type="hidden" name="isDone" th:value="${!subtask.isDone()}" />
+              <button type="submit" class="btn btn-success" th:text="${subtask.isDone() ? 'Mark as unDone' : 'Mark as Done'}"></button>
             </form>
           </td>
         </tr>

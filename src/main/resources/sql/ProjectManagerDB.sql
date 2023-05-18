@@ -54,6 +54,7 @@ CREATE TABLE Subtask
     description    VARCHAR(255),
     estimated_time INT(10),
     final_time     INT(10),
+    isDone       BIT(1)      NOT NULL DEFAULT b'0',
     task_id        INT(10) NOT NULL,
     PRIMARY KEY (subtask_id),
     FOREIGN KEY (task_id) REFERENCES Task (task_id) ON DELETE CASCADE ON UPDATE CASCADE

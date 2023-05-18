@@ -95,7 +95,6 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
                 if (resultSet.getDate(6) != null) {
                     finalDate = resultSet.getDate(6).toLocalDate();
                 }
-
                 int userID = resultSet.getInt(7);
 
                 projectList.add(new Project(projectID, title, description, startDate, deadlineDate, finalDate, userID));
@@ -141,6 +140,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             throw new RuntimeException(e);
         }
     }
+
 
     //--------------------------------------------------EMPLOYEE------------------------------------------------------\\
     @Override
@@ -372,9 +372,10 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
                 String description = resultSet.getString(3);
                 int estimated_time = resultSet.getInt(4);
                 int final_time = resultSet.getInt(5);
-                int taskID = resultSet.getInt(6);
+                boolean isDone = resultSet.getBoolean(6);
+                int taskID = resultSet.getInt(7);
 
-                subtask = new Subtask(subTaskID, title, description, estimated_time, final_time, taskID);
+                subtask = new Subtask(subTaskID, title, description, estimated_time, final_time, isDone, taskID);
             }
 
             return subtask;
@@ -399,8 +400,9 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
                 String description = resultSet.getString(3);
                 int estimated_time = resultSet.getInt(4);
                 int final_time = resultSet.getInt(5);
-                int task_ID = resultSet.getInt(6);
-                subtasks.add(new Subtask(subtaskID, title, description, estimated_time, final_time, task_ID));
+                boolean isDone = resultSet.getBoolean(6);
+                int task_ID = resultSet.getInt(7);
+                subtasks.add(new Subtask(subtaskID, title, description, estimated_time, final_time, isDone, task_ID));
             }
 
             return subtasks;
@@ -413,19 +415,36 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     @Override
     public void updateSubtask(Subtask subtask) {
         try {
-            String SQL = "UPDATE Subtask SET title = ?, description = ?, estimated_time = ?, final_time = ? WHERE subtask_id  = ?";
+            String SQL = "UPDATE Subtask SET title = ?, description = ?, estimated_time = ?, final_time = ?, isDone = ? WHERE subtask_id  = ?";
             preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, subtask.getTitle());
             preparedStatement.setString(2, subtask.getDescription());
             preparedStatement.setInt(3, subtask.getEstimated_time());
             preparedStatement.setInt(4, subtask.getFinal_time());
-            preparedStatement.setInt(5, subtask.getSubtaskID());
+            preparedStatement.setBoolean(5, subtask.isDone());
+            preparedStatement.setInt(6, subtask.getSubtaskID());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public void updateSubtaskStatus(int subTaskID, boolean isDone) {
+        try {
+            SQL = "UPDATE Subtask SET isDone = ? WHERE subtask_id  = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+
+            preparedStatement.setBoolean(1, isDone);
+            preparedStatement.setInt(2, subTaskID);
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override

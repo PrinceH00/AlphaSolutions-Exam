@@ -279,6 +279,21 @@ public class ProjectManagerController {
         }
         return "redirect:/login";
     }
+    @PostMapping("/mark_done/{subtaskID}")
+    public String markSubtaskAsDone(@PathVariable("subtaskID") int subtaskID, HttpSession session) {
+        if (isLoggedIn(session)) {
+            Subtask subtask = projectManagerService.getSubTaskByID(subtaskID);
+            int taskID = subtask.getTaskID();
+            if (subtask != null) {
+                boolean isDone = !subtask.isDone();
+                subtask.setDone(isDone);
+                projectManagerService.updateSubtaskStatus(subtaskID,isDone);
+            }
+            return "redirect:/subtasks/" + taskID;
+        }
+        return "redirect:/login";
+    }
+
 
     @PostMapping("delete_subtask/{subTaskID}")
     public String deleteSubtask(@PathVariable int subTaskID, HttpSession session) {
