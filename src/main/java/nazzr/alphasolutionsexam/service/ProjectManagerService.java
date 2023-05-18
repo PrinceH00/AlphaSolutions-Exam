@@ -1,5 +1,6 @@
 package nazzr.alphasolutionsexam.service;
 
+import nazzr.alphasolutionsexam.dto.SubtaskDTO;
 import nazzr.alphasolutionsexam.model.*;
 import nazzr.alphasolutionsexam.repository.IProjectManagerRepository_DB;
 import org.springframework.beans.factory.annotation.Value;
@@ -86,12 +87,11 @@ public class ProjectManagerService {
     public Subtask createSubtask(Subtask subtask, int taskID) {
         return iProjectManagerRepositoryDb.createSubtask(subtask, taskID);
     }
-
     public Subtask getSubTaskByID(int subTaskID) {
         return iProjectManagerRepositoryDb.getSubTaskByID(subTaskID);
     }
 
-    public List<Subtask> getSubtasks(int taskID) {
+    public List<SubtaskDTO> getSubtasks(int taskID) {
         return iProjectManagerRepositoryDb.getSubtasks(taskID);
     }
     public void updateSubtask(Subtask subtask){

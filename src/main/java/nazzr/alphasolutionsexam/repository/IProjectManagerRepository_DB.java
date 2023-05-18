@@ -1,5 +1,6 @@
 package nazzr.alphasolutionsexam.repository;
 
+import nazzr.alphasolutionsexam.dto.SubtaskDTO;
 import nazzr.alphasolutionsexam.model.*;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public interface IProjectManagerRepository_DB {
 
     Subtask getSubTaskByID(int subTaskID);
 
-    List<Subtask> getSubtasks(int taskID);
+    List<SubtaskDTO> getSubtasks(int taskID);
     void updateSubtask(Subtask subtask);
     void updateSubtaskStatus(int subTaskID, boolean isDone);
 

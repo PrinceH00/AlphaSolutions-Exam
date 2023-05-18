@@ -1,6 +1,7 @@
 package nazzr.alphasolutionsexam.controller;
 
 import jakarta.servlet.http.HttpSession;
+import nazzr.alphasolutionsexam.dto.SubtaskDTO;
 import nazzr.alphasolutionsexam.model.*;
 import nazzr.alphasolutionsexam.service.ProjectManagerService;
 import org.springframework.stereotype.Controller;
@@ -266,7 +267,7 @@ public class ProjectManagerController {
     @GetMapping("subtasks/{taskID}")
     public String viewSubtasks(@PathVariable int taskID, Model model, HttpSession session) {
         if (isLoggedIn(session)) {
-            List<Subtask> subtasks = projectManagerService.getSubtasks(taskID);
+            List<SubtaskDTO> subtasks = projectManagerService.getSubtasks(taskID);
             model.addAttribute("subtasks", subtasks);
 
             return "subtasks";

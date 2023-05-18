@@ -1,5 +1,6 @@
 package nazzr.alphasolutionsexam.repository;
 
+import nazzr.alphasolutionsexam.dto.SubtaskDTO;
 import nazzr.alphasolutionsexam.model.*;
 import nazzr.alphasolutionsexam.repository.util.DB_Connector;
 import org.springframework.stereotype.Repository;
@@ -386,27 +387,53 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     }
 
     @Override
-    public List<Subtask> getSubtasks(int taskID) {
-        List<Subtask> subtasks = new ArrayList<>();
+    public List<SubtaskDTO> getSubtasks(int taskID) {
+        List<SubtaskDTO> subtasks = new ArrayList<>();
         try {
-            SQL = "SELECT * FROM Subtask WHERE task_id = ?";
+            SQL = "SELECT Subtask.subtask_id, Subtask.title, Subtask.description, Subtask.estimated_time, Subtask.final_time, Subtask.isDone, Subtask.task_id, Employee.employee_id, Employee.firstname, Employee.lastname " +
+                    "FROM Subtask " +
+                    "LEFT JOIN EmployeeSubtask ON Subtask.subtask_id = EmployeeSubtask.subtask_id " +
+                    "LEFT JOIN Employee ON EmployeeSubtask.employee_id = Employee.employee_id " +
+                    "WHERE Subtask.task_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, taskID);
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
                 int subtaskID = resultSet.getInt(1);
-                String title = resultSet.getString(2);
-                String description = resultSet.getString(3);
-                int estimated_time = resultSet.getInt(4);
-                int final_time = resultSet.getInt(5);
-                boolean isDone = resultSet.getBoolean(6);
-                int task_ID = resultSet.getInt(7);
-                subtasks.add(new Subtask(subtaskID, title, description, estimated_time, final_time, isDone, task_ID));
+                SubtaskDTO subtaskDTO = null;
+
+                // Vi tjekker for om subtask allerede eksisterer for at undgå duplikater
+                for (SubtaskDTO existingSubtaskDTO : subtasks) {
+                    if (existingSubtaskDTO.getSubtaskID() == subtaskID) {
+                        subtaskDTO = existingSubtaskDTO;
+                        break;
+                    }
+                }
+
+                // Hvis den ikke eksisterer tilføjer vi den til listen
+                if (subtaskDTO == null) {
+                    subtaskDTO = new SubtaskDTO();
+                    subtaskDTO.setSubtaskID(subtaskID);
+                    subtaskDTO.setTitle(resultSet.getString(2));
+                    subtaskDTO.setDescription(resultSet.getString(3));
+                    subtaskDTO.setEstimatedTime(resultSet.getInt(4));
+                    subtaskDTO.setFinalTime(resultSet.getInt(5));
+                    subtaskDTO.setDone(resultSet.getBoolean(6));
+                    subtaskDTO.setTaskID(resultSet.getInt(7));
+                    subtaskDTO.setAssignedEmployees(new ArrayList<>()); // vi instantierer en employee liste, så vi kan tage højde for om der er flere employees på en subtask
+
+                    subtasks.add(subtaskDTO);
+                }
+
+                // vi checker om en employee er assigned til en subtask, og dernæst opretter vi og tilføjer et employee objekt
+                if (resultSet.getInt(8) != 0) {
+                    Employee employee = new Employee(resultSet.getInt(8), resultSet.getString(9), resultSet.getString(10), null, null, 0);
+                    subtaskDTO.getAssignedEmployees().add(employee);
+                }
             }
 
             return subtasks;
-
         } catch (SQLException e) {
             throw new RuntimeException();
         }

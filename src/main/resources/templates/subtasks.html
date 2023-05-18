@@ -1,47 +1,56 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
-
 <head>
-  <meta charset="UTF-8">
-  <title>Subtasks</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <title>Subtasks</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
-
 <body>
 <div class="container" style="padding-top: 20px;">
-  <div class="card">
-    <div class="card-body">
-      <h3 class="card-title">Subtasks</h3>
-      <table class="table">
-        <thead>
-        <tr>
-          <th>Title</th>
-          <th>Description</th>
-          <th>Estimate Time (In Minutes)</th>
-          <th>Final Time (In Minutes)</th>
-          <th>Action</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="subtask : ${subtasks}" th:style="${subtask.isDone() ? 'background-color: #c9f6c9;' : 'background-color: #ffffff;'}">
-          <td th:text="${subtask.getTitle()}"></td>
-          <td th:text="${subtask.getDescription()}"></td>
-          <td th:text="${subtask.getEstimated_time()}"></td>
-          <td th:text="${subtask.getFinal_time()}"></td>
-          <td>
-            <a th:href="@{/edit_subtask/{subtaskID} (subtaskID=${subtask.getSubtaskID()})}" class="btn btn-warning">Edit</a>
-            <form method="post" th:action="@{/delete_subtask/{subtaskID} (subtaskID=${subtask.getSubtaskID()})}" style="display: inline-block;">
-              <button type="submit" class="btn btn-danger">Delete</button>
-            </form>
-            <form method="POST" th:action="@{/mark_done/{subtaskID}(subtaskID=${subtask.getSubtaskID()})}" style="display: inline-block;">
-              <input type="hidden" name="isDone" th:value="${!subtask.isDone()}" />
-              <button type="submit" class="btn btn-success" th:text="${subtask.isDone() ? 'Mark as unDone' : 'Mark as Done'}"></button>
-            </form>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-      <br>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Subtasks</h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Estimate Time</th>
+                    <th>Final Time</th>
+                    <th>Assigned Employees</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="subtask : ${subtasks}" th:style="${subtask.isDone() ? 'background-color: #c9f6c9;' : 'background-color: #ffffff;'}">
+                    <td th:text="${subtask.getTitle()}"></td>
+                    <td th:text="${subtask.getDescription()}"></td>
+                    <td th:text="${subtask.getEstimatedTime()}"></td>
+                    <td th:text="${subtask.getFinalTime()}"></td>
+                    <td>
+            <span th:if="${subtask.getAssignedEmployees().size() > 0}">
+              <span th:each="employee : ${subtask.getAssignedEmployees()}" th:text="${employee.getFirstName()} + ' ' + ${employee.getLastName() + ', '}"></span>
+            </span>
+                        <span th:unless="${subtask.getAssignedEmployees().size() > 0}">Not Assigned</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/edit_subtask/{subtaskID}(subtaskID=${subtask.getSubtaskID()})}" class="btn btn-warning">Edit</a>
+                        <form method="post" th:action="@{/delete_subtask/{subtaskID}(subtaskID=${subtask.getSubtaskID()})}" style="display: inline-block;">
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                        <form th:if="${subtask.isDone()}" method="POST" th:action="@{/mark_done/{subtaskID}(subtaskID=${subtask.getSubtaskID()})}" style="display: inline-block;">
+                            <input type="hidden" name="isDone" value="false" />
+                            <button type="submit" class="btn btn-warning">Mark as Undone</button>
+                        </form>
+                        <form th:unless="${subtask.isDone()}" method="POST" th:action="@{/mark_done/{subtaskID}(subtaskID=${subtask.getSubtaskID()})}" style="display: inline-block;">
+                            <input type="hidden" name="isDone" value="true" />
+                            <button type="submit" class="btn btn-success">Mark as Done</button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            <br>
       <a th:href="@{/create_subtask/{taskID} (taskID=${taskID})}" class="btn btn-primary">Add Subtask</a>
       <a th:href="@{/dashboard}" class="btn btn-secondary">Back to Dashboard</a>
       <a th:href="@{/logout}" class="btn btn-danger">Logout</a>
