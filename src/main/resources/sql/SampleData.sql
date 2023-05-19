@@ -1,3 +1,5 @@
+USE projectmanager;
+
 INSERT INTO User (firstname, lastname, email, password) VALUES
 ('John', 'Doe', 'john.doe@example.com', 'password123');
 
