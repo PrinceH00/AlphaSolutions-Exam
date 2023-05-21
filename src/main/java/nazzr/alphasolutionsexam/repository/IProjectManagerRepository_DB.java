@@ -45,8 +45,12 @@ public interface IProjectManagerRepository_DB {
     Subtask getSubTaskByID(int subTaskID);
 
     List<SubtaskDTO> getSubtasks(int taskID);
-    void updateSubtask(Subtask subtask);
+
     void updateSubtaskStatus(int subTaskID, boolean isDone);
 
     void deleteSubtask(int taskID);
+
+    void updateSubtask(Subtask subtask, List<Integer> assignedEmployeeIDs);
+    void updateAssignedEmployees(int subtaskID, List<Integer> assignedEmployeeIDs);
+    List<Integer> getAssignedEmployeeIDs(int subtaskID);
 }

@@ -94,8 +94,12 @@ public class ProjectManagerService {
     public List<SubtaskDTO> getSubtasks(int taskID) {
         return iProjectManagerRepositoryDb.getSubtasks(taskID);
     }
-    public void updateSubtask(Subtask subtask){
-        iProjectManagerRepositoryDb.updateSubtask(subtask);
+
+    public void updateSubtask(Subtask subtask, List<Integer> assignedEmployeeIDs) {
+        iProjectManagerRepositoryDb.updateSubtask(subtask, assignedEmployeeIDs);
+    }
+    public List<Integer> getAssignedEmployeeIDs(int subtaskID) {
+        return iProjectManagerRepositoryDb.getAssignedEmployeeIDs(subtaskID);
     }
     public void updateSubtaskStatus(int subtaskID, boolean isDone){
         iProjectManagerRepositoryDb.updateSubtaskStatus(subtaskID, isDone);
