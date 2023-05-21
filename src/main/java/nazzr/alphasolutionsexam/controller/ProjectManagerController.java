@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -282,20 +283,40 @@ public class ProjectManagerController {
         if (isLoggedIn(session)) {
             Subtask subtask = projectManagerService.getSubTaskByID(subtaskID);
             model.addAttribute("subtask", subtask);
+
+            List<Employee> employees = projectManagerService.getEmployees((User) session.getAttribute("user"));
+            model.addAttribute("employees", employees);
+
+            List<Integer> assignedEmployeeIDs = projectManagerService.getAssignedEmployeeIDs(subtaskID);
+            model.addAttribute("assignedEmployeeIDs", assignedEmployeeIDs);
+
             return "edit_subtask";
         }
         return "redirect:/login";
     }
-    @PostMapping("edit_subtask/{subtaskID}")
-    public String updateSubtask(@PathVariable int subtaskID, @ModelAttribute("subtask") Subtask subtask, HttpSession session) {
+
+
+    @PostMapping("/edit_subtask/{subtaskID}")
+    public String updateSubtask(@PathVariable int subtaskID, @ModelAttribute("subtask") Subtask subtask,
+                                @RequestParam(value = "assignedEmployees", required = false) List<Integer> assignedEmployeeIDs,
+                                HttpSession session) {
         if (isLoggedIn(session)) {
             subtask.setSubtaskID(subtaskID);
             int taskID = projectManagerService.getSubTaskByID(subtaskID).getTaskID();
-            projectManagerService.updateSubtask(subtask);
+
+            if (assignedEmployeeIDs == null) {
+                assignedEmployeeIDs = new ArrayList<>();
+            }
+
+            projectManagerService.updateSubtask(subtask, assignedEmployeeIDs);
+
             return "redirect:/subtasks/" + taskID;
         }
+
         return "redirect:/login";
     }
+
+
     @PostMapping("/mark_done/{subtaskID}")
     public String markSubtaskAsDone(@PathVariable("subtaskID") int subtaskID, HttpSession session) {
         if (isLoggedIn(session)) {

@@ -13,7 +13,6 @@
     <div class="card-body">
       <h3>Edit Subtask</h3>
       <form method="POST" th:action="@{/edit_subtask/{subtaskID}(subtaskID=${subtask.getSubtaskID()})}" th:object="${subtask}">
-      <form method="post" th:object="${subtask}">
         <div class="form-group">
           <label for="title">Title:</label>
           <input type="text" id="title" th:field="*{title}" class="form-control" autofocus required>
@@ -23,14 +22,26 @@
           <input type="text" id="description" th:field="*{description}" class="form-control" required>
         </div>
         <div class="form-group">
-          <label for="estimated_time">Estimated time:</label>
+          <label for="estimated_time">Estimated Time:</label>
           <input type="number" id="estimated_time" th:field="*{estimated_time}" class="form-control" required>
           <small class="form-text text-muted">Minute only format, e.g. 25</small>
         </div>
         <div class="form-group">
+          <label for="final_time">Final Time:</label>
+          <input type="number" id="final_time" th:field="*{final_time}" class="form-control">
+          <small class="form-text text-muted">Minute only format, e.g. 25</small>
+        </div>
+        <div class="form-group">
+          <label for="assignedEmployees">Assigned Employees:</label>
+          <select id="assignedEmployees" name="assignedEmployees" class="form-control" multiple>
+            <option th:each="employee : ${employees}" th:value="${employee.employeeID}" th:text="${employee.firstName + ' ' + employee.lastName}" th:selected="${assignedEmployeeIDs != null && assignedEmployeeIDs.contains(employee.employeeID)}"></option>
+          </select>
+          <small class="form-text text-muted">Use CTRL to choose multiple employees</small>
+        </div>
+        <div class="form-group">
           <p>
             <button type="submit" class="btn btn-primary">Done</button>
-            <a th:href="@{/subtasks/{taskID} (taskID=${subtask.getTaskID()})}" class="btn btn-secondary">Back</a>
+            <a th:href="@{/subtasks/{taskID}(taskID=${subtask.getTaskID()})}" class="btn btn-secondary">Back</a>
           </p>
         </div>
       </form>
@@ -39,4 +50,5 @@
 </div>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
+
 </html>

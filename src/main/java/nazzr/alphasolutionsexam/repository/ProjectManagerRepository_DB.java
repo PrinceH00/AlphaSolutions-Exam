@@ -461,9 +461,9 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
     }
 
     @Override
-    public void updateSubtask(Subtask subtask) {
+    public void updateSubtask(Subtask subtask, List<Integer> assignedEmployeeIDs) {
         try {
-            String SQL = "UPDATE Subtask SET title = ?, description = ?, estimated_time = ?, final_time = ?, isDone = ? WHERE subtask_id  = ?";
+            String SQL = "UPDATE Subtask SET title = ?, description = ?, estimated_time = ?, final_time = ?, isDone = ? WHERE subtask_id = ?";
             preparedStatement = connection.prepareStatement(SQL);
 
             preparedStatement.setString(1, subtask.getTitle());
@@ -474,11 +474,55 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             preparedStatement.setInt(6, subtask.getSubtaskID());
             preparedStatement.executeUpdate();
 
+            updateAssignedEmployees(subtask.getSubtaskID(), assignedEmployeeIDs);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public void updateAssignedEmployees(int subtaskID, List<Integer> assignedEmployeeIDs) {
+        try {
+            SQL = "DELETE FROM EmployeeSubtask WHERE subtask_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, subtaskID);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            SQL = "INSERT INTO EmployeeSubtask (employee_id, subtask_id) VALUES (?, ?)";
+            preparedStatement = connection.prepareStatement(SQL);
+            for (Integer employeeID : assignedEmployeeIDs) {
+                preparedStatement.setInt(1, employeeID);
+                preparedStatement.setInt(2, subtaskID);
+                preparedStatement.addBatch();
+            }
+            preparedStatement.executeBatch();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Integer> getAssignedEmployeeIDs(int subtaskID) {
+        List<Integer> assignedEmployeeIDs = new ArrayList<>();
+        try {
+            String SQL = "SELECT employee_id FROM EmployeeSubtask WHERE subtask_id = ?";
+            preparedStatement = connection.prepareStatement(SQL);
+            preparedStatement.setInt(1, subtaskID);
+            resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                int employeeID = resultSet.getInt(1);
+                assignedEmployeeIDs.add(employeeID);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return assignedEmployeeIDs;
+    }
     @Override
     public void updateSubtaskStatus(int subTaskID, boolean isDone) {
         try {
