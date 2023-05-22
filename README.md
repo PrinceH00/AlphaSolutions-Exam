@@ -39,9 +39,9 @@ newly created project will then be viewed on the dashboard.
 
 The Subtask looks like this:
 
-| Project Title          | Start Date                | (Deadline Date)           | Final Date              | Total Estimated Time                       | Total Final Time                                | Time Evaluation                                                |
-|------------------------|---------------------------|---------------------------|-------------------------|--------------------------------------------|-------------------------------------------------|----------------------------------------------------------------|
-| (Title of the project) | (When the project starts) | (When is need to be done) | (When it was delivered) | (Total time for all subtask for all tasks) | (Total time used for all subtask for all tasks) | (If the estimated time was the same or lower then finail time) |        
+| Project Title          | Start Date                | (Deadline Date)           | Final Date              | Total Estimated Time                       | Total Final Time                                | Time Evaluation                                                 |
+|------------------------|---------------------------|---------------------------|-------------------------|--------------------------------------------|-------------------------------------------------|-----------------------------------------------------------------|
+| (Title of the project) | (When the project starts) | (When is need to be done) | (When it was delivered) | (Total time for all subtask for all tasks) | (Total time used for all subtask for all tasks) | (If the estimated time was the same or lower then final time)   |        
 
 ###
 
