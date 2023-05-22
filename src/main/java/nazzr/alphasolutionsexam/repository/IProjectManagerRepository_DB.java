@@ -1,5 +1,6 @@
 package nazzr.alphasolutionsexam.repository;
 
+import nazzr.alphasolutionsexam.dto.ProjectTimeDTO;
 import nazzr.alphasolutionsexam.dto.SubtaskDTO;
 import nazzr.alphasolutionsexam.model.*;
 
@@ -14,7 +15,7 @@ public interface IProjectManagerRepository_DB {
 
     Project getProjectByID(int project_id);
 
-    List<Project> getProjects(User user);
+    List<ProjectTimeDTO> getProjects(User user);
 
     void updateProject(Project project);
 

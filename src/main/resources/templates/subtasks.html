@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container" style="padding-top: 20px;">
+<div class="container-fluid" style="padding-top: 20px; width: 50%">
     <div class="card">
         <div class="card-body">
             <h3 class="card-title">Subtasks</h3>
@@ -18,7 +18,7 @@
                     <th>Estimate Time</th>
                     <th>Final Time</th>
                     <th>Assigned Employees</th>
-                    <th>Action</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -40,7 +40,7 @@
                         </form>
                         <form th:if="${subtask.isDone()}" method="POST" th:action="@{/mark_done/{subtaskID}(subtaskID=${subtask.getSubtaskID()})}" style="display: inline-block;">
                             <input type="hidden" name="isDone" value="false" />
-                            <button type="submit" class="btn btn-warning">Mark as Undone</button>
+                            <button type="submit" class="btn btn-primary">Mark as Undone</button>
                         </form>
                         <form th:unless="${subtask.isDone()}" method="POST" th:action="@{/mark_done/{subtaskID}(subtaskID=${subtask.getSubtaskID()})}" style="display: inline-block;">
                             <input type="hidden" name="isDone" value="true" />
@@ -57,6 +57,5 @@
     </div>
   </div>
 </div>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 </body>
 </html>

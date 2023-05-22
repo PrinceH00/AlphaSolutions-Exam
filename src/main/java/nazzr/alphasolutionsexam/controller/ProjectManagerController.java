@@ -1,6 +1,7 @@
 package nazzr.alphasolutionsexam.controller;
 
 import jakarta.servlet.http.HttpSession;
+import nazzr.alphasolutionsexam.dto.ProjectTimeDTO;
 import nazzr.alphasolutionsexam.dto.SubtaskDTO;
 import nazzr.alphasolutionsexam.model.*;
 import nazzr.alphasolutionsexam.service.ProjectManagerService;
@@ -94,12 +95,11 @@ public class ProjectManagerController {
     }
 
 
-    @GetMapping("dashboard")
+    @GetMapping("/dashboard")
     public String viewProjects(HttpSession session, Model model) {
         if (isLoggedIn(session)) {
-            List<Project> projectList = projectManagerService.getProjects((User) session.getAttribute("user"));
+            List<ProjectTimeDTO> projectList = projectManagerService.getProjects((User) session.getAttribute("user"));
             model.addAttribute("projectList", projectList);
-
             return "dashboard";
         }
         return "redirect:/login";

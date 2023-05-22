@@ -1,5 +1,6 @@
 package nazzr.alphasolutionsexam.service;
 
+import nazzr.alphasolutionsexam.dto.ProjectTimeDTO;
 import nazzr.alphasolutionsexam.dto.SubtaskDTO;
 import nazzr.alphasolutionsexam.model.*;
 import nazzr.alphasolutionsexam.repository.IProjectManagerRepository_DB;
@@ -27,7 +28,7 @@ public class ProjectManagerService {
         return iProjectManagerRepositoryDb.getProjectByID(projectID);
     }
 
-    public List<Project> getProjects(User user) {
+    public List<ProjectTimeDTO> getProjects(User user) {
         return iProjectManagerRepositoryDb.getProjects(user);
     }
 

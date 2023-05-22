@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 </head>
 <body>
-<div class="container" style="padding-top: 20px;">
+<div class="container-fluid" style="padding-top: 20px; width: 50%">
     <div class="card">
         <div class="card-body">
             <h3 class="card-title">Dashboard</h3>
@@ -17,19 +17,29 @@
                     <th>Start date</th>
                     <th>Deadline date</th>
                     <th>Final Date</th>
+                    <th>Total Estimated Time</th>
+                    <th>Total Final Time</th>
+                    <th>Time Evaluation</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr th:each="project : ${projectList}">
-                    <td th:text="${project.getTitle()}"></td>
-                    <td th:text="${project.getStartDate()}"></td>
-                    <td th:text="${project.getDeadlineDate()}"></td>
-                    <td th:text="${project.getFinalDate()}"></td>
+                    <td th:text="${project.title}"></td>
+                    <td th:text="${project.startDate}"></td>
+                    <td th:text="${project.deadlineDate}"></td>
+                    <td th:text="${project.finalDate}"></td>
+                    <td th:text="${project.total_estimated_time}"></td>
+                    <td th:text="${project.total_final_time}"></td>
                     <td>
-                        <a th:href="@{/tasks/{projectID} (projectID=${project.getProjectID()})}" class="btn btn-primary">Tasks</a>
-                        <a th:href="@{/edit_project/{projectID} (projectID=${project.getProjectID()})}" class="btn btn-warning">Edit</a>
-                        <form method="POST" th:action="@{/delete_project/{projectID} (projectID=${project.getProjectID()})}" style="display: inline-block;">
+                        <span th:if="${project.total_estimated_time == 0 || project.total_final_time == 0}">⚠ Missing data</span>
+                        <span th:if="${project.total_final_time &gt; project.total_estimated_time}">❌ Over time</span>
+                        <span th:if="${project.total_final_time &gt;= 0 && project.total_final_time &lt;= project.total_estimated_time && project.total_estimated_time != 0 && project.total_final_time != 0}">✔ In time</span>
+                    </td>
+                    <td>
+                        <a th:href="@{/tasks/{projectID} (projectID=${project.projectID})}" class="btn btn-primary">Tasks</a>
+                        <a th:href="@{/edit_project/{projectID} (projectID=${project.projectID})}" class="btn btn-warning">Edit</a>
+                        <form method="POST" th:action="@{/delete_project/{projectID} (projectID=${project.projectID})}" style="display: inline-block;">
                             <button type="submit" class="btn btn-danger">Delete</button>
                         </form>
                     </td>

@@ -1,5 +1,6 @@
 package nazzr.alphasolutionsexam.repository;
 
+import nazzr.alphasolutionsexam.dto.ProjectTimeDTO;
 import nazzr.alphasolutionsexam.dto.SubtaskDTO;
 import nazzr.alphasolutionsexam.model.*;
 import nazzr.alphasolutionsexam.repository.util.DB_Connector;
@@ -76,29 +77,31 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
         }
     }
 
-    @Override
-    public List<Project> getProjects(User user) {
-        List<Project> projectList = new ArrayList<>();
+    public List<ProjectTimeDTO> getProjects(User user) {
+        List<ProjectTimeDTO> projectList = new ArrayList<>();
         try {
-            SQL = "SELECT * FROM Project WHERE user_id = ?";
+            String SQL = "SELECT Project.project_id, Project.title, Project.description, Project.startDate, Project.deadlineDate, Project.finalDate, SUM(Subtask.estimated_time) AS total_estimated_time, SUM(Subtask.final_time) AS total_final_time " +
+                    "FROM Project " +
+                    "LEFT JOIN Task ON Project.project_id = Task.project_id " +
+                    "LEFT JOIN Subtask ON Task.task_id = Subtask.task_id " +
+                    "WHERE Project.user_id = ? " +
+                    "GROUP BY Project.project_id, Project.title, Project.description, Project.startDate, Project.deadlineDate, Project.finalDate";
             preparedStatement = connection.prepareStatement(SQL);
             preparedStatement.setInt(1, user.getUserID());
             resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {
-                int projectID = resultSet.getInt(1);
-                String title = resultSet.getString(2);
-                String description = resultSet.getString(3);
-                LocalDate startDate = resultSet.getDate(4).toLocalDate();
-                LocalDate deadlineDate = resultSet.getDate(5).toLocalDate();
+                ProjectTimeDTO project = new ProjectTimeDTO();
+                project.setProjectID(resultSet.getInt(1));
+                project.setTitle(resultSet.getString(2));
+                project.setDescription(resultSet.getString(3));
+                project.setStartDate(resultSet.getDate(4).toLocalDate());
+                project.setDeadlineDate(resultSet.getDate(5).toLocalDate());
+                project.setFinalDate(resultSet.getDate(6) != null ? resultSet.getDate(6).toLocalDate() : null);
+                project.setTotal_estimated_time(resultSet.getInt(7));
+                project.setTotal_final_time(resultSet.getInt(8));
 
-                LocalDate finalDate = null;
-                if (resultSet.getDate(6) != null) {
-                    finalDate = resultSet.getDate(6).toLocalDate();
-                }
-                int userID = resultSet.getInt(7);
-
-                projectList.add(new Project(projectID, title, description, startDate, deadlineDate, finalDate, userID));
+                projectList.add(project);
             }
 
             return projectList;
@@ -107,6 +110,7 @@ public class ProjectManagerRepository_DB implements IProjectManagerRepository_DB
             throw new RuntimeException(e);
         }
     }
+
 
     public void deleteProject(int projectID) {
         try {
