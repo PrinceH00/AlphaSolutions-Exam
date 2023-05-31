@@ -1,3 +1,5 @@
+### ATTENTION: Live version is currently not working - kindly follow the CONTRIBUTE steps for working version.
+
 ## AlphaSolutions-Exam
 
 This project is our second semester exam-project. This application will help you manage your projects and give you an
